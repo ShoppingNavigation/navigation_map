@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:store_navigation_map/src/utils/map_state.dart';
 
 class MapControls extends StatelessWidget {
   const MapControls({super.key});
@@ -24,7 +25,9 @@ class MapControls extends StatelessWidget {
         if (kDebugMode) ...[
           const SizedBox(height: 20),
           FloatingActionButton.small(
-            onPressed: () {},
+            onPressed: () {
+              MapState.showDebugView = !MapState.showDebugView;
+            },
             child: const Icon(Icons.adb),
           ),
         ]
