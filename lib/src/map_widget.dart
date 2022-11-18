@@ -2,6 +2,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_navigation_graph/store_navigation_graph.dart';
+import 'package:store_navigation_map/src/cubits/graph/graph_cubit.dart';
 import 'package:store_navigation_map/src/cubits/zoom/map_controls_cubit.dart';
 import 'package:store_navigation_map/src/map_game.dart';
 import 'package:store_navigation_map/src/utils/globals.dart';
@@ -10,12 +11,13 @@ import 'package:store_navigation_map/src/widgets/next_category.dart';
 import 'package:store_navigation_map/src/widgets/zoom_info.dart';
 
 final MapControlsCubit mapControlsCubit = MapControlsCubit();
+final GraphCubit graphCubit = GraphCubit();
 
 class NavigationMap extends StatelessWidget {
   final NavigationGraph graph;
 
   NavigationMap({super.key, required this.graph}) {
-    Globals.graph = graph;
+    graphCubit.setNewGraph(graph);
   }
 
   final game = MapGame();
@@ -25,8 +27,11 @@ class NavigationMap extends StatelessWidget {
     Globals.colorScheme = Theme.of(context).colorScheme;
     Globals.textTheme = Theme.of(context).textTheme;
 
-    return BlocProvider.value(
-      value: mapControlsCubit,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: mapControlsCubit),
+        BlocProvider.value(value: graphCubit),
+      ],
       child: Stack(children: [
         GameWidget(game: game),
         const Positioned(
