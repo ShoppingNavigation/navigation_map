@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store_navigation_map/src/cubits/zoom/map_controls_cubit.dart';
-import 'package:store_navigation_map/src/utils/map_state.dart';
+import 'package:store_navigation_map/src/cubits/debug/debug_cubit.dart';
+import 'package:store_navigation_map/src/cubits/map_controls/map_controls_cubit.dart';
 
 class MapControls extends StatelessWidget {
 
@@ -34,7 +34,7 @@ class MapControls extends StatelessWidget {
           const SizedBox(height: 20),
           FloatingActionButton.small(
             onPressed: () {
-              MapState.showDebugView = !MapState.showDebugView;
+              context.read<DebugCubit>().changeVisibility();
             },
             child: const Icon(Icons.adb),
           ),

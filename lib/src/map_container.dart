@@ -7,7 +7,6 @@ import 'package:flame/input.dart';
 import 'package:flutter/foundation.dart';
 import 'package:store_navigation_map/src/debug/graph/debug_graph.dart';
 import 'package:store_navigation_map/src/utils/globals.dart';
-import 'package:store_navigation_map/src/utils/map_state.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
 class MapContainer extends PositionComponent with Draggable {
@@ -76,10 +75,10 @@ class MapContainer extends PositionComponent with Draggable {
   }
 
   void _checkDebugModeSwap() {
-    if (MapState.showDebugView && !_isDebugViewShown) {
+    if (debugCubit!.state.isDebugEnabled && !_isDebugViewShown) {
       add(_graph);
       _isDebugViewShown = true;
-    } else if (!MapState.showDebugView && _isDebugViewShown) {
+    } else if (!debugCubit!.state.isDebugEnabled && _isDebugViewShown) {
       remove(_graph);
       _isDebugViewShown = false;
     }

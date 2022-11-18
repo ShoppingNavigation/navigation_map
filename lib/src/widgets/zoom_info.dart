@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store_navigation_map/src/cubits/zoom/map_controls_cubit.dart';
+import 'package:store_navigation_map/src/cubits/map_controls/map_controls_cubit.dart';
 
 class ZoomInfo extends StatefulWidget {
   const ZoomInfo({super.key});

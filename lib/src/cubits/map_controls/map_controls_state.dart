@@ -8,4 +8,7 @@ abstract class MapControlsState {
 
 class ChangeZoomState extends MapControlsState {
   const ChangeZoomState({required super.zoom});
+
+  @override
+  String toString() => 'Change Zoom: $zoom';
 }
