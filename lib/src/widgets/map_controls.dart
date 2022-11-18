@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class MapControls extends StatelessWidget {
@@ -20,6 +21,13 @@ class MapControls extends StatelessWidget {
           onPressed: () {},
           child: const Icon(Icons.remove),
         ),
+        if (kDebugMode) ...[
+          const SizedBox(height: 20),
+          FloatingActionButton.small(
+            onPressed: () {},
+            child: const Icon(Icons.adb),
+          ),
+        ]
       ],
     );
   }
