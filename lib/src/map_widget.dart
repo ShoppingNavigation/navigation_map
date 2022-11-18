@@ -12,6 +12,7 @@ import 'package:store_navigation_map/src/utils/globals.dart';
 import 'package:store_navigation_map/src/widgets/map_controls.dart';
 import 'package:store_navigation_map/src/widgets/next_category.dart';
 import 'package:store_navigation_map/src/widgets/zoom_info.dart';
+import 'package:store_navigation_map/store_navigation_map.dart';
 
 
 DebugCubit? debugCubit;
@@ -19,7 +20,7 @@ late MapControlsCubit mapControlsCubit;
 late GraphCubit graphCubit;
 
 class NavigationMap extends StatelessWidget {
-  final NavigationGraph graph;
+  final NavigationGraph<UiNode> graph;
 
   NavigationMap({super.key, required this.graph}) {
     Bloc.observer = DebugObserver();

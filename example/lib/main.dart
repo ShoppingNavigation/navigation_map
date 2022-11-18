@@ -5,19 +5,19 @@ import 'package:store_navigation_map/store_navigation_map.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final v0 = Node('v0', x: 200, y: 40);
-  final v1 = Node('v1', x: 40, y: 100);
-  final v2 = Node('v2', x: 200, y: 200);
-  final v3 = Node('v3', x: 360, y: 100);
-  final v4 = Node('v4', x: 40, y: 200);
-  final v5 = Node('v5', x: 360, y: 300);
-  final v6 = Node('v6', x: 40, y: 300);
-  final v7 = Node('v7', x: 360, y: 400);
-  final v8 = Node('v8', x: 40, y: 400);
-  final v9 = Node('v9', x: 200, y: 500);
-  final unconnected = Node('U', x: 200, y: 600);
+  final v0 = UiNode('v0', position: Vector2(200, 40));
+  final v1 = UiNode('v1', position: Vector2(40, 100));
+  final v2 = UiNode('v2', position: Vector2(200, 200));
+  final v3 = UiNode('v3', position: Vector2(360, 100));
+  final v4 = UiNode('v4', position: Vector2(40, 200));
+  final v5 = UiNode('v5', position: Vector2(360, 300));
+  final v6 = UiNode('v6', position: Vector2(40, 300));
+  final v7 = UiNode('v7', position: Vector2(360, 400));
+  final v8 = UiNode('v8', position: Vector2(40, 400));
+  final v9 = UiNode('v9', position: Vector2(200, 500));
+  final unconnected = UiNode('unconnected', position: Vector2(200, 600));
 
-  final graph = NavigationGraph(nodes: [v0, v1, v2, v3, v4, v5, v6, v7, v8, v9, unconnected]);
+  final graph = NavigationGraph<UiNode>(nodes: [v0, v1, v2, v3, v4, v5, v6, v7, v8, v9, unconnected]);
   graph.connect(v0, v1, 3);
   graph.connect(v0, v2, 5);
   graph.connect(v0, v3, 1);

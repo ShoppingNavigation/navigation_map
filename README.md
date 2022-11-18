@@ -17,7 +17,7 @@ To use this map you just need to import the package.
 ## Usage
 
 A working example is in the `example` folder.
-You need to initialize a graph (as seen here: [store_navigation_map](https://github.com/ShoppingNavigation/navigation_graph#readme)) and hand it to the `NavigationMap` Widget. Thats all.
+You need to initialize a graph (as seen here: [store_navigation_map](https://github.com/ShoppingNavigation/navigation_graph#readme)) and hand it to the `NavigationMap` Widget. The only change you have to do is use `UiNode` instead of `Node`. The `UiNode` also has a field for the position of the node.
 
 
 ```dart
