@@ -4,16 +4,12 @@ import 'package:store_navigation_graph/store_navigation_graph.dart';
 import 'package:store_navigation_map/src/map_game.dart';
 import 'package:store_navigation_map/src/utils/globals.dart';
 import 'package:store_navigation_map/src/widgets/map_controls.dart';
+import 'package:store_navigation_map/src/widgets/next_category.dart';
 
 class NavigationMap extends StatelessWidget {
-  final ColorScheme? overrideColorScheme;
   final NavigationGraph graph;
 
-  NavigationMap({super.key, required this.graph, this.overrideColorScheme}){
-    if(overrideColorScheme != null){
-      Globals.colorScheme = overrideColorScheme!;
-    }
-
+  NavigationMap({super.key, required this.graph}) {
     Globals.graph = graph;
   }
 
@@ -21,6 +17,9 @@ class NavigationMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Globals.colorScheme = Theme.of(context).colorScheme;
+    Globals.textTheme = Theme.of(context).textTheme;
+
     return Stack(children: [
       GameWidget(game: game),
       const Positioned(
@@ -28,6 +27,12 @@ class NavigationMap extends StatelessWidget {
         left: 10,
         child: MapControls(),
       ),
+      const Positioned(
+        bottom: 20,
+        right: 10,
+        left: 10,
+        child: NextCategory(),
+      )
     ]);
   }
 }

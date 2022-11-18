@@ -3,6 +3,7 @@ import 'package:store_navigation_graph/store_navigation_graph.dart';
 
 class Globals {
   static ColorScheme colorScheme = ColorScheme.fromSeed(seedColor: const Color(0xFF626200));
+  static TextTheme textTheme = const TextTheme();
 
   /// this wont fail, since we set it in MapWidget
   // ignore: null_check_always_fails
