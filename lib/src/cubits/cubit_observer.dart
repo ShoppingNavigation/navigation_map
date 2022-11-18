@@ -5,7 +5,7 @@ import 'package:store_navigation_map/store_navigation_map.dart';
 class DebugObserver extends BlocObserver {
   @override
   void onCreate(BlocBase bloc) {
-    debugCubit?.addLog('New cubit created: ${bloc.runtimeType}');
+    debugCubit?.addLog('NEW: ${bloc.runtimeType}');
 
     super.onCreate(bloc);
   }
