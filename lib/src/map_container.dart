@@ -79,13 +79,11 @@ class MapContainer extends PositionComponent with Draggable {
 
   @override
   bool onDragStart(DragStartInfo info) {
-    print('drag start');
     return true;
   }
 
   @override
   bool onDragUpdate(DragUpdateInfo info) {
-    print('drag update');
     _renderDragTrace.add(info.eventPosition.game);
     _movementTrace.addLast(info.delta.game);
     return true;
