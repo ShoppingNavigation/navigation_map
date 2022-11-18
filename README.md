@@ -1,39 +1,26 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Flutter package, that displays a store map and its routing.
+Using flutter flame and store_navigation_graph
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- [ ] Show a map of the store
+- [ ] "Move" through the store using the typical gestures
+- [x] Show debug information about the graph when `kDebugMode`
+- [ ] Show route to category / categories
+- [ ] Public API to control this package from outside
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+To use this map you just need to import the package.
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+A working example is in the `example` folder.
+You need to initialize a graph (as seen here: [store_navigation_map](https://github.com/ShoppingNavigation/navigation_graph#readme)) and hand it to the `NavigationMap` Widget. Thats all.
+
 
 ```dart
-const like = 'sample';
+NavigationMap(
+    graph: graph,
+)
 ```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
