@@ -4,7 +4,8 @@ Using flutter flame and store_navigation_graph
 ## Features
 
 - [ ] Show a map of the store
-- [ ] "Move" through the store using the typical gestures
+- [x] "Move" through the store using the typical gestures
+- [ ] Improve scaling with gesture input
 - [x] Show debug information about the graph when `kDebugMode`
 - [ ] Show route to category / categories
 - [ ] Public API to control this package from outside

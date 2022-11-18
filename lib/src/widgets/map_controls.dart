@@ -20,13 +20,13 @@ class MapControls extends StatelessWidget {
         const SizedBox(height: 20),
         FloatingActionButton.small(
           onPressed: () {
-            context.read<MapControlsCubit>().increaseZoomByPercent(0.1);
+            context.read<MapControlsCubit>().zoom(0.1);
           },
           child: const Icon(Icons.add),
         ),
         FloatingActionButton.small(
           onPressed: () {
-            context.read<MapControlsCubit>().decreaseZoomByPercent(0.1);
+            context.read<MapControlsCubit>().zoom(-0.1);
           },
           child: const Icon(Icons.remove),
         ),
