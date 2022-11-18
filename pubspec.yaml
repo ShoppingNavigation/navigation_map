@@ -1,0 +1,25 @@
+name: store_navigation_map
+description: The map for the store navigation
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ">=2.18.2 <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flame: ^1.4.0
+  flutter:
+    sdk: flutter
+  store_navigation_graph:
+    path: ../store_navigation_graph
+    # git:
+    #   url: https://github.com/ShoppingNavigation/navigation_graph.git
+    #   ref: main
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
