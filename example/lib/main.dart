@@ -3,6 +3,8 @@ import 'package:store_navigation_graph/store_navigation_graph.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   final v0 = Node('v0', x: 200, y: 40);
   final v1 = Node('v1', x: 40, y: 100);
   final v2 = Node('v2', x: 200, y: 200);
