@@ -31,7 +31,7 @@ void main() {
   graph.connect(v5, v9, 3);
   graph.connect(v7, v9, 3);
   runApp(MaterialApp(
-    theme: ThemeData(useMaterial3: true, colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF626200))),
+    theme: ThemeData(useMaterial3: true, colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFBFF5A3))),
     home: Scaffold(
       appBar: AppBar(title: const Text('Navigation Map Example')),
       body: NavigationMap(
