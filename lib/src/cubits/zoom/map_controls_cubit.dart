@@ -18,11 +18,4 @@ class MapControlsCubit extends Cubit<MapControlsState> {
   void decreaseZoomByPercent(double zoom) {
     emit(ChangeZoomState(zoom: max(state.zoom - zoom, 0.5)));
   }
-
-  @override
-  void onChange(Change<MapControlsState> change) {
-    super.onChange(change);
-
-    // todo: write to debug cubit
-  }
 }

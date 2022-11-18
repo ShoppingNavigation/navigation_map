@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:store_navigation_map/src/debug/graph/debug_graph.dart';
 import 'package:store_navigation_map/src/utils/globals.dart';
 import 'package:store_navigation_map/src/utils/map_state.dart';
+import 'package:store_navigation_map/store_navigation_map.dart';
 
 class MapContainer extends PositionComponent with Draggable {
   /// Used to display the current drag movement in debug mode
@@ -30,6 +31,12 @@ class MapContainer extends PositionComponent with Draggable {
       add(_graph);
     }
 
+    mapControlsCubit.stream.listen((event) {
+      if (event.zoom != scale.x) {
+        scale = Vector2(event.zoom, event.zoom);
+      }
+    });
+
     return super.onLoad();
   }
 
@@ -42,6 +49,7 @@ class MapContainer extends PositionComponent with Draggable {
 
   @override
   void update(double dt) {
+
     _handleDragPosition();
     _checkDebugModeSwap();
   }
