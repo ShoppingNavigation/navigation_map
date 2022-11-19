@@ -32,12 +32,15 @@ void main() {
   graph.connect(v5, v7, 1);
   graph.connect(v5, v9, 3);
   graph.connect(v7, v9, 3);
+
+  final groundPlan = GroundPlanModel(outline: const GroundPlanOutlineModel(vertices: []), graph: graph);
+
   runApp(MaterialApp(
     theme: ThemeData(useMaterial3: true, colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFBFF5A3))),
     home: Scaffold(
       appBar: AppBar(title: const Text('Navigation Map Example')),
       body: NavigationMap(
-        graph: graph,
+        groundplan: groundPlan,
       ),
     ),
   ));

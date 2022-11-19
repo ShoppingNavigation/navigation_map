@@ -24,7 +24,7 @@ class MapContainer extends PositionComponent with Draggable {
     scale = Vector2(0.8, 0.8);
     position = Vector2(0, 0);
 
-    _graph = DebugGraph(graph: graphCubit.state.graph);
+    _graph = DebugGraph(graph: groundPlanCubit.state.groundPlan.graph);
     if (_isDebugViewShown) {
       add(_graph);
     }

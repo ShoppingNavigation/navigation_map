@@ -1,10 +1,9 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store_navigation_graph/store_navigation_graph.dart';
 import 'package:store_navigation_map/src/cubits/cubit_observer.dart';
 import 'package:store_navigation_map/src/cubits/debug/debug_cubit.dart';
-import 'package:store_navigation_map/src/cubits/graph/graph_cubit.dart';
+import 'package:store_navigation_map/src/cubits/groundplan/groundplan_cubit.dart';
 import 'package:store_navigation_map/src/cubits/map_controls/map_controls_cubit.dart';
 import 'package:store_navigation_map/src/debug/widget/debug_log.dart';
 import 'package:store_navigation_map/src/map_game.dart';
@@ -16,18 +15,16 @@ import 'package:store_navigation_map/store_navigation_map.dart';
 
 DebugCubit? debugCubit;
 late MapControlsCubit mapControlsCubit;
-late GraphCubit graphCubit;
+late GroundPlanCubit groundPlanCubit;
 
 class NavigationMap extends StatelessWidget {
-  final NavigationGraph<UiNode> graph;
+  final GroundPlanModel groundplan;
 
-  NavigationMap({super.key, required this.graph}) {
+  NavigationMap({super.key, required this.groundplan}) {
     Bloc.observer = DebugObserver();
     debugCubit = DebugCubit();
     mapControlsCubit = MapControlsCubit();
-    graphCubit = GraphCubit();
-
-    graphCubit.setNewGraph(graph);
+    groundPlanCubit = GroundPlanCubit(groundplan);
   }
 
   final game = MapGame();
@@ -40,8 +37,8 @@ class NavigationMap extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: mapControlsCubit),
-        BlocProvider.value(value: graphCubit),
         BlocProvider.value(value: debugCubit!),
+        BlocProvider.value(value: groundPlanCubit),
       ],
       child: Stack(children: [
         GameWidget(game: game),
