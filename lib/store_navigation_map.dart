@@ -8,3 +8,4 @@ export 'package:flame/extensions.dart';
 // groundplan models
 export 'src/models/groundplan/groundplan_model.dart';
 export 'src/models/groundplan/outline_model.dart';
+export 'src/models/groundplan/shelf_model.dart';
