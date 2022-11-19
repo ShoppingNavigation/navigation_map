@@ -5,6 +5,7 @@ import 'package:flame/components.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/foundation.dart';
 import 'package:store_navigation_map/src/debug/graph/debug_graph.dart';
+import 'package:store_navigation_map/src/groundplan/groundplan.dart';
 import 'package:store_navigation_map/src/utils/globals.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
@@ -39,6 +40,8 @@ class MapContainer extends PositionComponent with Draggable {
         scale = Vector2(event.zoom, event.zoom);
       }
     });
+
+    add(GroundPlan());
 
     return super.onLoad();
   }

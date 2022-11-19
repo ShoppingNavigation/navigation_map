@@ -12,7 +12,7 @@ class MapWorld extends World {
 
   @override
   void render(Canvas canvas){
-    canvas.drawColor(Globals.colorScheme.surface, BlendMode.hardLight);
+    canvas.drawColor(Globals.colorScheme.surfaceVariant, BlendMode.hardLight);
   }
 
 }

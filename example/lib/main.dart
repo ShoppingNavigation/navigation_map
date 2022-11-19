@@ -24,7 +24,7 @@ class Example extends StatefulWidget {
 }
 
 class _ExampleState extends State<Example> {
-  int _currentDestination = 0;
+  int _currentDestination = 1;
 
   @override
   void initState() {
