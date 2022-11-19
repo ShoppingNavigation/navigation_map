@@ -28,6 +28,7 @@ class MapContainer extends PositionComponent with Draggable {
     add(GroundPlan());
     _graph = DebugGraph(graph: groundPlanCubit.state.groundPlan.graph);
 
+    _isDebugViewShown = debugCubit?.state.isDebugEnabled ?? false;
     debugCubit?.stream.listen((event) {
       _isDebugViewShown = event.isDebugEnabled;
     });
@@ -82,10 +83,10 @@ class MapContainer extends PositionComponent with Draggable {
   }
 
   void _checkDebugModeSwap() {
-    if (debugCubit!.state.isDebugEnabled && !_isDebugViewShown) {
+    if (_isDebugViewShown && !contains(_graph)) {
       add(_graph);
       _isDebugViewShown = true;
-    } else if (!debugCubit!.state.isDebugEnabled && _isDebugViewShown) {
+    } else if (!_isDebugViewShown && contains(_graph)) {
       remove(_graph);
       _isDebugViewShown = false;
     }
