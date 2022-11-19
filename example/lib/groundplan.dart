@@ -54,6 +54,7 @@ final List<GroundPlanShelfModel> shelves = [
 ];
 
 final GroundPlanModel groundPlan = GroundPlanModel(
+  additionalZoom: 3,
   outline: outline,
   graph: NavigationGraph(nodes: []),
   shelves: shelves,

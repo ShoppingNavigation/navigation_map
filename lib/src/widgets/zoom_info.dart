@@ -39,7 +39,7 @@ class _ZoomInfoState extends State<ZoomInfo> {
   Widget build(BuildContext context) {
     return BlocListener<MapControlsCubit, MapControlsState>(
       listener: (context, state) {
-        _showNewZoomChip(state.zoom);
+        _showNewZoomChip(state.userZoomValue);
       },
       child: AnimatedOpacity(
         opacity: _showZoomChip ? 1 : 0,

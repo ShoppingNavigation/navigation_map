@@ -23,7 +23,7 @@ class NavigationMap extends StatefulWidget {
   NavigationMap({super.key, required this.groundplan}) {
     Bloc.observer = DebugObserver();
     debugCubit = DebugCubit();
-    mapControlsCubit = MapControlsCubit();
+    mapControlsCubit = MapControlsCubit(additionalZoom: groundplan.additionalZoom);
     groundPlanCubit = GroundPlanCubit(groundplan);
   }
 

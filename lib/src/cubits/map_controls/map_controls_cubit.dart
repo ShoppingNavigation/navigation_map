@@ -3,13 +3,14 @@ import 'package:bloc/bloc.dart';
 part 'map_controls_state.dart';
 
 class MapControlsCubit extends Cubit<MapControlsState> {
-  MapControlsCubit() : super(const ChangeZoomState(zoom: 1)) {
-    zoom(3);
-  }
+  MapControlsCubit({required double additionalZoom})
+      : super(InitMapControlsState(zoom: 1 + additionalZoom, additionalZoom: additionalZoom, userZoomValue: 1));
 
   /// changes the zoom level
   /// max value for zoom is 3, min is 0.5
   void zoom(double zoom) {
-    emit(ChangeZoomState(zoom: (state.zoom + zoom).clamp(0.5, 3)));
+    final double userZoom = (state.userZoomValue + zoom).clamp(0.5, 3);
+    final realZoom = userZoom * state.additionalZoom;
+    emit(state.changeZoom(userZoom: userZoom, zoom: realZoom));
   }
 }
