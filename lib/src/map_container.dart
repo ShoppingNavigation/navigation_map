@@ -2,7 +2,6 @@ import 'dart:collection';
 import 'dart:ui';
 
 import 'package:flame/components.dart';
-import 'package:flame/extensions.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/foundation.dart';
 import 'package:store_navigation_map/src/debug/graph/debug_graph.dart';

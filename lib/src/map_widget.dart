@@ -14,7 +14,6 @@ import 'package:store_navigation_map/src/widgets/next_category.dart';
 import 'package:store_navigation_map/src/widgets/zoom_info.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
-
 DebugCubit? debugCubit;
 late MapControlsCubit mapControlsCubit;
 late GraphCubit graphCubit;
@@ -56,12 +55,21 @@ class NavigationMap extends StatelessWidget {
           right: 10,
           child: ZoomInfo(),
         ),
-        if (debugCubit!.state.isDebugEnabled)
-          const Positioned(
-            bottom: 10,
-            left: 10,
-            child: DebugLog(),
-          ),
+        BlocBuilder<DebugCubit, DebugState>(
+          builder: (context, state) {
+            if (!state.isDebugEnabled) {
+              return Container();
+            }
+
+            return Positioned(
+              bottom: 10,
+              left: 10,
+              child: DebugLog(
+                logs: state.latestMessages,
+              ),
+            );
+          },
+        ),
         const Positioned(
           bottom: 20,
           right: 10,
