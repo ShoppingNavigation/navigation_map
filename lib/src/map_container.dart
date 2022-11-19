@@ -23,7 +23,7 @@ class MapContainer extends PositionComponent with Draggable {
   Future<void>? onLoad() async {
     size = Vector2.all(1000);
     scale = Vector2(0.8, 0.8);
-    position = Vector2(0, 0);
+    position = mapControlsCubit.state.startupPosition;
 
     _graph = DebugGraph(graph: groundPlanCubit.state.groundPlan.graph);
 
