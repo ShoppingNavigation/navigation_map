@@ -17,7 +17,7 @@ DebugCubit? debugCubit;
 late MapControlsCubit mapControlsCubit;
 late GroundPlanCubit groundPlanCubit;
 
-class NavigationMap extends StatelessWidget {
+class NavigationMap extends StatefulWidget {
   final GroundPlanModel groundplan;
 
   NavigationMap({super.key, required this.groundplan}) {
@@ -27,6 +27,11 @@ class NavigationMap extends StatelessWidget {
     groundPlanCubit = GroundPlanCubit(groundplan);
   }
 
+  @override
+  State<NavigationMap> createState() => _NavigationMapState();
+}
+
+class _NavigationMapState extends State<NavigationMap> {
   final game = MapGame();
 
   @override
@@ -68,7 +73,7 @@ class NavigationMap extends StatelessWidget {
           },
         ),
         const Positioned(
-          bottom: 20,
+          bottom: 10,
           right: 10,
           left: 10,
           child: NextCategory(),

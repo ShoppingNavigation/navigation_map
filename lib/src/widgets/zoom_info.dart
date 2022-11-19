@@ -17,6 +17,9 @@ class _ZoomInfoState extends State<ZoomInfo> {
   Timer? _zoomChipDelayTimer;
 
   void _showNewZoomChip(double newZoom) {
+    if (!mounted) {
+      return;
+    }
     _zoomChipDelayTimer?.cancel();
     setState(() {
       _showZoomChip = true;
@@ -24,7 +27,11 @@ class _ZoomInfoState extends State<ZoomInfo> {
     });
     _zoomChipDelayTimer = Timer(
       const Duration(seconds: 2),
-      () => setState(() => _showZoomChip = false),
+      () => setState(() {
+        if (mounted) {
+          _showZoomChip = false;
+        }
+      }),
     );
   }
 
