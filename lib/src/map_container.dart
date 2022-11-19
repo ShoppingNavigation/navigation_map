@@ -25,6 +25,7 @@ class MapContainer extends PositionComponent with Draggable {
     scale = Vector2(0.8, 0.8);
     position = mapControlsCubit.state.startupPosition;
 
+    add(GroundPlan());
     _graph = DebugGraph(graph: groundPlanCubit.state.groundPlan.graph);
 
     debugCubit?.stream.listen((event) {
@@ -41,8 +42,6 @@ class MapContainer extends PositionComponent with Draggable {
         scale = event.scale;
       }
     });
-
-    add(GroundPlan());
 
     return super.onLoad();
   }

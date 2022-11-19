@@ -5,7 +5,7 @@ import 'package:store_navigation_map/src/utils/globals.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
 class DebugEdge extends Component {
-  static const double _textSize = 10;
+  static const double _textSize = 1;
   final TextPaint _textPaint = TextPaint(
     style: TextStyle(
       fontSize: _textSize,
@@ -22,8 +22,8 @@ class DebugEdge extends Component {
       edge.first.position.toOffset(),
       edge.second.position.toOffset(),
       Paint()
-        ..color = Globals.colorScheme.tertiaryContainer
-        ..strokeWidth = 5,
+        ..color = Globals.colorScheme.errorContainer
+        ..strokeWidth = 1,
     );
 
     _textPaint.render(canvas, edge.distance.toStringAsFixed(2),
