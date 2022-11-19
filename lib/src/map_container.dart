@@ -35,9 +35,10 @@ class MapContainer extends PositionComponent with Draggable {
       add(_graph);
     }
 
+    scale = mapControlsCubit.state.scale;
     mapControlsCubit.stream.listen((event) {
       if (event.zoom != scale.x) {
-        scale = Vector2(event.zoom, event.zoom);
+        scale = event.scale;
       }
     });
 

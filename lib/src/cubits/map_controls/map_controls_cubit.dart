@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:store_navigation_map/store_navigation_map.dart';
 
 part 'map_controls_state.dart';
 

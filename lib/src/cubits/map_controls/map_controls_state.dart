@@ -7,6 +7,8 @@ abstract class MapControlsState {
 
   const MapControlsState({required this.zoom, required this.additionalZoom, required this.userZoomValue});
 
+  Vector2 get scale => Vector2.all(zoom);
+
   MapControlsState changeZoom({required double zoom, required double userZoom}) =>
       ChangeZoomState(zoom: zoom, additionalZoom: additionalZoom, userZoomValue: userZoom);
 }
