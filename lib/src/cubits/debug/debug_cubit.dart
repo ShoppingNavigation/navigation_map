@@ -11,7 +11,6 @@ class DebugCubit extends Cubit<DebugState> {
   }
 
   void changeVisibility() {
-    addLog('Change debugger visibility to ${!state.isDebugEnabled}');
     emit(state.changeVisibility());
   }
 }

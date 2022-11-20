@@ -28,6 +28,14 @@ class NavigationMap extends StatefulWidget {
       startupPosition: groundplan.startupPosition,
     );
     groundPlanCubit = GroundPlanCubit(groundplan);
+
+    Future.delayed(
+      Duration(seconds: 2),
+      () => groundPlanCubit.routeTo(
+        groundplan.graph.nodes.first,
+        groundplan.graph.nodes.last,
+      ),
+    );
   }
 
   @override
