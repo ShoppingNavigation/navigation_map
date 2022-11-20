@@ -33,4 +33,5 @@ final groundPlanOnlyGraph = GroundPlanModel(
   outline: const GroundPlanOutlineModel(vertices: []),
   graph: _graph,
   shelves: [],
+  obstacles: [],
 );

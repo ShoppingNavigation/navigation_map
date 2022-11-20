@@ -1,4 +1,5 @@
 import 'package:store_navigation_graph/store_navigation_graph.dart';
+import 'package:store_navigation_map/src/models/groundplan/obstacle_model.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
 class GroundPlanModel {
@@ -12,11 +13,13 @@ class GroundPlanModel {
   final NavigationGraph<UiNode> graph;
   final GroundPlanOutlineModel outline;
   final List<GroundPlanShelfModel> shelves;
+  final List<GroundPlanObstacleModel> obstacles;
 
   const GroundPlanModel({
     required this.outline,
     required this.graph,
     required this.shelves,
+    required this.obstacles,
     this.additionalZoom = 0,
     this.startupPosition,
   });
@@ -25,6 +28,7 @@ class GroundPlanModel {
       additionalZoom: 1,
         outline: const GroundPlanOutlineModel(vertices: []),
         graph: NavigationGraph(nodes: []),
-        shelves: []
+        shelves: [],
+        obstacles: [],
       );
 }

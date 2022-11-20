@@ -53,6 +53,25 @@ final List<GroundPlanShelfModel> _shelves = [
   ]),
 ];
 
+final _obstacles = <GroundPlanObstacleModel>[
+  GroundPlanObstacleModel(
+    position: Vector2(30, 15),
+    vertices: [
+      Vector2(5, 0),
+      Vector2(0, 10),
+      Vector2(-5, 0),
+    ],
+  ),
+  GroundPlanObstacleModel(
+    position: Vector2(43, 10),
+    vertices: [
+      Vector2(7, 0),
+      Vector2(0, 15),
+      Vector2(-7, 0),
+    ],
+  ),
+];
+
 final _start = UiNode('Start', position: Vector2(30, 0));
 final _v0 = UiNode('v0', position: Vector2(30, 10));
 final _v1 = UiNode('v1', position: Vector2(25, 10));
@@ -84,4 +103,5 @@ final GroundPlanModel groundPlan = GroundPlanModel(
   outline: _outline,
   graph: _graph,
   shelves: _shelves,
+  obstacles: _obstacles,
 );

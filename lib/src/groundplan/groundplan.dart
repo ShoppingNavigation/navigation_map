@@ -1,5 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:store_navigation_map/src/cubits/groundplan/groundplan_cubit.dart';
+import 'package:store_navigation_map/src/groundplan/obstacle.dart';
 import 'package:store_navigation_map/src/groundplan/outline.dart';
 import 'package:store_navigation_map/src/groundplan/route.dart';
 import 'package:store_navigation_map/src/groundplan/shelf.dart';
@@ -17,6 +18,10 @@ class GroundPlan extends Component {
 
     for (var element in groundPlan.shelves) {
       add(GroundPlanShelf(shelfModel: element));
+    }
+
+    for (var element in groundPlan.obstacles) {
+      add(GroundPlanObstacle(obstacle: element));
     }
 
     _routeListener();

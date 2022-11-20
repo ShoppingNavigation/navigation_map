@@ -1,4 +1,5 @@
 import 'package:flame/components.dart';
+import 'package:flutter/rendering.dart';
 import 'package:store_navigation_graph/store_navigation_graph.dart';
 import 'package:store_navigation_map/src/debug/graph/debug_edge.dart';
 import 'package:store_navigation_map/src/debug/graph/debug_node.dart';
