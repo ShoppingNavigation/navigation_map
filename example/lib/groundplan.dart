@@ -82,7 +82,7 @@ const milch = CategoryModel(id: 'vertniou', name: 'Milchprodukte', nodeId: 'v9')
 const fleisch = CategoryModel(id: 'fdghytjit7y', name: 'Fleischprodukte', nodeId: 'v9');
 const fisch = CategoryModel(id: 'sgtyrjr6', name: 'Fischprodukte', nodeId: 'v9');
 
-final _start = UiNode('Start', position: Vector2(30, 0));
+final startNode = UiNode('Start', position: Vector2(30, 0));
 final _v0 = UiNode('v0', position: Vector2(30, 10));
 final _v1 = UiNode('v1', position: Vector2(25, 10));
 final _v1_2 = UiNode('v1_2', position: Vector2(15, 10), connectorPoints: [
@@ -135,7 +135,7 @@ final _v9 = UiNode('v9', position: Vector2(65, 42.5), connectorPoints: [
   ),
 ]);
 final _graph = NavigationGraph<UiNode>(nodes: [
-  _start,
+  startNode,
   _v0,
   _v1,
   _v1_2,
@@ -150,7 +150,7 @@ final _graph = NavigationGraph<UiNode>(nodes: [
   _v8,
   _v9,
 ])
-  ..connect(_start, _v0, 10)
+  ..connect(startNode, _v0, 10)
   ..connect(_v0, _v1, 5)
   ..connect(_v1, _v1_2, 10)
   ..connect(_v1_2, _v2, 10)

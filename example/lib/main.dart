@@ -40,7 +40,7 @@ class _ExampleState extends State<Example> {
       appBar: AppBar(title: const Text('Navigation Map Example'), actions: [
         IconButton(
             onPressed: () =>
-                context.read<RoutingCubit>().routeTo(groundPlan.graph.nodes.first, groundPlan.graph.nodes.last),
+                context.read<RoutingCubit>().routeTo(startNode, getranke),
             icon: const Icon(Icons.route))
       ]),
       body: _currentDestination == 0
