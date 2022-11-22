@@ -6,9 +6,10 @@ import 'package:store_navigation_map/store_navigation_map.dart';
 
 class GroundPlanRoute extends Component {
   final List<UiNode> route;
+  final ShelfCategoryConnector connector;
   late Path _routePath;
 
-  GroundPlanRoute({required this.route}) {
+  GroundPlanRoute({required this.route, required this.connector}) {
     _routePath = _buildPath(route);
   }
 
@@ -31,6 +32,9 @@ class GroundPlanRoute extends Component {
     for (final vert in route.skip(1)) {
       path.lineTo(vert.position.x, vert.position.y);
     }
+
+    path.lineTo(connector.position.x, connector.position.y);
+    path.addOval(Rect.fromCircle(center: connector.position.toOffset(), radius: 0.5));
 
     return path;
   }

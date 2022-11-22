@@ -32,7 +32,7 @@ class GroundPlan extends Component {
     routingCubit?.stream.listen((event) {
       if (event is RoutingSingleRoute) {
         if (_currentDisplayingRoute == null) {
-          _currentDisplayingRoute = GroundPlanRoute(route: event.currentRoute.route);
+          _currentDisplayingRoute = GroundPlanRoute(route: event.currentRoute.route, connector: event.connectorPoint);
           add(_currentDisplayingRoute!);
           return;
         }
@@ -42,7 +42,7 @@ class GroundPlan extends Component {
           remove(_currentDisplayingRoute!);
         }
 
-        _currentDisplayingRoute = GroundPlanRoute(route: event.currentRoute.route);
+        _currentDisplayingRoute = GroundPlanRoute(route: event.currentRoute.route, connector: event.connectorPoint);
         add(_currentDisplayingRoute!);
       }
     });

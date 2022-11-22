@@ -24,6 +24,9 @@ class RoutingCubit extends Cubit<RoutingState> {
       return;
     }
 
-    emit(state.singleRouting(result));
+    emit(state.singleRouting(
+      result,
+      destinationNode.connectorPoints.firstWhere((element) => element.category.id == destination.id),
+    ));
   }
 }
