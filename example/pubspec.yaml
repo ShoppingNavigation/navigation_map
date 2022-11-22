@@ -12,6 +12,10 @@ dependencies:
   flutter:
     sdk: flutter
 
+  store_shared_models:
+    git:
+      url: https://github.com/ShoppingNavigation/store_shared_models.git
+      ref: main
   store_navigation_map:
     path: ../
   store_navigation_graph:

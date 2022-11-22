@@ -1,5 +1,6 @@
 import 'package:store_navigation_graph/store_navigation_graph.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
+import 'package:store_shared_models/store_shared_models.dart';
 
 final GroundPlanOutlineModel _outline = GroundPlanOutlineModel(vertices: [
   Vector2(0, 0),
@@ -75,7 +76,12 @@ final _obstacles = <GroundPlanObstacleModel>[
 final _start = UiNode('Start', position: Vector2(30, 0));
 final _v0 = UiNode('v0', position: Vector2(30, 10));
 final _v1 = UiNode('v1', position: Vector2(25, 10));
-final _v2 = UiNode('v2', position: Vector2(5, 10));
+final _v2 = UiNode('v2', position: Vector2(5, 10), connectorPoints: [
+  ShelfCategoryConnector(
+    position: Vector2(5, 2.5),
+    category: const CategoryModel(id: 'asdf', name: 'Eis', nodeId: 'v2'),
+  ),
+]);
 final _v3 = UiNode('v3', position: Vector2(5, 30));
 final _v4 = UiNode('v4', position: Vector2(25, 30));
 final _v5 = UiNode('v5', position: Vector2(45, 30));

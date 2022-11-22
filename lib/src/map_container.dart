@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/foundation.dart';
-import 'package:store_navigation_map/src/debug/graph/debug_graph.dart';
+import 'package:store_navigation_map/src/debug/debug_component.dart';
 import 'package:store_navigation_map/src/groundplan/groundplan.dart';
 import 'package:store_navigation_map/src/utils/globals.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
@@ -17,7 +17,7 @@ class MapContainer extends PositionComponent with Draggable {
   final Queue<Vector2> _movementTrace = Queue<Vector2>();
 
   bool _isDebugViewShown = kDebugMode;
-  late DebugGraph _graph;
+  late DebugComponent _graph;
 
   @override
   Future<void>? onLoad() async {
@@ -26,7 +26,7 @@ class MapContainer extends PositionComponent with Draggable {
     position = mapControlsCubit.state.startupPosition;
 
     add(GroundPlan());
-    _graph = DebugGraph(graph: groundPlanCubit.state.groundPlan.graph);
+    _graph = DebugComponent(graph: groundPlanCubit.state.groundPlan.graph);
 
     _isDebugViewShown = debugCubit?.state.isDebugEnabled ?? false;
     debugCubit?.stream.listen((event) {
