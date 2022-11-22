@@ -8,7 +8,8 @@ Using flutter flame and store_navigation_graph
 - [ ] Improve scaling with gesture input
 - [x] Show debug information about the graph when `kDebugMode`
 - [x] Show route to category / categories
-- [ ] Public API to control this package from outside
+- [x] Public API to control this package from outside
+- [ ] Connect shelves with catgories
 
 ## Getting started
 

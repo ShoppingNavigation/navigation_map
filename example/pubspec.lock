@@ -170,6 +170,15 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  store_shared_models:
+    dependency: transitive
+    description:
+      path: "."
+      ref: main
+      resolved-ref: "82615dcbef6d8d789116c02753ab1d0e784403c9"
+      url: "https://github.com/ShoppingNavigation/store_shared_models.git"
+    source: git
+    version: "1.0.0"
   stream_channel:
     dependency: transitive
     description:
