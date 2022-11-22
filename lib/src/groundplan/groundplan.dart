@@ -23,12 +23,19 @@ class GroundPlan extends Component {
       add(GroundPlanObstacle(obstacle: element));
     }
 
-    _routeListener();
+    _initializeRouteAndListener();
 
     return super.onLoad();
   }
 
-  void _routeListener() {
+  void _initializeRouteAndListener() {
+    final initialState = routingCubit?.state;
+    if (initialState != null && initialState is RoutingSingleRoute) {
+      _currentDisplayingRoute =
+          GroundPlanRoute(route: initialState.currentRoute.route, connector: initialState.connectorPoint);
+      add(_currentDisplayingRoute!);
+    }
+
     routingCubit?.stream.listen((event) {
       if (event is RoutingSingleRoute) {
         if (_currentDisplayingRoute == null) {
@@ -44,6 +51,10 @@ class GroundPlan extends Component {
 
         _currentDisplayingRoute = GroundPlanRoute(route: event.currentRoute.route, connector: event.connectorPoint);
         add(_currentDisplayingRoute!);
+      }
+
+      if (event is RoutingFinished && _currentDisplayingRoute != null && contains(_currentDisplayingRoute!)) {
+        remove(_currentDisplayingRoute!);
       }
     });
   }

@@ -9,6 +9,13 @@ part 'routing_state.dart';
 class RoutingCubit extends Cubit<RoutingState> {
   RoutingCubit() : super(RoutingInitial());
 
+  /// finishes the current object (or the complete routing)
+  void finish() {
+    if (state is RoutingSingleRoute) {
+      emit(state.finish());
+    }
+  }
+
   /// begins routing to a given node
   void routeTo(UiNode start, CategoryModel destination) {
     final graph = groundPlanCubit.state.groundPlan.graph;
