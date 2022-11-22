@@ -1,5 +1,4 @@
 import 'package:flame/components.dart';
-import 'package:store_navigation_map/src/cubits/routing/routing_cubit.dart';
 import 'package:store_navigation_map/src/groundplan/obstacle.dart';
 import 'package:store_navigation_map/src/groundplan/outline.dart';
 import 'package:store_navigation_map/src/groundplan/route.dart';
