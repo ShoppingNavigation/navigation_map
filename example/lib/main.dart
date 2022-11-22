@@ -1,3 +1,4 @@
+import 'package:example/destination_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
@@ -36,6 +37,8 @@ class _ExampleState extends State<Example> {
 
   @override
   Widget build(BuildContext context) {
+    final routingCubit = context.read<RoutingCubit>();
+
     return Scaffold(
       appBar: AppBar(title: const Text('Navigation Map Example'), actions: [
         IconButton(
@@ -44,7 +47,10 @@ class _ExampleState extends State<Example> {
           icon: const Icon(Icons.route),
         ),
         IconButton(
-          onPressed: () => context.read<RoutingCubit>().routeToAll(startNode, [getranke, milch]),
+          onPressed: () => showDialog(
+            context: context,
+            builder: (context) => DestinationSelector(routingCubit: routingCubit),
+          ),
           icon: const Icon(Icons.alt_route),
         )
       ]),

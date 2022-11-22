@@ -82,6 +82,8 @@ const milch = CategoryModel(id: 'vertniou', name: 'Milchprodukte', nodeId: 'v9')
 const fleisch = CategoryModel(id: 'fdghytjit7y', name: 'Fleischprodukte', nodeId: 'v9');
 const fisch = CategoryModel(id: 'sgtyrjr6', name: 'Fischprodukte', nodeId: 'v9');
 
+const List<CategoryModel> categories = [obst, gemuse, brot, konserven, getranke, milch, fleisch, fisch];
+
 final startNode = UiNode('Start', position: Vector2(30, 0));
 final _v0 = UiNode('v0', position: Vector2(30, 10));
 final _v1 = UiNode('v1', position: Vector2(25, 10));
