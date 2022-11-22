@@ -1,5 +1,4 @@
 import 'package:store_navigation_graph/store_navigation_graph.dart';
-import 'package:store_navigation_map/src/models/groundplan/obstacle_model.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
 class GroundPlanModel {

@@ -16,6 +16,7 @@ import 'package:store_navigation_map/store_navigation_map.dart';
 DebugCubit? debugCubit;
 late MapControlsCubit mapControlsCubit;
 late GroundPlanCubit groundPlanCubit;
+RoutingCubit? routingCubit;
 
 class NavigationMap extends StatefulWidget {
   final GroundPlanModel groundplan;
@@ -28,14 +29,6 @@ class NavigationMap extends StatefulWidget {
       startupPosition: groundplan.startupPosition,
     );
     groundPlanCubit = GroundPlanCubit(groundplan);
-
-    Future.delayed(
-      Duration(seconds: 2),
-      () => groundPlanCubit.routeTo(
-        groundplan.graph.nodes.first,
-        groundplan.graph.nodes.last,
-      ),
-    );
   }
 
   @override
@@ -49,6 +42,7 @@ class _NavigationMapState extends State<NavigationMap> {
   Widget build(BuildContext context) {
     Globals.colorScheme = Theme.of(context).colorScheme;
     Globals.textTheme = Theme.of(context).textTheme;
+    routingCubit ??= context.read<RoutingCubit>();
 
     return MultiBlocProvider(
       providers: [

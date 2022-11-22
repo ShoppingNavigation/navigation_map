@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
 import 'only_graph.dart';
@@ -7,11 +8,13 @@ import 'groundplan.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  
-
-  runApp(MaterialApp(
-    theme: ThemeData(useMaterial3: true, colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFBFF5A3))),
-      home: const Example(),
+  runApp(
+    MaterialApp(
+      theme: ThemeData(useMaterial3: true, colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFBFF5A3))),
+      home: BlocProvider(
+        create: (context) => RoutingCubit(),
+        child: Example(key: UniqueKey()),
+      ),
     ),
   );
 }
@@ -34,7 +37,12 @@ class _ExampleState extends State<Example> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Navigation Map Example')),
+      appBar: AppBar(title: const Text('Navigation Map Example'), actions: [
+        IconButton(
+            onPressed: () =>
+                context.read<RoutingCubit>().routeTo(groundPlan.graph.nodes.first, groundPlan.graph.nodes.last),
+            icon: const Icon(Icons.route))
+      ]),
       body: _currentDestination == 0
           ? NavigationMap(groundplan: groundPlanOnlyGraph, key: UniqueKey())
           : NavigationMap(groundplan: groundPlan, key: UniqueKey()),

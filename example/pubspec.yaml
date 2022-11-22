@@ -16,6 +16,8 @@ dependencies:
     path: ../
   store_navigation_graph:
     path: ../../store_navigation_graph
+  flutter_bloc: ^8.1.1
+  bloc: ^8.1.0
 
 dev_dependencies:
   flutter_test:

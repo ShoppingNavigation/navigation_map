@@ -1,5 +1,5 @@
 import 'package:flame/components.dart';
-import 'package:store_navigation_map/src/cubits/groundplan/groundplan_cubit.dart';
+import 'package:store_navigation_map/src/cubits/routing/routing_cubit.dart';
 import 'package:store_navigation_map/src/groundplan/obstacle.dart';
 import 'package:store_navigation_map/src/groundplan/outline.dart';
 import 'package:store_navigation_map/src/groundplan/route.dart';
@@ -30,13 +30,14 @@ class GroundPlan extends Component {
   }
 
   void _routeListener() {
-    groundPlanCubit.stream.listen((event) {
-      if (event is GroundPlanRoutingState) {
+    routingCubit?.stream.listen((event) {
+      if (event is RoutingSingleRoute) {
         if (_currentDisplayingRoute == null) {
           _currentDisplayingRoute = GroundPlanRoute(route: event.currentRoute.route);
           add(_currentDisplayingRoute!);
           return;
         }
+
 
         if (contains(_currentDisplayingRoute!)) {
           remove(_currentDisplayingRoute!);

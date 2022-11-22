@@ -13,6 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
+  meta: ^1.8.0
   store_navigation_graph:
     path: ../store_navigation_graph
     # git:

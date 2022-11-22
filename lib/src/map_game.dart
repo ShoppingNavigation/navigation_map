@@ -21,7 +21,6 @@ class MapGame extends FlameGame with HasDraggables, ScaleDetector {
     return super.onLoad();
   }
 
-  double lastZoomValue = 0;
   @override
   void onScaleUpdate(ScaleUpdateInfo info) {
     mapControlsCubit.zoom((info.delta.game.x * 0.02).clamp(-0.01, 0.01));
