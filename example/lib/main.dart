@@ -41,7 +41,12 @@ class _ExampleState extends State<Example> {
         IconButton(
             onPressed: () =>
                 context.read<RoutingCubit>().routeTo(startNode, getranke),
-            icon: const Icon(Icons.route))
+          icon: const Icon(Icons.route),
+        ),
+        IconButton(
+          onPressed: () => context.read<RoutingCubit>().routeToAll(startNode, [getranke, milch]),
+          icon: const Icon(Icons.alt_route),
+        )
       ]),
       body: _currentDestination == 0
           ? NavigationMap(groundplan: groundPlanOnlyGraph, key: UniqueKey())

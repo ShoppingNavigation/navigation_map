@@ -38,24 +38,34 @@ class GroundPlan extends Component {
 
     routingCubit?.stream.listen((event) {
       if (event is RoutingSingleRoute) {
-        if (_currentDisplayingRoute == null) {
-          _currentDisplayingRoute = GroundPlanRoute(route: event.currentRoute.route, connector: event.connectorPoint);
-          add(_currentDisplayingRoute!);
-          return;
-        }
+        _showRoute(event.currentRoute.route, event.connectorPoint);
+        return;
+      }
 
-
-        if (contains(_currentDisplayingRoute!)) {
-          remove(_currentDisplayingRoute!);
-        }
-
-        _currentDisplayingRoute = GroundPlanRoute(route: event.currentRoute.route, connector: event.connectorPoint);
-        add(_currentDisplayingRoute!);
+      if (event is RoutingMultiRoute) {
+        _showRoute(event.routes.route[event.currentDestinationIndex], event.connectors[event.currentDestinationIndex]);
+        return;
       }
 
       if (event is RoutingFinished && _currentDisplayingRoute != null && contains(_currentDisplayingRoute!)) {
         remove(_currentDisplayingRoute!);
       }
     });
+  }
+
+  void _showRoute(List<UiNode> route, ShelfCategoryConnector connector) {
+    if (_currentDisplayingRoute == null) {
+      _currentDisplayingRoute = GroundPlanRoute(route: route, connector: connector);
+      add(_currentDisplayingRoute!);
+      return;
+    }
+
+
+    if (contains(_currentDisplayingRoute!)) {
+      remove(_currentDisplayingRoute!);
+    }
+
+    _currentDisplayingRoute = GroundPlanRoute(route: route, connector: connector);
+    add(_currentDisplayingRoute!);
   }
 }

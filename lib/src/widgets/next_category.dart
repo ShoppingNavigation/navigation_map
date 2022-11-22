@@ -14,6 +14,10 @@ class NextCategory extends StatelessWidget {
           return _singleRoute(context, state);
         }
 
+        if (state is RoutingMultiRoute) {
+          return _multiRoute(context, state);
+        }
+
         return Container();
       },
     );
@@ -31,6 +35,32 @@ class NextCategory extends StatelessWidget {
               children: [
                 const Text('Aktuelle Kategorie'),
                 Text(state.connectorPoint.category.name, style: Globals.textTheme.titleLarge),
+              ],
+            ),
+            TextButton(
+              onPressed: () {
+                context.read<RoutingCubit>().finish();
+              },
+              child: const Text('Erledigt'),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _multiRoute(BuildContext context, RoutingMultiRoute state) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Aktuelle Kategorie (${state.currentSubRoute} von ${state.destinationCount})'),
+                Text(state.currentDestination.name, style: Globals.textTheme.titleLarge),
               ],
             ),
             TextButton(
