@@ -43,7 +43,7 @@ class GroundPlan extends Component {
       }
 
       if (event is RoutingMultiRoute) {
-        _showRoute(event.routes.route[event.currentDestinationIndex], event.connectors[event.currentDestinationIndex]);
+        _showRoute(event.routes.route[event.currentDestinationIndex], event.currentConnector);
         return;
       }
 

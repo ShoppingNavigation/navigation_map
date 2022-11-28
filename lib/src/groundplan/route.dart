@@ -33,9 +33,16 @@ class GroundPlanRoute extends Component {
       path.lineTo(vert.position.x, vert.position.y);
     }
 
-    path.lineTo(connector.position.x, connector.position.y);
-    path.addOval(Rect.fromCircle(center: connector.position.toOffset(), radius: 0.5));
+    final pos = _absoluteConnectorPosition(connector);
+    path.lineTo(pos.x, pos.y);
+    path.addOval(Rect.fromCircle(center: pos.toOffset(), radius: 0.5));
 
     return path;
+  }
+
+  Vector2 _absoluteConnectorPosition(ShelfCategoryConnector connector) {
+    final shelves = groundPlanCubit.state.groundPlan.shelves;
+    final shelf = shelves.firstWhere((element) => element.connector.category.id == connector.category.id);
+    return shelf.position + connector.position;
   }
 }

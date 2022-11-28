@@ -13,21 +13,24 @@ class DebugShelfConnectorPoint extends Component {
     ),
   );
 
-  final ShelfCategoryConnector connector;
+  final GroundPlanShelfModel shelf;
 
-  DebugShelfConnectorPoint({required this.connector});
+  DebugShelfConnectorPoint({required this.shelf});
+
+  ShelfCategoryConnector get connector => shelf.connector;
+  Vector2 get globalConnectorPosition => shelf.connector.position + shelf.position;
 
   @override
   void render(Canvas canvas) {
     canvas.drawLine(
-        connector.node.position.toOffset(), connector.position.toOffset(), DebugGlobals.connectorPointEdgePaint);
-    canvas.drawCircle(connector.position.toOffset(), 1, DebugGlobals.connectorPointPaint);
+        connector.node.position.toOffset(), globalConnectorPosition.toOffset(), DebugGlobals.connectorPointEdgePaint);
+    canvas.drawCircle(globalConnectorPosition.toOffset(), 1, DebugGlobals.connectorPointPaint);
     _textPaint.render(
       canvas,
       connector.category.name,
       Vector2(
-        connector.position.x - ((_textSize * connector.category.name.length / 2) / 2),
-        connector.position.y - (_textSize / 2),
+        globalConnectorPosition.x - ((_textSize * connector.category.name.length / 2) / 2),
+        globalConnectorPosition.y - (_textSize / 2),
       ),
     );
   }

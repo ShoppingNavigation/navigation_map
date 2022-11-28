@@ -12,7 +12,7 @@ class DebugComponent extends Component {
   @override
   Future<void>? onLoad() async {
     for (final shelf in shelves) {
-      add(DebugShelfConnectorPoint(connector: shelf.connector));
+      add(DebugShelfConnectorPoint(shelf: shelf));
     }
 
     add(DebugGraph(graph: graph));

@@ -36,7 +36,7 @@ class RoutingSingleRoute extends RoutingState {
   get props => [route, connectorPoint];
 
   @override
-  String toString() => 'Routing to ${route.route.last} (${route.distance}) via ${route.route}';
+  String toString() => 'Routing to ${route.route.last} (${route.distance})';
 }
 
 /// Routing to multiple destinations in one go
@@ -49,12 +49,13 @@ class RoutingMultiRoute extends RoutingState {
     debugCubit?.addLog(toString());
   }
 
-  ShelfCategoryConnector get currentDestination {
+  ShelfCategoryConnector get currentConnector {
     final currentDestinationNode = routes.route[currentDestinationIndex].last;
-    return connectors.firstWhere((element) => element.node.equals(currentDestinationNode));
+    final res = connectors.firstWhere((element) => element.node.equals(currentDestinationNode));
+    return res;
   }
 
-  CategoryModel get currentCategory => currentDestination.category;
+  CategoryModel get currentCategory => currentConnector.category;
   int get currentSubRoute => currentDestinationIndex + 1;
   int get destinationCount => routes.route.length;
 
@@ -62,5 +63,6 @@ class RoutingMultiRoute extends RoutingState {
   get props => [routes, connectors, currentDestinationIndex];
 
   @override
-  String toString() => 'Multirouting to $destinationCount destinations';
+  String toString() =>
+      'Multirouting to ${currentCategory.name} ($currentSubRoute/$destinationCount). Connector to ${currentConnector.node}';
 }

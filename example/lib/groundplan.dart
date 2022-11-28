@@ -19,7 +19,7 @@ final List<GroundPlanShelfModel> _shelves = [
       Vector2(0, 5),
       Vector2(-20, 0),
     ],
-    connector: ShelfCategoryConnector(position: Vector2(15, 17.5), category: obst, node: _v1_2),
+    connector: ShelfCategoryConnector(position: Vector2(10, 2.5), category: obst, node: _v1_2),
   ),
   GroundPlanShelfModel(
     position: Vector2(10, 15),
@@ -28,7 +28,7 @@ final List<GroundPlanShelfModel> _shelves = [
       Vector2(0, 5),
       Vector2(-10, 0),
     ],
-    connector: ShelfCategoryConnector(position: Vector2(5, 2.5), category: gemuse, node: _v2),
+    connector: ShelfCategoryConnector(position: Vector2(5, 2.5), category: gemuse, node: _v1_2),
   ),
   GroundPlanShelfModel(
     position: Vector2(10, 20),
@@ -37,7 +37,7 @@ final List<GroundPlanShelfModel> _shelves = [
       Vector2(0, 5),
       Vector2(-10, 0),
     ],
-    connector: ShelfCategoryConnector(position: Vector2(15, 22.5), category: brot, node: _v3_4),
+    connector: ShelfCategoryConnector(position: Vector2(5, 2.5), category: brot, node: _v3_4),
   ),
   GroundPlanShelfModel(
     position: Vector2(10, 35),
@@ -46,35 +46,37 @@ final List<GroundPlanShelfModel> _shelves = [
       Vector2(0, 5),
       Vector2(-30, 0),
     ],
-    connector: ShelfCategoryConnector(position: Vector2(25, 37.5), category: konserven, node: _v4),
+    connector: ShelfCategoryConnector(position: Vector2(15, 2.5), category: konserven, node: _v4),
   ),
   GroundPlanShelfModel(position: Vector2(10, 40), vertices: [
     Vector2(30, 0),
     Vector2(0, 5),
     Vector2(-30, 0),
     ],
-    connector: ShelfCategoryConnector(position: Vector2(25, 42.5), category: getranke, node: _v6_7),
+    connector: ShelfCategoryConnector(position: Vector2(15, 2.5), category: getranke, node: _v6_7),
   ),
   GroundPlanShelfModel(position: Vector2(55, 30), vertices: [
-    Vector2(25, 0),
+      Vector2(20, 0),
     Vector2(0, 5),
-    Vector2(-25, 0),
+      Vector2(-20, 0),
     ],
-    connector: ShelfCategoryConnector(position: Vector2(65, 32.5), category: milch, node: _v9),
+    connector: ShelfCategoryConnector(position: Vector2(10, 2.5), category: milch, node: _v9),
   ),
-  GroundPlanShelfModel(position: Vector2(75, 35), vertices: [
+  GroundPlanShelfModel(
+    position: Vector2(75, 30),
+    vertices: [
     Vector2(5, 0),
-    Vector2(0, 20),
+      Vector2(0, 25),
     Vector2(-5, 0),
     ],
-    connector: ShelfCategoryConnector(position: Vector2(65, 52.5), category: fleisch, node: _v9),
+    connector: ShelfCategoryConnector(position: Vector2(2.5, 12.5), category: fleisch, node: _v9),
   ),
   GroundPlanShelfModel(position: Vector2(55, 50), vertices: [
-    Vector2(25, 0),
+      Vector2(20, 0),
     Vector2(0, 5),
-    Vector2(-25, 0),
+      Vector2(-20, 0),
     ],
-    connector: ShelfCategoryConnector(position: Vector2(77.5, 42.5), category: fisch, node: _v9),
+    connector: ShelfCategoryConnector(position: Vector2(10, 2.5), category: fisch, node: _v9),
   ),
 ];
 

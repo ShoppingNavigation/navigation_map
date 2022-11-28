@@ -10,15 +10,15 @@ class DebugLog extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
           height: 200,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      width: MediaQuery.of(context).size.width,
+      child: ListView(
         children: logs
-                .map((e) => Text(
-                      e,
-                      style: TextStyle(color: Globals.colorScheme.error),
-                      textAlign: TextAlign.left,
-                    ))
-                .toList(),
+            .map((e) => Text(
+                  e,
+                  style: TextStyle(color: Globals.colorScheme.error),
+                  textAlign: TextAlign.left,
+                ))
+            .toList(),
       ),
     );
   }

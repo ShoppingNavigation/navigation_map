@@ -7,4 +7,7 @@ class ShelfCategoryConnector {
   final UiNode node;
 
   const ShelfCategoryConnector({required this.position, required this.category, required this.node});
+
+  @override
+  String toString() => '${category.name} connected to $node';
 }
