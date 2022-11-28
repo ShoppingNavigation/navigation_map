@@ -9,6 +9,8 @@ import 'package:store_navigation_map/src/groundplan/groundplan.dart';
 import 'package:store_navigation_map/src/utils/globals.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
+/// Container for the flame-game components.
+/// This container is moved when the customer "drags the groundplan arround"
 class MapContainer extends PositionComponent with Draggable {
   /// Used to display the current drag movement in debug mode
   final List<Vector2> _renderDragTrace = [];
@@ -17,7 +19,7 @@ class MapContainer extends PositionComponent with Draggable {
   final Queue<Vector2> _movementTrace = Queue<Vector2>();
 
   bool _isDebugViewShown = kDebugMode;
-  late DebugComponent _graph;
+  late DebugComponent _debugGraphComponent;
 
   @override
   Future<void>? onLoad() async {
@@ -26,7 +28,7 @@ class MapContainer extends PositionComponent with Draggable {
     position = mapControlsCubit.state.startupPosition;
 
     add(GroundPlan());
-    _graph = DebugComponent(
+    _debugGraphComponent = DebugComponent(
         graph: groundPlanCubit.state.groundPlan.graph, shelves: groundPlanCubit.state.groundPlan.shelves);
 
     _isDebugViewShown = debugCubit?.state.isDebugEnabled ?? false;
@@ -35,7 +37,7 @@ class MapContainer extends PositionComponent with Draggable {
     });
 
     if (_isDebugViewShown) {
-      add(_graph);
+      add(_debugGraphComponent);
     }
 
     scale = mapControlsCubit.state.scale;
@@ -57,7 +59,6 @@ class MapContainer extends PositionComponent with Draggable {
 
   @override
   void update(double dt) {
-
     _handleDragPosition();
     _checkDebugModeSwap();
   }
@@ -84,11 +85,11 @@ class MapContainer extends PositionComponent with Draggable {
   }
 
   void _checkDebugModeSwap() {
-    if (_isDebugViewShown && !contains(_graph)) {
-      add(_graph);
+    if (_isDebugViewShown && !contains(_debugGraphComponent)) {
+      add(_debugGraphComponent);
       _isDebugViewShown = true;
-    } else if (!_isDebugViewShown && contains(_graph)) {
-      remove(_graph);
+    } else if (!_isDebugViewShown && contains(_debugGraphComponent)) {
+      remove(_debugGraphComponent);
       _isDebugViewShown = false;
     }
   }

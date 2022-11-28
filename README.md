@@ -22,16 +22,47 @@ There is just one mandatory field for the navigation map, which is the `groundpl
 
 ```dart
 NavigationMap(
-    groundplan: groundplan,
-)
+    groundplan: GroundPlanModel(
+        graph: NavigationGraph<UiNode>(...)
+        outline: GroundPlanOutlineModel(vertices: <Vector2>[])
+        shelves: <GroundPlanShelfModel>[
+            position: Vector2(...),
+            vertices: <Vector2>[],
+            connector: ShelfCategoryConnector(
+                position: Vector2(...),
+                category: CategoryModel(...),
+                node: UiNode(...),
+            ),
+        ],
+        obstacles: <GroundPlanObstacleModel>[
+            position: Vector2(...),
+            vertices: <Vector2>[],
+        ],
+    ),
+);
 ```
 
-Added to that, you need to add the `RoutingCubit` to a top level bloc-provider. With that cubit you can control the routes.
+Added to that, you need to provide the `RoutingCubit` to a top level bloc-provider. Using that cubit you can either route to a sinlge category:
+
+```dart
+context.read<RoutingCubit>().routeTo(start, category);
+```
+
+or to multiple nodes in one go:
+
+```dart
+context.read<RoutingCubit>().routeToAll(start, [category1, category2]);
+```
+
+The current state of routing is saved in the `RoutingState`. This state can be either in `Initial, SingleRoute, MultiRoute or Finished`.
+
 
 ## About the structure
 
-The whole thing is wrapped in a `Game` widget from flame with the exception of `MapControls` and `NextCategory`.
-The game contains a world, which by it self only contains a `MapContainer`. The `MapContainer` is a positioned Component of which the position is changed on every drag update.
+The most important part of this package is the connection between a shelf (category) and a node in the graph. Because this is split into 3 different packages (category: store_navigation_map, node/graph: store_navigation_graph, shelf: store_navigation_map), we need to add some glue code. The structure is also shown in the image below.
+A new field connector of type `ShelfCategoryConnector` is added to a shelf. This provides a position to which the `NavigationGraph` can connect to. The routing is done to the node, that is also given in the connector.
+
+![structure](structure.png)
 
 ### Debug view
-Everything debug related should be put in the `/debug` folder. To show the whole graph for debugging purposes, you just need to add `DebugGraph` Component to the `MapContainer`.
+Everything debug related should be in the `/debug` folder. To show the whole graph for debugging purposes, you just need to add `DebugGraph` Component to the MapContainer. The Debugview should never be shown to a customer.

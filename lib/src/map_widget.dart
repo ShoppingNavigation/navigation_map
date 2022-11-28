@@ -18,6 +18,8 @@ late MapControlsCubit mapControlsCubit;
 late GroundPlanCubit groundPlanCubit;
 RoutingCubit? routingCubit;
 
+/// Top level Widget for navigation map. This widget contains the map itself, the map controls and
+/// the navigation controls
 class NavigationMap extends StatefulWidget {
   final GroundPlanModel groundplan;
 
