@@ -4,6 +4,7 @@ import 'package:store_shared_models/store_shared_models.dart';
 class ShelfCategoryConnector {
   final Vector2 position;
   final CategoryModel category;
+  final UiNode node;
 
-  const ShelfCategoryConnector({required this.position, required this.category});
+  const ShelfCategoryConnector({required this.position, required this.category, required this.node});
 }

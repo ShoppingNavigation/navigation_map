@@ -34,7 +34,7 @@ class NextCategory extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text('Aktuelle Kategorie'),
-                Text(state.connectorPoint.category.name, style: Globals.textTheme.titleLarge),
+                Text(state.currentCategory.name, style: Globals.textTheme.titleLarge),
               ],
             ),
             TextButton(
@@ -60,7 +60,7 @@ class NextCategory extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Aktuelle Kategorie (${state.currentSubRoute} von ${state.destinationCount})'),
-                Text(state.currentDestination.name, style: Globals.textTheme.titleLarge),
+                Text(state.currentCategory.name, style: Globals.textTheme.titleLarge),
               ],
             ),
             TextButton(

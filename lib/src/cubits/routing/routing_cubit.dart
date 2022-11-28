@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
 import 'package:store_navigation_graph/store_navigation_graph.dart';
@@ -19,7 +20,7 @@ class RoutingCubit extends Cubit<RoutingState> {
 
     if (state is RoutingMultiRoute) {
       final stateRoute = state as RoutingMultiRoute;
-      if (stateRoute.connectors.length == stateRoute.currentDestinationIndex + 1) {
+      if (stateRoute.routes.route.length == stateRoute.currentDestinationIndex + 1) {
         emit(state.finish());
         return;
       }
@@ -31,13 +32,9 @@ class RoutingCubit extends Cubit<RoutingState> {
   /// begins routing to a list of categories
   void routeToAll(UiNode start, List<CategoryModel> destinations) {
     final graph = groundPlanCubit.state.groundPlan.graph;
-    final destinationNodes = destinations
-        .map(
-          (e) => graph.nodes.firstWhere(
-            (element) => element.connectorPoints.any((element) => element.category.id == e.id),
-          ),
-        )
-        .toList();
+    final shelves = groundPlanCubit.state.groundPlan.shelves;
+    final destinationNodes =
+        shelves.where((e) => destinations.contains(e.connector.category)).map((e) => e.connector.node).toList();
 
     final RouteToAllResult<UiNode>? result = graph.routeToAll(start, destinationNodes);
     if (result == null) {
@@ -45,34 +42,23 @@ class RoutingCubit extends Cubit<RoutingState> {
       return;
     }
 
-    final routeIds = destinations.map((e) => e.id);
-    final destinationConnectors = <ShelfCategoryConnector>[];
-    for (final partRoute in result.route) {
-      destinationConnectors
-          .add(partRoute.last.connectorPoints.firstWhere((element) => routeIds.contains(element.category.id)));
-    }
-
-    emit(state.multiRouting(result, destinationConnectors, 0));
+    emit(state.multiRouting(result, shelves.map((e) => e.connector).toList(), 0));
   }
 
   /// begins routing to a given category
   void routeTo(UiNode start, CategoryModel destination) {
     final graph = groundPlanCubit.state.groundPlan.graph;
+    final shelves = groundPlanCubit.state.groundPlan.shelves;
 
     /// get first node which has a connection to the category
-    final destinationNode = graph.nodes.firstWhere(
-      (element) => element.connectorPoints.any((element) => element.category.id == destination.id),
-    );
+    final destinationConnector = shelves.firstWhere((element) => element.connector.category == destination).connector;
 
-    final RouteToResult<UiNode>? result = graph.routeTo(start, destinationNode);
+    final RouteToResult<UiNode>? result = graph.routeTo(start, destinationConnector.node);
     if (result == null) {
       debugCubit?.addLog('No route found betwenn $start and $destination');
       return;
     }
 
-    emit(state.singleRouting(
-      result,
-      destinationNode.connectorPoints.firstWhere((element) => element.category.id == destination.id),
-    ));
+    emit(state.singleRouting(result, destinationConnector));
   }
 }

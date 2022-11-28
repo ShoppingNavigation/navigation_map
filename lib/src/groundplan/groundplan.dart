@@ -32,13 +32,13 @@ class GroundPlan extends Component {
     final initialState = routingCubit?.state;
     if (initialState != null && initialState is RoutingSingleRoute) {
       _currentDisplayingRoute =
-          GroundPlanRoute(route: initialState.currentRoute.route, connector: initialState.connectorPoint);
+          GroundPlanRoute(route: initialState.route.route, connector: initialState.connectorPoint);
       add(_currentDisplayingRoute!);
     }
 
     routingCubit?.stream.listen((event) {
       if (event is RoutingSingleRoute) {
-        _showRoute(event.currentRoute.route, event.connectorPoint);
+        _showRoute(event.route.route, event.connectorPoint);
         return;
       }
 

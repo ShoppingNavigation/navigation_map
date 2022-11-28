@@ -9,7 +9,7 @@ Using flutter flame and store_navigation_graph
 - [x] Show debug information about the graph when `kDebugMode`
 - [x] Show route to category / categories
 - [x] Public API to control this package from outside
-- [ ] Connect shelves with catgories
+- [x] Connect shelves with catgories
 
 ## Getting started
 

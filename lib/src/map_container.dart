@@ -26,7 +26,8 @@ class MapContainer extends PositionComponent with Draggable {
     position = mapControlsCubit.state.startupPosition;
 
     add(GroundPlan());
-    _graph = DebugComponent(graph: groundPlanCubit.state.groundPlan.graph);
+    _graph = DebugComponent(
+        graph: groundPlanCubit.state.groundPlan.graph, shelves: groundPlanCubit.state.groundPlan.shelves);
 
     _isDebugViewShown = debugCubit?.state.isDebugEnabled ?? false;
     debugCubit?.stream.listen((event) {
