@@ -19,7 +19,9 @@ dependencies:
   store_navigation_map:
     path: ../
   store_navigation_graph:
-    path: ../../store_navigation_graph
+    git:
+      url: https://github.com/ShoppingNavigation/navigation_graph.git
+      ref: main
   flutter_bloc: ^8.1.1
   bloc: ^8.1.0
 

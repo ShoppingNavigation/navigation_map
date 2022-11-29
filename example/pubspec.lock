@@ -166,9 +166,11 @@ packages:
   store_navigation_graph:
     dependency: "direct main"
     description:
-      path: "../../store_navigation_graph"
-      relative: true
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: e96a67c5b928ffc72332ece736903a370543c36d
+      url: "https://github.com/ShoppingNavigation/navigation_graph.git"
+    source: git
     version: "1.0.0"
   store_navigation_map:
     dependency: "direct main"
