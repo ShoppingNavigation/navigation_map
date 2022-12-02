@@ -10,4 +10,8 @@ class DebugGlobals {
     ..color = const Color(0xFFE14D2A)
     ..style = PaintingStyle.stroke
     ..strokeWidth = 0.5;
+  static Paint minimalBoundingRectanglePaint = Paint()
+    ..color = const Color(0xFFF96666)
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 0.1;
 }

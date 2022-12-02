@@ -2,6 +2,7 @@ import 'package:flame/components.dart';
 import 'package:store_navigation_graph/store_navigation_graph.dart';
 import 'package:store_navigation_map/src/debug/graph/debug_graph.dart';
 import 'package:store_navigation_map/src/debug/groundplan/connector_point.dart';
+import 'package:store_navigation_map/src/debug/groundplan/shelf_minimal_bounding_rect.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
 class DebugComponent extends Component {
@@ -13,6 +14,7 @@ class DebugComponent extends Component {
   Future<void>? onLoad() async {
     for (final shelf in shelves) {
       add(DebugShelfConnectorPoint(shelf: shelf));
+      add(DebugShelfMinimalBoundingRect(shelf: shelf));
     }
 
     add(DebugGraph(graph: graph));
