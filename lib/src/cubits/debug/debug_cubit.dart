@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 part 'debug_state.dart';
 
 class DebugCubit extends Cubit<DebugState> {
-  DebugCubit() : super(DebugInitial());
+  DebugCubit({required bool canShowDebug}) : super(DebugInitial(canShowDebug: canShowDebug));
 
   void addLog(String message) {
     emit(state.addLog(message));

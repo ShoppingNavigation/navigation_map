@@ -22,10 +22,11 @@ RoutingCubit? routingCubit;
 /// the navigation controls
 class NavigationMap extends StatefulWidget {
   final GroundPlanModel groundplan;
+  final bool canShowDebug;
 
-  NavigationMap({super.key, required this.groundplan}) {
+  NavigationMap({super.key, required this.groundplan, this.canShowDebug = false}) {
     Bloc.observer = DebugObserver();
-    debugCubit = DebugCubit();
+    debugCubit = DebugCubit(canShowDebug: canShowDebug);
     mapControlsCubit = MapControlsCubit(
       additionalZoom: groundplan.additionalZoom,
       startupPosition: groundplan.startupPosition,
@@ -66,7 +67,7 @@ class _NavigationMapState extends State<NavigationMap> {
         ),
         BlocBuilder<DebugCubit, DebugState>(
           builder: (context, state) {
-            if (!state.isDebugEnabled) {
+            if (!widget.canShowDebug || !state.isDebugEnabled) {
               return Container();
             }
 

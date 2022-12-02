@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_navigation_map/src/cubits/debug/debug_cubit.dart';
 import 'package:store_navigation_map/src/cubits/map_controls/map_controls_cubit.dart';
+import 'package:store_navigation_map/store_navigation_map.dart';
 
 class MapControls extends StatelessWidget {
 
@@ -30,7 +31,7 @@ class MapControls extends StatelessWidget {
           },
           child: const Icon(Icons.remove),
         ),
-        if (kDebugMode) ...[
+        if (debugCubit != null && debugCubit!.state.canShowDebug) ...[
           const SizedBox(height: 20),
           FloatingActionButton.small(
             onPressed: () {

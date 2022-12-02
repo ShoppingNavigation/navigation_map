@@ -56,7 +56,7 @@ class _ExampleState extends State<Example> {
       ]),
       body: _currentDestination == 0
           ? NavigationMap(groundplan: groundPlanOnlyGraph, key: UniqueKey())
-          : NavigationMap(groundplan: groundPlan, key: UniqueKey()),
+          : NavigationMap(groundplan: groundPlan, canShowDebug: true, key: UniqueKey()),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (value) => setState(() => _currentDestination = value),
         selectedIndex: _currentDestination,
