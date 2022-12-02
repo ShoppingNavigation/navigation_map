@@ -1,8 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/widgets.dart';
-import 'package:store_navigation_map/src/models/groundplan/shelf_model.dart';
-import 'package:store_navigation_map/src/utils/collection_extension.dart';
 import 'package:store_navigation_map/src/utils/globals.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
@@ -15,7 +13,7 @@ class GroundPlanShelf extends PositionComponent with Tappable {
 
     position = shelfModel.position;
 
-    size = _calculateMinimalBoundingRectangle(shelfModel.vertices);
+    size = shelfModel.minimalBoundingRectangle;
   }
 
   @override
@@ -42,10 +40,6 @@ class GroundPlanShelf extends PositionComponent with Tappable {
     }
 
     return path..close();
-  }
-
-  Vector2 _calculateMinimalBoundingRectangle(List<Vector2> vertices) {
-    return Vector2(vertices.maxBy((p0) => p0.x).x, vertices.maxBy((p0) => p0.y).y);
   }
 
 }
