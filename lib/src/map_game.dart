@@ -6,7 +6,7 @@ import 'package:store_navigation_map/src/map_container.dart';
 import 'package:store_navigation_map/src/map_world.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
-class MapGame extends FlameGame with HasDraggables, ScaleDetector {
+class MapGame extends FlameGame with HasDraggables, HasTappables, ScaleDetector {
 
   @override
   Future<void> onLoad() async {

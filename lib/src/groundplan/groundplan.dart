@@ -5,12 +5,15 @@ import 'package:store_navigation_map/src/groundplan/route.dart';
 import 'package:store_navigation_map/src/groundplan/shelf.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
-class GroundPlan extends Component {
+class GroundPlan extends PositionComponent {
 
   GroundPlanRoute? _currentDisplayingRoute;
 
   @override
   Future<void>? onLoad() async {
+    position = Vector2.all(0);
+    scale = Vector2.all(1);
+
     final GroundPlanModel groundPlan = groundPlanCubit.state.groundPlan;
 
     add(GroundPlanOutline(outline: groundPlan.outline));
