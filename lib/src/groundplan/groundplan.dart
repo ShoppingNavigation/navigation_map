@@ -19,7 +19,7 @@ class GroundPlan extends PositionComponent {
     add(GroundPlanOutline(outline: groundPlan.outline));
 
     for (var element in groundPlan.shelves) {
-      add(GroundPlanShelf(shelfModel: element));
+      add(GroundPlanShelf(shelf: element));
     }
 
     for (var element in groundPlan.obstacles) {

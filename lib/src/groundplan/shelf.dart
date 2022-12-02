@@ -5,15 +5,15 @@ import 'package:store_navigation_map/src/utils/globals.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
 class GroundPlanShelf extends PositionComponent with Tappable {
-  final GroundPlanShelfModel shelfModel;
+  final GroundPlanShelfModel shelf;
   late final Path _shelfPath;
 
-  GroundPlanShelf({required this.shelfModel}) {
-    _shelfPath = _buildPath(shelfModel.position, shelfModel.vertices);
+  GroundPlanShelf({required this.shelf}) {
+    _shelfPath = _buildPath(shelf.position, shelf.vertices);
 
-    position = shelfModel.position;
+    position = shelf.position;
 
-    size = shelfModel.minimalBoundingRectangle;
+    size = shelf.minimalBoundingRectangle;
   }
 
   @override
@@ -27,7 +27,7 @@ class GroundPlanShelf extends PositionComponent with Tappable {
 
   @override
   bool onTapUp(TapUpInfo info) {
-    debugCubit?.addLog('tap ${shelfModel.connector.category.name}');
+    adminCubit.selectShelf(shelf);
     return true;
   }
 

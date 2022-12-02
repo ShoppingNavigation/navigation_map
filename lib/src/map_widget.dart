@@ -1,6 +1,7 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store_navigation_map/src/cubits/admin/admin_cubit.dart';
 import 'package:store_navigation_map/src/cubits/cubit_observer.dart';
 import 'package:store_navigation_map/src/cubits/debug/debug_cubit.dart';
 import 'package:store_navigation_map/src/cubits/groundplan/groundplan_cubit.dart';
@@ -16,6 +17,7 @@ import 'package:store_navigation_map/store_navigation_map.dart';
 DebugCubit? debugCubit;
 late MapControlsCubit mapControlsCubit;
 late GroundPlanCubit groundPlanCubit;
+late AdminCubit adminCubit;
 RoutingCubit? routingCubit;
 
 /// Top level Widget for navigation map. This widget contains the map itself, the map controls and
@@ -24,7 +26,17 @@ class NavigationMap extends StatefulWidget {
   final GroundPlanModel groundplan;
   final bool canShowDebug;
 
-  NavigationMap({super.key, required this.groundplan, this.canShowDebug = false}) {
+  NavigationMap(
+      {super.key,
+      required this.groundplan,
+      bool adminActive = false,
+      void Function(UiNode)? onShelfSelected,
+      this.canShowDebug = false}) {
+    if (adminActive && onShelfSelected == null) {
+      throw Exception('Cannot set adminActive to true without providing onShelfSelected function');
+    }
+
+
     Bloc.observer = DebugObserver();
     debugCubit = DebugCubit(canShowDebug: canShowDebug);
     mapControlsCubit = MapControlsCubit(
@@ -32,6 +44,7 @@ class NavigationMap extends StatefulWidget {
       startupPosition: groundplan.startupPosition,
     );
     groundPlanCubit = GroundPlanCubit(groundplan);
+    adminCubit = AdminCubit(active: adminActive, onShelfSelected: onShelfSelected ?? (node) {});
   }
 
   @override

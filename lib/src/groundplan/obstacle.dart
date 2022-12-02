@@ -1,10 +1,9 @@
 import 'package:flame/components.dart';
-import 'package:flame/input.dart';
 import 'package:flutter/widgets.dart';
 import 'package:store_navigation_map/src/models/groundplan/obstacle_model.dart';
 import 'package:store_navigation_map/src/utils/globals.dart';
 
-class GroundPlanObstacle extends PositionComponent with Tappable {
+class GroundPlanObstacle extends PositionComponent {
   final GroundPlanObstacleModel obstacle;
   late final Path _obstaclePath;
 
@@ -32,11 +31,5 @@ class GroundPlanObstacle extends PositionComponent with Tappable {
     }
 
     return path..close();
-  }
-
-  @override
-  bool onTapUp(TapUpInfo info) {
-    print('hi');
-    return true;
   }
 }

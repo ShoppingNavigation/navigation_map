@@ -56,7 +56,12 @@ class _ExampleState extends State<Example> {
       ]),
       body: _currentDestination == 0
           ? NavigationMap(groundplan: groundPlanOnlyGraph, key: UniqueKey())
-          : NavigationMap(groundplan: groundPlan, canShowDebug: true, key: UniqueKey()),
+          : NavigationMap(
+              groundplan: groundPlan,
+              canShowDebug: true,
+              adminActive: true,
+              onShelfSelected: shelfSelected,
+              key: UniqueKey()),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (value) => setState(() => _currentDestination = value),
         selectedIndex: _currentDestination,
@@ -66,5 +71,9 @@ class _ExampleState extends State<Example> {
         ],
       ),
     );
+  }
+
+  void shelfSelected(UiNode node) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Selected node $node')));
   }
 }
