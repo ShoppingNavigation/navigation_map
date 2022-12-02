@@ -55,7 +55,7 @@ context.read<RoutingCubit>().routeToAll(start, [category1, category2]);
 ```
 
 The current state of routing is saved in the `RoutingState`. This state can be either in `Initial, SingleRoute, MultiRoute or Finished`.
-
+To use the admin view (pick a category), you also need to add the `adminActive` and `onShelfSelected` fields to the widget. Using only one of them wont work. As soon as the user picks a shelf, the `onShelfSelected` method gets called.
 
 ## About the structure
 
