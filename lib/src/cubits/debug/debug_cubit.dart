@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
+import 'package:store_navigation_map/src/cubits/debug/log_model.dart';
 
 part 'debug_state.dart';
 
