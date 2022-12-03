@@ -10,11 +10,12 @@ part 'user_state.dart';
 
 class UserCubit extends Cubit<UserState> {
   final UserGraphMapper _ugm;
+  final UserDataProvider _userDataProvider = FakeUserDataProvider();
 
   UserCubit(NavigationGraph<UiNode> graph)
       : _ugm = UserGraphMapper(graph),
         super(UserInitial()) {
-    FakeUserDataProvider().getPosition().listen((event) {
+    _userDataProvider.getPosition().listen((event) {
       emit(UserPositionSet(position: event, edgePosition: _ugm.closestPointOnEdge(event)));
     });
   }
