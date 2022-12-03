@@ -9,20 +9,20 @@ abstract class UserDataProvider {
 class FakeUserDataProvider extends UserDataProvider {
   @override
   Stream<Vector2> getPosition() {
-    return Stream<Vector2>.periodic(const Duration(milliseconds: 1000), _getNextStatefulPosition);
+    return Stream<Vector2>.periodic(const Duration(milliseconds: 100), _getNextStatefulPosition);
   }
 
   final Vector2 _maxValues = Vector2(40, 60);
   final Vector2 _offset = Vector2(20, 0);
   Vector2 _previousPosition = Vector2(20, 0);
-  double _currentStepDirection = 1;
+  double _currentStepDirection = 0.5;
   Vector2 _getNextStatefulPosition(int _) {
     double nextY = _previousPosition.y + _currentStepDirection;
     if (nextY > _maxValues.y) {
-      _currentStepDirection = -1;
+      _currentStepDirection = -_currentStepDirection;
       nextY += 2 * _currentStepDirection;
     } else if (nextY < 0) {
-      _currentStepDirection = 1;
+      _currentStepDirection = -_currentStepDirection;
       nextY += 2 * _currentStepDirection;
     }
 
@@ -30,5 +30,5 @@ class FakeUserDataProvider extends UserDataProvider {
     return _previousPosition;
   }
 
-  double _yValue(double x, double offset) => offset + 10 * sin(x * (1 / 10));
+  double _yValue(double x, double offset) => offset + 9 * sin(x * (1 / 10));
 }

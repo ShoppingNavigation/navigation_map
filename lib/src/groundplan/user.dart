@@ -9,16 +9,12 @@ class GroundPlanUser extends PositionComponent {
 
   GroundPlanUser() {
     userCubit.stream.listen((event) {
-      _currentPosition = event.mappingResult.found ? event.mappingResult.closestPoint : null;
+      _currentPosition = event.mappingResult.found ? event.mappingResult.closestPoint : event.position;
     });
   }
 
   @override
   void render(Canvas canvas) {
-    if (_currentPosition == null) {
-      return;
-    }
-
     canvas.drawCircle(_currentPosition!.toOffset(), 2, Paint()..color = Globals.colorScheme.tertiary);
   }
 }

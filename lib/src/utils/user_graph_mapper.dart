@@ -12,10 +12,14 @@ class UgmResult {
   static get empty => UgmResult(found: false);
 }
 
+/// !statefull! mapper from the absolute user position to one on the edge
 class UserGraphMapper {
   final NavigationGraph<UiNode> graph;
+  final double secondBoost;
 
-  const UserGraphMapper(this.graph);
+  UserGraphMapper(this.graph, {this.secondBoost = 1 / 2});
+
+  MapEntry<UiNode, double>? previousSecond;
 
   /// calculates the closest point on any edge of [graph] for the provided positon
   UgmResult closestPointOnEdge(Vector2 from) {
@@ -30,11 +34,24 @@ class UserGraphMapper {
       _reportDebugValues(-1.0, stopwatch);
       return UgmResult(found: false);
     }
-
-    final distancesToOnlyAdjacent = distances.where((element) => adjacentNodesToClosestNode.containsKey(element.key));
-
     final closestConnection = distances.first.key.position;
+
+    if (previousSecond != null) {
+      if (distances.any((element) => element.key == previousSecond?.key)) {
+        distances.removeWhere((element) => element.key == previousSecond?.key);
+        distances.add(MapEntry<UiNode, double>(
+          previousSecond!.key,
+          previousSecond!.value * secondBoost,
+        ));
+        distances.sort((a, b) => a.value.compareTo(b.value));
+      }
+    }
+
+    final distancesToOnlyAdjacent =
+        distances.where((element) => adjacentNodesToClosestNode.containsKey(element.key)).toList();
+
     final secondConnection = distancesToOnlyAdjacent.first.key.position;
+    previousSecond = distancesToOnlyAdjacent.first;
 
     Vector2 closestPoint = _closestPointOnVectorRay(
           closestConnection,
@@ -44,6 +61,11 @@ class UserGraphMapper {
         Vector2.zero();
     
     _reportDebugValues(from.distanceTo(closestPoint), stopwatch);
+    assert(!closestPoint.isNaN && !closestPoint.isInfinite, 'Is NaN or Infinite: $closestPoint');
+    assert(!closestConnection.isNaN && !closestConnection.isInfinite);
+    assert(!secondConnection.isNaN && !secondConnection.isInfinite);
+    debugCubit?.addDebugValue('UGM_Closest', closestConnection);
+    debugCubit?.addDebugValue('UGM_Second', secondConnection);
     return UgmResult(
       found: true,
       closestPoint: closestPoint,
@@ -59,7 +81,8 @@ class UserGraphMapper {
 
     final edge = _VectorRay(positionFirst, directionVector);
     final edgeFrom = _VectorRay(from, orthogonalVector);
-    return edge.getIntersectionPoint(edgeFrom);
+    final result = edge.getIntersectionPoint(edgeFrom);
+    return result;
   }
 
   /// calculates the closest node
@@ -73,9 +96,11 @@ class UserGraphMapper {
     return result;
   }
 
+  int currentStep = 0;
   void _reportDebugValues(double error, Stopwatch sw) {
     debugCubit?.addDebugValue('UGM_Error', error.abs());
     debugCubit?.addDebugValue('UGM_Time', sw.elapsed.inMicroseconds / 1000.0);
+    debugCubit?.addDebugValue('UGM_Step', currentStep++);
   }
 }
 
@@ -109,7 +134,17 @@ class _VectorRay {
   Vector2? getIntersectionPoint(_VectorRay other) {
     final multiples = getMultiplesOfDirectionVectorsForIntersection(other);
 
-    return location + (direction * multiples[0]);
+    if (!_isCorrectNumber(multiples[0]) || !_isCorrectNumber(multiples[1])) {
+      return null;
+    }
+
+    if (multiples[0] >= 0) {
+      return location + (direction * multiples[0]);
+    } else if (multiples[1] >= 0) {
+      return other.location + (other.direction * multiples[1]);
+    } else {
+      return null;
+    }
   }
 
   /// Calculates in which direction the vector ray is facing
@@ -122,5 +157,9 @@ class _VectorRay {
     }
 
     return direction.y > 0 ? 1 : -1;
+  }
+
+  bool _isCorrectNumber(double toCheck) {
+    return !toCheck.isNaN || !toCheck.isInfinite;
   }
 }
