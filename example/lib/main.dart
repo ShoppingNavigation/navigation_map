@@ -28,7 +28,7 @@ class Example extends StatefulWidget {
 }
 
 class _ExampleState extends State<Example> {
-  int _currentDestination = 1;
+  int _currentDestination = 0;
 
   @override
   void initState() {
@@ -40,7 +40,10 @@ class _ExampleState extends State<Example> {
     final routingCubit = context.read<RoutingCubit>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Navigation Map Example'), actions: [
+      appBar: AppBar(
+          title: const Text('Navigation Map Example'),
+          actions: _currentDestination == 1
+              ? [
         IconButton(
             onPressed: () =>
                 context.read<RoutingCubit>().routeTo(startNode, getranke),
@@ -53,9 +56,10 @@ class _ExampleState extends State<Example> {
           ),
           icon: const Icon(Icons.alt_route),
         )
-      ]),
+                ]
+              : []),
       body: _currentDestination == 0
-          ? NavigationMap(groundplan: groundPlanOnlyGraph, key: UniqueKey())
+          ? NavigationMap(groundplan: groundPlanOnlyGraph, canShowDebug: true, key: UniqueKey())
           : NavigationMap(
               groundplan: groundPlan,
               canShowDebug: true,
