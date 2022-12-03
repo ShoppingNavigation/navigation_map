@@ -14,4 +14,5 @@ class DebugGlobals {
     ..color = const Color(0xFFF96666)
     ..style = PaintingStyle.stroke
     ..strokeWidth = 0.1;
+  static Paint userPaint = Paint()..color = const Color(0xFF1CD6CE);
 }
