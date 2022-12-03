@@ -8,17 +8,29 @@ class UserGraphMapper {
 
   /// calculates the closest point on any edge of [graph] for the provided positon
   Vector2 closestPointOnEdge(Vector2 from) {
+    final stopwatch = Stopwatch()..start();
     final distances = _calculateDistances(from).entries.toList()..sort((a, b) => a.value.compareTo(b.value));
+    if (distances.isEmpty) {
+      _reportDebugValues(-1.0, stopwatch);
+      return from;
+    }
     final adjacentNodesToClosestNode = graph.getAdjacentTNodes(distances.first.key);
+    if (adjacentNodesToClosestNode.isEmpty) {
+      _reportDebugValues(-1.0, stopwatch);
+      return from;
+    }
 
     final distancesToOnlyAdjacent = distances.where((element) => adjacentNodesToClosestNode.containsKey(element.key));
 
-    return _closestPointOnVectorRay(
+    Vector2 closestPoint = _closestPointOnVectorRay(
           distances.first.key.position,
           distancesToOnlyAdjacent.first.key.position,
           from,
         ) ??
         Vector2.zero();
+    
+    _reportDebugValues(from.distanceTo(closestPoint), stopwatch);
+    return closestPoint;
   }
 
   Vector2? _closestPointOnVectorRay(Vector2 positionFirst, Vector2 positionSecond, Vector2 from) {
@@ -40,6 +52,11 @@ class UserGraphMapper {
     }
 
     return result;
+  }
+
+  void _reportDebugValues(double error, Stopwatch sw) {
+    debugCubit?.addDebugValue('UGM_Error', error.abs());
+    debugCubit?.addDebugValue('UGM_Time', sw.elapsed.inMicroseconds / 1000.0);
   }
 }
 

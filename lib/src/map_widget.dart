@@ -8,6 +8,7 @@ import 'package:store_navigation_map/src/cubits/groundplan/groundplan_cubit.dart
 import 'package:store_navigation_map/src/cubits/map_controls/map_controls_cubit.dart';
 import 'package:store_navigation_map/src/cubits/user/user_cubit.dart';
 import 'package:store_navigation_map/src/debug/widget/debug_log.dart';
+import 'package:store_navigation_map/src/debug/widget/debug_values.dart';
 import 'package:store_navigation_map/src/map_game.dart';
 import 'package:store_navigation_map/src/utils/globals.dart';
 import 'package:store_navigation_map/src/widgets/map_controls.dart';
@@ -71,6 +72,21 @@ class _NavigationMapState extends State<NavigationMap> {
       ],
       child: Stack(children: [
         GameWidget(game: game),
+        BlocBuilder<DebugCubit, DebugState>(
+          builder: (context, state) {
+            if (!widget.canShowDebug || !state.isDebugEnabled) {
+              return Container();
+            }
+
+            return Positioned(
+              top: 10,
+              right: 10,
+              child: DebugValues(
+                debugValues: state.debugValues,
+              ),
+            );
+          },
+        ),
         const Positioned(
           top: 10,
           left: 10,
