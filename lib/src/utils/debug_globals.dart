@@ -15,4 +15,10 @@ class DebugGlobals {
     ..style = PaintingStyle.stroke
     ..strokeWidth = 0.1;
   static Paint userPaint = Paint()..color = const Color(0xFF1CD6CE);
+  static Paint userClosestPointOnEdgePaint = Paint()
+    ..color = const Color(0xFF367E18)
+    ..strokeWidth = 0.25;
+  static Paint userClosestPointPaint = Paint()
+    ..color = const Color(0xFFFD841F)
+    ..strokeWidth = 0.25;
 }

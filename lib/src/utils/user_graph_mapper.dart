@@ -1,36 +1,55 @@
 import 'package:store_navigation_graph/store_navigation_graph.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
+class UgmResult {
+  final bool found;
+  final Vector2? closestPoint;
+  final Vector2? closestConnection;
+  final Vector2? secondConnection;
+
+  UgmResult({required this.found, this.closestPoint, this.closestConnection, this.secondConnection});
+
+  static get empty => UgmResult(found: false);
+}
+
 class UserGraphMapper {
   final NavigationGraph<UiNode> graph;
 
   const UserGraphMapper(this.graph);
 
   /// calculates the closest point on any edge of [graph] for the provided positon
-  Vector2 closestPointOnEdge(Vector2 from) {
+  UgmResult closestPointOnEdge(Vector2 from) {
     final stopwatch = Stopwatch()..start();
     final distances = _calculateDistances(from).entries.toList()..sort((a, b) => a.value.compareTo(b.value));
     if (distances.isEmpty) {
       _reportDebugValues(-1.0, stopwatch);
-      return from;
+      return UgmResult(found: false);
     }
     final adjacentNodesToClosestNode = graph.getAdjacentTNodes(distances.first.key);
     if (adjacentNodesToClosestNode.isEmpty) {
       _reportDebugValues(-1.0, stopwatch);
-      return from;
+      return UgmResult(found: false);
     }
 
     final distancesToOnlyAdjacent = distances.where((element) => adjacentNodesToClosestNode.containsKey(element.key));
 
+    final closestConnection = distances.first.key.position;
+    final secondConnection = distancesToOnlyAdjacent.first.key.position;
+
     Vector2 closestPoint = _closestPointOnVectorRay(
-          distances.first.key.position,
-          distancesToOnlyAdjacent.first.key.position,
+          closestConnection,
+          secondConnection,
           from,
         ) ??
         Vector2.zero();
     
     _reportDebugValues(from.distanceTo(closestPoint), stopwatch);
-    return closestPoint;
+    return UgmResult(
+      found: true,
+      closestPoint: closestPoint,
+      closestConnection: closestConnection,
+      secondConnection: secondConnection,
+    );
   }
 
   Vector2? _closestPointOnVectorRay(Vector2 positionFirst, Vector2 positionSecond, Vector2 from) {

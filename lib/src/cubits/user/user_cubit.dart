@@ -16,7 +16,7 @@ class UserCubit extends Cubit<UserState> {
       : _ugm = UserGraphMapper(graph),
         super(UserInitial()) {
     _userDataProvider.getPosition().listen((event) {
-      emit(UserPositionSet(position: event, edgePosition: _ugm.closestPointOnEdge(event)));
+      emit(UserPositionSet(position: event, mappingResult: _ugm.closestPointOnEdge(event)));
     });
   }
 }
