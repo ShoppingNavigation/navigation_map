@@ -12,7 +12,7 @@ class FakeUserDataProvider extends UserDataProvider {
     return Stream<Vector2>.periodic(const Duration(milliseconds: 100), _getNextStatefulPosition);
   }
 
-  final Vector2 _maxValues = Vector2(40, 60);
+  final Vector2 _maxValues = Vector2(40, 40);
   final Vector2 _offset = Vector2(20, 0);
   Vector2 _previousPosition = Vector2(20, 0);
   double _currentStepDirection = 1;

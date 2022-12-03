@@ -47,7 +47,7 @@ class NavigationMap extends StatefulWidget {
     );
     groundPlanCubit = GroundPlanCubit(groundplan);
     adminCubit = AdminCubit(active: adminActive, onShelfSelected: onShelfSelected ?? (node) {});
-    userCubit = UserCubit();
+    userCubit = UserCubit(groundplan.graph);
   }
 
   @override

@@ -1,20 +1,26 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:store_navigation_map/src/cubits/user/user_cubit.dart';
 import 'package:store_navigation_map/src/map_widget.dart';
 import 'package:store_navigation_map/src/utils/debug_globals.dart';
 
 class DebugUser extends PositionComponent {
-  Vector2 _currentPosition = Vector2.zero();
+  UserState? event;
 
   DebugUser() {
     userCubit.stream.listen((event) {
-      _currentPosition = event.position;
+      this.event = event;
     });
   }
 
   @override
   void render(Canvas canvas) {
-    canvas.drawCircle(_currentPosition.toOffset(), 2, DebugGlobals.userPaint);
+    if (event == null) {
+      return;
+    }
+
+    canvas.drawCircle(event!.position.toOffset(), 1, DebugGlobals.userPaint);
+    canvas.drawLine(event!.position.toOffset(), event!.edgePosition.toOffset(), DebugGlobals.userPaint);
   }
 }
