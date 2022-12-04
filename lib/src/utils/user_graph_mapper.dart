@@ -26,44 +26,34 @@ class UserGraphMapper {
     final stopwatch = Stopwatch()..start();
     final distances = _calculateDistances(from).entries.toList()..sort((a, b) => a.value.compareTo(b.value));
     if (distances.isEmpty) {
-      _reportDebugValues(-1.0, stopwatch);
+      _reportDebugValues(double.infinity, stopwatch);
       return UgmResult(found: false);
     }
     final adjacentNodesToClosestNode = graph.getAdjacentTNodes(distances.first.key);
     if (adjacentNodesToClosestNode.isEmpty) {
-      _reportDebugValues(-1.0, stopwatch);
+      _reportDebugValues(double.infinity, stopwatch);
       return UgmResult(found: false);
     }
+
     final closestConnection = distances.first.key.position;
-
-    if (previousSecond != null) {
-      if (distances.any((element) => element.key == previousSecond?.key)) {
-        distances.removeWhere((element) => element.key == previousSecond?.key);
-        distances.add(MapEntry<UiNode, double>(
-          previousSecond!.key,
-          previousSecond!.value * secondBoost,
-        ));
-        distances.sort((a, b) => a.value.compareTo(b.value));
-      }
-    }
-
     final distancesToOnlyAdjacent =
         distances.where((element) => adjacentNodesToClosestNode.containsKey(element.key)).toList();
 
     final secondConnection = distancesToOnlyAdjacent.first.key.position;
-    previousSecond = distancesToOnlyAdjacent.first;
 
-    Vector2 closestPoint = _closestPointOnVectorRay(
+    Vector2? closestPoint = _closestPointOnVectorRay(
           closestConnection,
           secondConnection,
           from,
-        ) ??
-        Vector2.zero();
+    );
+    if (closestPoint == null) {
+      return UgmResult(found: false);
+    }
     
     _reportDebugValues(from.distanceTo(closestPoint), stopwatch);
-    assert(!closestPoint.isNaN && !closestPoint.isInfinite, 'Is NaN or Infinite: $closestPoint');
-    assert(!closestConnection.isNaN && !closestConnection.isInfinite);
-    assert(!secondConnection.isNaN && !secondConnection.isInfinite);
+    assert(!closestPoint.isNaN && !closestPoint.isInfinite, 'Must be finite: $closestPoint');
+    assert(!closestConnection.isNaN && !closestConnection.isInfinite, 'Must be finite: $closestConnection');
+    assert(!secondConnection.isNaN && !secondConnection.isInfinite, 'Must be finite: $secondConnection');
     debugCubit?.addDebugValue('UGM_Closest', closestConnection);
     debugCubit?.addDebugValue('UGM_Second', secondConnection);
     return UgmResult(
@@ -138,9 +128,9 @@ class _VectorRay {
       return null;
     }
 
-    if (multiples[0] >= 0) {
+    if (multiples[0] >= -1 && multiples[0] <= 1) {
       return location + (direction * multiples[0]);
-    } else if (multiples[1] >= 0) {
+    } else if (multiples[1] >= -1 && multiples[1] <= 1) {
       return other.location + (other.direction * multiples[1]);
     } else {
       return null;

@@ -16,8 +16,10 @@ class DebugUser extends PositionComponent {
 
   @override
   void render(Canvas canvas) {
-    if (event == null || !event!.mappingResult.found) {
+    if (event == null) {
+      if (!event!.mappingResult.found) {
       return;
+      }
     }
 
     canvas.drawCircle(event!.position.toOffset(), 1, DebugGlobals.userPaint);
