@@ -19,11 +19,7 @@ shelves:
       position: 
         x: 25
         y: 12.5
-      node:
-        name: 'beispiel'
-        position:
-          x: 25
-          y: 30
+      node: 'v1'
 
 obstacles:
   - position:

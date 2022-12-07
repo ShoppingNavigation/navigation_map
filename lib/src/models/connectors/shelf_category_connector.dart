@@ -6,9 +6,11 @@ import 'package:yaml/yaml.dart';
 class ShelfCategoryConnector {
   final Vector2 position;
   final CategoryModel category;
-  final UiNode node;
+  final String nodeId;
 
-  const ShelfCategoryConnector({required this.position, required this.category, required this.node});
+  const ShelfCategoryConnector({required this.position, required this.category, required this.nodeId});
+
+  UiNode get node => groundPlanCubit.state.groundPlan.graph.nodes.firstWhere((element) => element.name == nodeId);
 
   @override
   String toString() => '${category.name} connected to $node';
@@ -21,7 +23,7 @@ class ShelfCategoryConnector {
     return ShelfCategoryConnector(
       position: vectorFromYaml(yaml['position']),
       category: const CategoryModel(id: 'test', name: 'test', nodeId: 'test'),
-      node: UiNode.fromYaml(yaml['node']),
+      nodeId: yaml['node'],
     );
   }
 }
