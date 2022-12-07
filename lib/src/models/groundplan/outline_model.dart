@@ -12,6 +12,6 @@ class GroundPlanOutlineModel {
   static GroundPlanOutlineModel fromYaml(YamlList outlineYaml) {
     assert(outlineYaml.length >= 3, 'needs at least 3 vertices for a closed shape');
 
-    return GroundPlanOutlineModel(vertices: outlineYaml.map((e) => yamlToVector(e)).toList());
+    return GroundPlanOutlineModel(vertices: outlineYaml.map((e) => vectorFromYaml(e)).toList());
   }
 }

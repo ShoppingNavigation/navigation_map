@@ -34,16 +34,19 @@ class GroundPlanModel {
 
   /// generates a groundplan from the provided yaml
   static GroundPlanModel fromYaml(String yaml) {
-    final yamlContent = loadYaml(yaml);
+    final YamlMap yamlContent = loadYaml(yaml);
 
     assert(yamlContent.containsKey('outline'));
+    assert(yamlContent.containsKey('shelves') && yamlContent['shelves'] is YamlList);
+    assert(yamlContent.containsKey('obstacles') && yamlContent['obstacles'] is YamlList);
 
     return GroundPlanModel(
-      additionalZoom: 1,
+      additionalZoom: yamlContent['additionalZoom'] as double? ?? 1,
       outline: GroundPlanOutlineModel.fromYaml(yamlContent['outline']),
       graph: NavigationGraph(nodes: []),
-      shelves: [],
-      obstacles: [],
+      shelves: (yamlContent['shelves'] as YamlList).map((element) => GroundPlanShelfModel.fromYaml(element)).toList(),
+      obstacles:
+          (yamlContent['obstacles'] as YamlList).map((element) => GroundPlanObstacleModel.fromYaml(element)).toList(),
     );
   }
 }
