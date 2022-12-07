@@ -1,5 +1,6 @@
 import 'package:store_navigation_graph/store_navigation_graph.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
+import 'package:yaml/yaml.dart';
 
 class GroundPlanModel {
   /// for small groundplans and additional zoom can make sense
@@ -30,4 +31,19 @@ class GroundPlanModel {
         shelves: [],
         obstacles: [],
       );
+
+  /// generates a groundplan from the provided yaml
+  static GroundPlanModel fromYaml(String yaml) {
+    final yamlContent = loadYaml(yaml);
+
+    assert(yamlContent.containsKey('outline'));
+
+    return GroundPlanModel(
+      additionalZoom: 1,
+      outline: GroundPlanOutlineModel.fromYaml(yamlContent['outline']),
+      graph: NavigationGraph(nodes: []),
+      shelves: [],
+      obstacles: [],
+    );
+  }
 }

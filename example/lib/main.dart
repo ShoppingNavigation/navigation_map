@@ -1,4 +1,5 @@
 import 'package:example/destination_selector.dart';
+import 'package:example/store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
@@ -6,8 +7,12 @@ import 'package:store_navigation_map/store_navigation_map.dart';
 import 'only_graph.dart';
 import 'groundplan.dart';
 
-void main() {
+late final GroundPlanModel storeGroundPlan;
+
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  storeGroundPlan = await loadStoreGroundPlan();
 
   runApp(
     MaterialApp(
@@ -28,7 +33,7 @@ class Example extends StatefulWidget {
 }
 
 class _ExampleState extends State<Example> {
-  int _currentDestination = 1;
+  int _currentDestination = 2;
 
   @override
   void initState() {
@@ -44,34 +49,37 @@ class _ExampleState extends State<Example> {
           title: const Text('Navigation Map Example'),
           actions: _currentDestination == 1
               ? [
-        IconButton(
-            onPressed: () =>
-                context.read<RoutingCubit>().routeTo(startNode, getranke),
-          icon: const Icon(Icons.route),
-        ),
-        IconButton(
-          onPressed: () => showDialog(
-            context: context,
-            builder: (context) => DestinationSelector(routingCubit: routingCubit),
-          ),
-          icon: const Icon(Icons.alt_route),
-        )
+                  IconButton(
+                    onPressed: () => context.read<RoutingCubit>().routeTo(startNode, getranke),
+                    icon: const Icon(Icons.route),
+                  ),
+                  IconButton(
+                    onPressed: () => showDialog(
+                      context: context,
+                      builder: (context) => DestinationSelector(routingCubit: routingCubit),
+                    ),
+                    icon: const Icon(Icons.alt_route),
+                  )
                 ]
               : []),
+      // somehow does not work with list lookup
       body: _currentDestination == 0
           ? NavigationMap(groundplan: groundPlanOnlyGraph, canShowDebug: true, key: UniqueKey())
-          : NavigationMap(
+          : _currentDestination == 1
+              ? NavigationMap(
               groundplan: groundPlan,
               canShowDebug: true,
               adminActive: true,
               onShelfSelected: shelfSelected,
-              key: UniqueKey()),
+                  key: UniqueKey())
+              : NavigationMap(groundplan: storeGroundPlan),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (value) => setState(() => _currentDestination = value),
         selectedIndex: _currentDestination,
         destinations: const [
           NavigationDestination(icon: Icon(Icons.scatter_plot), label: 'Graph'),
           NavigationDestination(icon: Icon(Icons.map), label: 'Map'),
+          NavigationDestination(icon: Icon(Icons.developer_mode), label: 'Demo'),
         ],
       ),
     );
