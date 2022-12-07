@@ -1,5 +1,4 @@
 import 'package:flame/components.dart';
-import 'package:store_navigation_graph/store_navigation_graph.dart';
 import 'package:store_navigation_map/src/debug/graph/debug_graph.dart';
 import 'package:store_navigation_map/src/debug/groundplan/connector_point.dart';
 import 'package:store_navigation_map/src/debug/groundplan/shelf_minimal_bounding_rect.dart';

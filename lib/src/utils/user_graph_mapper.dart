@@ -1,4 +1,3 @@
-import 'package:store_navigation_graph/store_navigation_graph.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
 class UgmResult {

@@ -72,7 +72,10 @@ class _ExampleState extends State<Example> {
               adminActive: true,
               onShelfSelected: shelfSelected,
                   key: UniqueKey())
-              : NavigationMap(groundplan: storeGroundPlan),
+              : NavigationMap(
+                  groundplan: storeGroundPlan,
+                  canShowDebug: true,
+                ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (value) => setState(() => _currentDestination = value),
         selectedIndex: _currentDestination,

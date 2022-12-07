@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:store_navigation_graph/store_navigation_graph.dart';
 import 'package:store_navigation_map/src/utils/user_data_provider.dart';
 import 'package:store_navigation_map/src/utils/user_graph_mapper.dart';
 

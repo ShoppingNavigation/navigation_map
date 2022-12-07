@@ -63,7 +63,7 @@ packages:
       name: flame
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.0"
+    version: "1.5.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -164,14 +164,14 @@ packages:
     source: hosted
     version: "1.10.0"
   store_navigation_graph:
-    dependency: "direct main"
+    dependency: transitive
     description:
       path: "."
       ref: main
-      resolved-ref: e96a67c5b928ffc72332ece736903a370543c36d
+      resolved-ref: "29fefd62c88fe5fa551acfacdb6a9a8e40ec2d0c"
       url: "https://github.com/ShoppingNavigation/navigation_graph.git"
     source: git
-    version: "1.0.0"
+    version: "1.1.0"
   store_navigation_map:
     dependency: "direct main"
     description:

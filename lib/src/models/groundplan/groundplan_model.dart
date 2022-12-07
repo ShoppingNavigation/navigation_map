@@ -1,4 +1,4 @@
-import 'package:store_navigation_graph/store_navigation_graph.dart';
+import 'package:store_navigation_map/src/utils/yaml_utils.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 import 'package:yaml/yaml.dart';
 
@@ -36,6 +36,7 @@ class GroundPlanModel {
   static GroundPlanModel fromYaml(String yaml) {
     final YamlMap yamlContent = loadYaml(yaml);
 
+    assert(yamlContent.containsKey('graph'));
     assert(yamlContent.containsKey('outline'));
     assert(yamlContent.containsKey('shelves') && yamlContent['shelves'] is YamlList);
     assert(yamlContent.containsKey('obstacles') && yamlContent['obstacles'] is YamlList);
@@ -43,7 +44,7 @@ class GroundPlanModel {
     return GroundPlanModel(
       additionalZoom: yamlContent['additionalZoom'] as double? ?? 1,
       outline: GroundPlanOutlineModel.fromYaml(yamlContent['outline']),
-      graph: NavigationGraph(nodes: []),
+      graph: graphFromTaml(yamlContent['graph']),
       shelves: (yamlContent['shelves'] as YamlList).map((element) => GroundPlanShelfModel.fromYaml(element)).toList(),
       obstacles:
           (yamlContent['obstacles'] as YamlList).map((element) => GroundPlanObstacleModel.fromYaml(element)).toList(),

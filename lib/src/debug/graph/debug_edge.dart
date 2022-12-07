@@ -1,6 +1,5 @@
 import 'package:flame/components.dart';
 import 'package:flutter/widgets.dart';
-import 'package:store_navigation_graph/store_navigation_graph.dart';
 import 'package:store_navigation_map/src/utils/debug_globals.dart';
 import 'package:store_navigation_map/src/utils/globals.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
