@@ -24,7 +24,7 @@ class MapContainer extends PositionComponent with Draggable {
 
   @override
   Future<void>? onLoad() async {
-    size = Vector2.all(1000);
+    size = groundPlanCubit.state.groundPlan.outline.minimalBoundingRectangle;
     scale = Vector2(0.8, 0.8);
     position = mapControlsCubit.state.startupPosition;
 

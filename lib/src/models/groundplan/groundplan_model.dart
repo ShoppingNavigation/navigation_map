@@ -26,7 +26,7 @@ class GroundPlanModel {
 
   static GroundPlanModel get empty => GroundPlanModel(
       additionalZoom: 1,
-        outline: const GroundPlanOutlineModel(vertices: []),
+        outline: GroundPlanOutlineModel(vertices: []),
         graph: NavigationGraph(nodes: []),
         shelves: [],
         obstacles: [],
