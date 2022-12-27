@@ -75,6 +75,8 @@ class _ExampleState extends State<Example> {
               : NavigationMap(
                   groundplan: storeGroundPlan,
                   canShowDebug: true,
+                  adminActive: true,
+                  onShelfSelected: shelfSelected,
                 ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (value) => setState(() => _currentDestination = value),
