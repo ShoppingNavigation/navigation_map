@@ -15,6 +15,7 @@ class GroundPlanUser extends PositionComponent {
 
   @override
   void render(Canvas canvas) {
-    canvas.drawCircle(_currentPosition!.toOffset(), 2, Paint()..color = Globals.colorScheme.tertiary);
+    canvas.drawCircle(_currentPosition!.toOffset(), 2 * groundPlanCubit.state.groundPlan.lineWidth,
+        Paint()..color = Globals.colorScheme.tertiary);
   }
 }

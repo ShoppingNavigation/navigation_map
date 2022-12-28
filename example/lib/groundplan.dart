@@ -173,6 +173,7 @@ final _graph = NavigationGraph<UiNode>(nodes: [
   ..connect(_v8, _v9, 20);
 
 final GroundPlanModel groundPlan = GroundPlanModel(
+  anchorCoordinates: Vector2.zero(),
   additionalZoom: 5,
   startupPosition: Vector2(75, 100),
   outline: _outline,

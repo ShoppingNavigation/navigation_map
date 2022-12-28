@@ -10,6 +10,8 @@ class GroundPlanModel {
   /// make the lineWidth thicker for large maps
   final double lineWidth;
 
+  final Vector2 anchorCoordinates;
+
   /// set the start camera position
   final Vector2? startupPosition;
 
@@ -23,13 +25,15 @@ class GroundPlanModel {
     required this.graph,
     required this.shelves,
     required this.obstacles,
+    required this.anchorCoordinates,
     this.additionalZoom = 0,
     this.lineWidth = 1,
     this.startupPosition,
   });
 
   static GroundPlanModel get empty => GroundPlanModel(
-      additionalZoom: 1,
+        additionalZoom: 1,
+        anchorCoordinates: Vector2.zero(),
         outline: GroundPlanOutlineModel(vertices: []),
         graph: NavigationGraph(nodes: []),
         shelves: [],
@@ -46,6 +50,7 @@ class GroundPlanModel {
     assert(yamlContent.containsKey('obstacles') && yamlContent['obstacles'] is YamlList);
 
     return GroundPlanModel(
+      anchorCoordinates: vectorFromYaml(yamlContent['anchorGeoCoordinates']),
       additionalZoom: yamlContent['additionalZoom'] as double? ?? 0,
       lineWidth: yamlContent['lineWidth'] as double? ?? 1,
       outline: GroundPlanOutlineModel.fromYaml(yamlContent['outline']),
