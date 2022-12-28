@@ -7,6 +7,9 @@ class GroundPlanModel {
   /// to make the map larger by default
   final double additionalZoom;
 
+  /// make the lineWidth thicker for large maps
+  final double lineWidth;
+
   /// set the start camera position
   final Vector2? startupPosition;
 
@@ -21,6 +24,7 @@ class GroundPlanModel {
     required this.shelves,
     required this.obstacles,
     this.additionalZoom = 0,
+    this.lineWidth = 1,
     this.startupPosition,
   });
 
@@ -42,7 +46,8 @@ class GroundPlanModel {
     assert(yamlContent.containsKey('obstacles') && yamlContent['obstacles'] is YamlList);
 
     return GroundPlanModel(
-      additionalZoom: yamlContent['additionalZoom'] as double? ?? 1,
+      additionalZoom: yamlContent['additionalZoom'] as double? ?? 0,
+      lineWidth: yamlContent['lineWidth'] as double? ?? 1,
       outline: GroundPlanOutlineModel.fromYaml(yamlContent['outline']),
       graph: graphFromTaml(yamlContent['graph']),
       shelves: (yamlContent['shelves'] as YamlList).map((element) => GroundPlanShelfModel.fromYaml(element)).toList(),
