@@ -72,7 +72,6 @@ class GpsUserDataProvider extends UserDataProvider {
       var x = Geolocator.distanceBetween(0, event.longitude, 0, baseCoordinates.x) * 10;
       var y = Geolocator.distanceBetween(event.latitude, 0, baseCoordinates.y, 0) * 10;
 
-      print('current pos ($x / $y)');
       return Vector2(x, y);
     });
   }
