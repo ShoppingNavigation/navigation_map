@@ -6,6 +6,4 @@ class MinimalBoundingRect {
   final Vector2 size;
 
   MinimalBoundingRect(this.anchor, this.size);
-
-  Anchor get typedAnchor => Anchor(anchor.x, anchor.y);
 }

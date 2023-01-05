@@ -1,4 +1,6 @@
 import 'package:flame/components.dart';
+import 'package:store_navigation_map/src/cubits/admin/admin_cubit.dart';
+import 'package:store_navigation_map/src/groundplan/admin/shelf_minimal_bounding_rect.dart';
 import 'package:store_navigation_map/src/groundplan/obstacle.dart';
 import 'package:store_navigation_map/src/groundplan/outline.dart';
 import 'package:store_navigation_map/src/groundplan/route.dart';
@@ -20,6 +22,9 @@ class GroundPlan extends PositionComponent {
 
     for (var element in groundPlan.shelves) {
       add(GroundPlanShelf(shelf: element));
+      if (adminCubit.state is! NoAdminInitial) {
+        add(GroundplanAdminShelfMinimalBoundingRect(shelf: element));
+      }
     }
 
     for (var element in groundPlan.obstacles) {

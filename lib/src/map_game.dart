@@ -1,7 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
-import 'package:flame/input.dart';
 import 'package:store_navigation_map/src/map_container.dart';
 import 'package:store_navigation_map/src/map_world.dart';
 

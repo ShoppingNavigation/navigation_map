@@ -1,14 +1,17 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:store_navigation_map/src/utils/debug_globals.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
-class DebugShelfMinimalBoundingRect extends PositionComponent {
+/// This component is used for the shelf-category connection
+class GroundplanAdminShelfMinimalBoundingRect extends PositionComponent with Tappable {
   final GroundPlanShelfModel shelf;
 
-  DebugShelfMinimalBoundingRect({required this.shelf}) {
+  GroundplanAdminShelfMinimalBoundingRect({required this.shelf}) {
     position = shelf.minimalBoundingRectangle.anchor;
+    size = shelf.minimalBoundingRectangle.anchor;
   }
 
   @override
@@ -19,5 +22,11 @@ class DebugShelfMinimalBoundingRect extends PositionComponent {
           shelf.minimalBoundingRectangle.size.toOffset(),
         ),
         DebugGlobals.minimalBoundingRectanglePaint);
+  }
+
+  @override
+  bool onTapUp(TapUpInfo info) {
+    adminCubit.selectShelf(shelf);
+    return true;
   }
 }
