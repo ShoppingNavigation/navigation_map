@@ -15,8 +15,8 @@ class GroundPlanShelf extends PositionComponent with Tappable {
     _shelfPath = _buildPath(shelf.position, shelf.vertices);
 
     position = shelf.position;
-
-    size = shelf.minimalBoundingRectangle;
+    anchor = Anchor.topLeft;
+    size = shelf.minimalBoundingRectangle.size;
 
     adminCubit.stream.listen((event) {
       if (event is AdminShelfSelected) {

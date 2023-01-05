@@ -8,15 +8,15 @@ class DebugShelfMinimalBoundingRect extends PositionComponent {
   final GroundPlanShelfModel shelf;
 
   DebugShelfMinimalBoundingRect({required this.shelf}) {
-    position = shelf.position;
+    position = shelf.minimalBoundingRectangle.anchor;
   }
 
   @override
   void render(Canvas canvas) {
     canvas.drawRect(
         Rect.fromPoints(
-          Vector2.all(0).toOffset(),
-          shelf.minimalBoundingRectangle.toOffset(),
+          Offset.zero,
+          shelf.minimalBoundingRectangle.size.toOffset(),
         ),
         DebugGlobals.minimalBoundingRectanglePaint);
   }
