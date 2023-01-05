@@ -53,6 +53,7 @@ class GroundPlanModel {
       anchorCoordinates: vectorFromYaml(yamlContent['anchorGeoCoordinates']),
       additionalZoom: yamlContent['additionalZoom'] as double? ?? 0,
       lineWidth: yamlContent['lineWidth'] as double? ?? 1,
+      startupPosition: vectorFromYaml(yamlContent['startupPosition']),
       outline: GroundPlanOutlineModel.fromYaml(yamlContent['outline']),
       graph: graphFromTaml(yamlContent['graph']),
       shelves: (yamlContent['shelves'] as YamlList).map((element) => GroundPlanShelfModel.fromYaml(element)).toList(),

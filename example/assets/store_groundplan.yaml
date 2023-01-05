@@ -1,5 +1,8 @@
 additionalZoom: 0.33
 lineWidth: 10.0
+startupPosition:
+  x: -1500.0
+  y: -200.0
 anchorGeoCoordinates:
   x: 6.710182801260762
   y: 51.83749312722795
