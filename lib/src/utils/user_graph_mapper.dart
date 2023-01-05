@@ -26,13 +26,13 @@ class UserGraphMapper {
     final distances = _calculateDistances(from).entries.toList()..sort((a, b) => a.value.compareTo(b.value));
     if (distances.isEmpty) {
       _reportDebugValues(double.infinity, stopwatch);
-      _reportFound(false);
+      _reportFound(false, reason: 'No distances');
       return UgmResult(found: false);
     }
     final adjacentNodesToClosestNode = graph.getAdjacentTNodes(distances.first.key);
     if (adjacentNodesToClosestNode.isEmpty) {
       _reportDebugValues(double.infinity, stopwatch);
-      _reportFound(false);
+      _reportFound(false, reason: 'No adjacent nodes');
       return UgmResult(found: false);
     }
 
@@ -58,7 +58,7 @@ class UserGraphMapper {
     }
     
     if (closestPoint == null) {
-      _reportFound(false);
+      _reportFound(false, reason: 'No closest point');
       return UgmResult(found: false);
     }
     
@@ -107,8 +107,11 @@ class UserGraphMapper {
     debugCubit?.addDebugValue('UGM_Step', currentStep++);
   }
 
-  void _reportFound(bool found) {
+  void _reportFound(bool found, {String reason = ''}) {
     debugCubit?.addDebugValue('UGM_Found', found);
+    if (!found && reason.isNotEmpty) {
+      debugCubit?.addDebugValue('UGM_Reason', reason);
+    }
   }
 }
 
@@ -145,43 +148,11 @@ class _VectorRay {
     if (!_isCorrectNumber(multiples[0]) || !_isCorrectNumber(multiples[1])) {
       return null;
     }
-
-    final multiplePointOne = location + (direction * multiples[0]);
-    final multiplePointTwo = other.location + (other.direction * multiples[1]);
-    if (_isPointOnSection(multiplePointOne)) {
-      return multiplePointOne;
-    } else if (_isPointOnSection(multiplePointTwo)) {
-      return multiplePointTwo;
-    } else {
-      return null;
+    
+    if (multiples[1] >= 0 && multiples[1] <= 1) {
+      return other.location + (other.direction * multiples[1]);
     }
-  }
-
-  /// checks if a given point is on the base section of the ray
-  /// https://stackoverflow.com/questions/11907947/how-to-check-if-a-point-lies-on-a-line-between-2-other-points
-  bool _isPointOnSection(Vector2 point) {
-    final rayPointOne = location;
-    final rayPointTwo = location + direction;
-
-    final dxc = point.x - rayPointOne.x;
-    final dyc = point.y - rayPointOne.y;
-    final dxl = rayPointTwo.x - rayPointOne.x;
-    final dyl = rayPointTwo.y - rayPointOne.y;
-    final cross = dxc * dyl - dyc * dxl;
-
-    if (cross.abs() > 0.05) {
-      return false;
-    }
-
-    if (dxl.abs() >= dyl.abs()) {
-      return dxl > 0
-          ? rayPointOne.x <= point.x && point.x <= rayPointTwo.x
-          : rayPointTwo.x <= point.x && point.x <= rayPointOne.x;
-    } else {
-      return dyl > 0
-          ? rayPointOne.y <= point.y && point.y <= rayPointTwo.y
-          : rayPointTwo.y <= point.y && point.y <= rayPointOne.y;
-    }
+    return null;
   }
 
   /// Calculates in which direction the vector ray is facing
