@@ -53,8 +53,8 @@ class GroundPlanModel {
 
     return GroundPlanModel(
       anchorCoordinates: vectorFromYaml(yamlContent['anchorGeoCoordinates']),
-      additionalZoom: yamlContent['additionalZoom'] as double? ?? 0,
-      lineWidth: yamlContent['lineWidth'] as double? ?? 1,
+      additionalZoom: (yamlContent['additionalZoom'] as num?)?.toDouble() ?? 0,
+      lineWidth: (yamlContent['lineWidth'] as num?)?.toDouble() ?? 1,
       startupPosition: vectorFromYaml(yamlContent['startupPosition']),
       outline: GroundPlanOutlineModel.fromYaml(yamlContent['outline']),
       graph: graphFromTaml(yamlContent['graph']),
