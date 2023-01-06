@@ -1,4 +1,3 @@
-import 'package:flame/widgets.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
 class MinimalBoundingRect {

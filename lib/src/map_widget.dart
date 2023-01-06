@@ -15,6 +15,7 @@ import 'package:store_navigation_map/src/widgets/map_controls.dart';
 import 'package:store_navigation_map/src/widgets/next_category.dart';
 import 'package:store_navigation_map/src/widgets/zoom_info.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
+import 'package:store_shared_models/store_shared_models.dart';
 
 DebugCubit? debugCubit;
 late MapControlsCubit mapControlsCubit;
@@ -34,7 +35,8 @@ class NavigationMap extends StatefulWidget {
       required this.groundplan,
       bool adminActive = false,
       void Function(UiNode)? onShelfSelected,
-      this.canShowDebug = false}) {
+      this.canShowDebug = false,
+      List<CategoryModel> categories = const []}) {
     if (adminActive && onShelfSelected == null) {
       throw Exception('Cannot set adminActive to true without providing onShelfSelected function');
     }
@@ -46,7 +48,7 @@ class NavigationMap extends StatefulWidget {
       additionalZoom: groundplan.additionalZoom,
       startupPosition: groundplan.startupPosition,
     );
-    groundPlanCubit = GroundPlanCubit(groundplan);
+    groundPlanCubit = GroundPlanCubit(groundplan, categories: categories);
     adminCubit = AdminCubit(active: adminActive, onShelfSelected: onShelfSelected ?? (node) {});
     userCubit = UserCubit(groundplan.graph);
   }

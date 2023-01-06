@@ -25,13 +25,16 @@ class DebugShelfConnectorPoint extends Component {
     canvas.drawLine(
         connector.node.position.toOffset(), globalConnectorPosition.toOffset(), DebugGlobals.connectorPointEdgePaint);
     canvas.drawCircle(globalConnectorPosition.toOffset(), 1, DebugGlobals.connectorPointPaint);
-    _textPaint.render(
-      canvas,
-      connector.category.name,
-      Vector2(
-        globalConnectorPosition.x - ((_textSize * connector.category.name.length / 2) / 2),
-        globalConnectorPosition.y - (_textSize / 2),
-      ),
-    );
+
+    if (connector.hasCategoryAssigned) {
+      _textPaint.render(
+        canvas,
+        connector.category!.name,
+        Vector2(
+          globalConnectorPosition.x - ((_textSize * connector.category!.name.length / 2) / 2),
+          globalConnectorPosition.y - (_textSize / 2),
+        ),
+      );
+    }
   }
 }

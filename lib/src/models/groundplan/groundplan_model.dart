@@ -17,10 +17,12 @@ class GroundPlanModel {
 
   final NavigationGraph<UiNode> graph;
   final GroundPlanOutlineModel outline;
-  final List<GroundPlanShelfModel> shelves;
+
+  /// non-final, because the mapping between shelves and categories is done during runtime
+  List<GroundPlanShelfModel> shelves;
   final List<GroundPlanObstacleModel> obstacles;
 
-  const GroundPlanModel({
+  GroundPlanModel({
     required this.outline,
     required this.graph,
     required this.shelves,

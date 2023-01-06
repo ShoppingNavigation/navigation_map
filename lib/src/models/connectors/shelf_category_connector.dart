@@ -5,24 +5,26 @@ import 'package:yaml/yaml.dart';
 
 class ShelfCategoryConnector {
   final Vector2 position;
-  final CategoryModel category;
+
+  /// non-final, becuse it is mapped at runtime
+  CategoryModel? category;
   final String nodeId;
 
-  const ShelfCategoryConnector({required this.position, required this.category, required this.nodeId});
+  ShelfCategoryConnector({required this.position, required this.category, required this.nodeId});
 
   UiNode get node => groundPlanCubit.state.groundPlan.graph.nodes.firstWhere((element) => element.name == nodeId);
+  bool get hasCategoryAssigned => category != null;
 
   @override
-  String toString() => '${category.name} connected to $node';
+  String toString() => category != null ? '${category!.name} connected to $node' : 'Empty connector to $node';
 
   static ShelfCategoryConnector fromYaml(YamlMap yaml) {
     assert(yaml.containsKey('position'));
     assert(yaml.containsKey('node'));
 
-    /// todo: make category nullable
     return ShelfCategoryConnector(
       position: vectorFromYaml(yaml['position']),
-      category: const CategoryModel(id: 'test', name: 'test', nodeId: 'test'),
+      category: null,
       nodeId: yaml['node'],
     );
   }

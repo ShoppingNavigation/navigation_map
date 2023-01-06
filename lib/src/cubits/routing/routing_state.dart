@@ -30,7 +30,7 @@ class RoutingSingleRoute extends RoutingState {
     debugCubit?.addLog(toString());
   }
 
-  CategoryModel get currentCategory => connectorPoint.category;
+  CategoryModel get currentCategory => connectorPoint.category!;
 
   @override
   get props => [route, connectorPoint];
@@ -55,7 +55,7 @@ class RoutingMultiRoute extends RoutingState {
     return res;
   }
 
-  CategoryModel get currentCategory => currentConnector.category;
+  CategoryModel get currentCategory => currentConnector.category!;
   int get currentSubRoute => currentDestinationIndex + 1;
   int get destinationCount => routes.route.length;
 

@@ -11,6 +11,10 @@ class GroundPlanRoute extends Component {
 
   GroundPlanRoute({required this.route, required this.connector}) {
     _routePath = _buildPath(route);
+
+    if (connector.category == null) {
+      throw Exception('Category on connector connot be null');
+    }
   }
 
   @override
@@ -42,7 +46,8 @@ class GroundPlanRoute extends Component {
 
   Vector2 _absoluteConnectorPosition(ShelfCategoryConnector connector) {
     final shelves = groundPlanCubit.state.groundPlan.shelves;
-    final shelf = shelves.firstWhere((element) => element.connector.category.id == connector.category.id);
+    final shelf = shelves.firstWhere(
+        (element) => element.connector.hasCategoryAssigned && element.connector.category!.id == connector.category!.id);
     return shelf.position + connector.position;
   }
 }

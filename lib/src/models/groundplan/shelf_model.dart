@@ -10,7 +10,7 @@ class GroundPlanShelfModel {
   final List<Vector2> vertices;
 
   /// sets the connector to which the navigation graph connects
-  final ShelfCategoryConnector connector;
+  ShelfCategoryConnector connector;
   
   /// returns the minimal bounding reactangle for this shelfs. Begins at [anchor] and ends at [size]
   late final MinimalBoundingRect minimalBoundingRectangle;
