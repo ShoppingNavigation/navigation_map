@@ -11,11 +11,12 @@ class GroundPlanCubit extends Cubit<GroundPlanState> {
       return;
     }
 
-    groundPlan.shelves = groundPlan.shelves
-        .map((e) => e
-          ..connector =
-              (e.connector..category = categories.firstWhere((element) => element.nodeId == e.connector.nodeId)))
-        .toList();
+    for (var category in categories) {
+      try {
+        var shelf = groundPlan.shelves.firstWhere((element) => element.connector.nodeId == category.nodeId);
+        shelf.connector.category = category;
+      } on StateError catch (_) {}
+    }
     emit(GroundPlanState(groundPlan: groundPlan));
   }
 }

@@ -5,7 +5,7 @@ import 'package:store_navigation_map/src/utils/globals.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
 class DebugShelfConnectorPoint extends Component {
-  static const _textSize = 1.0;
+  static final _textSize = 1.0 * groundPlanCubit.state.groundPlan.lineWidth;
   final TextPaint _textPaint = TextPaint(
     style: TextStyle(
       fontSize: _textSize,

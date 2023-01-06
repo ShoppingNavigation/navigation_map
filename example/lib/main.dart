@@ -3,6 +3,7 @@ import 'package:example/store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
+import 'package:store_shared_models/store_shared_models.dart';
 
 import 'only_graph.dart';
 import 'groundplan.dart';
@@ -77,6 +78,7 @@ class _ExampleState extends State<Example> {
                   canShowDebug: true,
                   adminActive: true,
                   onShelfSelected: shelfSelected,
+                  categories: const [CategoryModel(id: 'asdf', name: 'Lecker brot und so', nodeId: 'v4_17')],
                 ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (value) => setState(() => _currentDestination = value),
