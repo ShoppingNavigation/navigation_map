@@ -12,6 +12,8 @@ late final GroundPlanModel storeGroundPlan;
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await NotificationHelper.setup();
+  
 
   storeGroundPlan = await loadStoreGroundPlan();
 

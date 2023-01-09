@@ -14,7 +14,9 @@ class MapControls extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         FloatingActionButton.small(
-          onPressed: () {},
+          onPressed: () async {
+            await NotificationHelper.notify(title: 'Hallo', body: 'Hello world how are u');
+          },
           child: const Icon(Icons.gps_fixed),
         ),
         const SizedBox(height: 20),

@@ -13,9 +13,7 @@ Using flutter flame and store_navigation_graph
 
 ## Getting started
 
-To use this map you just need to import the package.
-
-## Usage
+### Usage
 
 A working example is in the `example` folder.
 There is just one mandatory field for the navigation map, which is the `groundplan`. The groundplan is an object which contains all information like the outline of the store, the shelfs and the navigation graph, which you need to initialize as seen here: [store_navigation_map](https://github.com/ShoppingNavigation/navigation_graph#readme). The only change you have to do is use `UiNode` instead of `Node`. The `UiNode` also has a field for the position of the node.
@@ -56,6 +54,21 @@ context.read<RoutingCubit>().routeToAll(start, [category1, category2]);
 
 The current state of routing is saved in the `RoutingState`. This state can be either in `Initial, SingleRoute, MultiRoute or Finished`.
 To use the admin view (pick a category), you also need to add the `adminActive` and `onShelfSelected` fields to the widget. Using only one of them wont work. As soon as the user picks a shelf, the `onShelfSelected` method gets called.
+
+### Additional things:
+
+- You also need to add location permissions to ios and android
+- Add code to AppDelegate.swift to get the notifications to work:
+```swift
+FlutterLocalNotificationsPlugin.setPluginRegistrantCallback { (registry) in
+    GeneratedPluginRegistrant.register(with: registry)
+}
+
+if #available(iOS 10.0, *) {
+    UNUserNotificationCenter.current().delegate = self as UNUserNotificationCenterDelegate
+}
+```
+- Add `await NotificationHelper.setup()` to main method before `runApp()`
 
 ## About the structure
 
