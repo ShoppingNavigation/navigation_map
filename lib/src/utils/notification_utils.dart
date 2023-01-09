@@ -26,7 +26,7 @@ class NotificationHelper {
   }
 
   static int _notificationIndex = 0;
-  static Future<void> notify({required String title, required String body}) async {
+  static Future<void> notifyCloseToNode({required String title, required String body}) async {
     if (isInForeground && (await Vibration.hasVibrator() ?? false)) {
       return _notifyForeground(title: title, body: body);
     }

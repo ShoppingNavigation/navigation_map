@@ -45,7 +45,7 @@ class UserCubit extends Cubit<UserState> {
           ugmResult.closestPoint!.distanceTo(destinationPosition) <=
               groundPlanCubit.state.groundPlan.notificationDistance) {
         routingCubit?.reach();
-        await NotificationHelper.notify(
+        await NotificationHelper.notifyCloseToNode(
             title: "'$categoryName' erreicht",
             body: routingCubit?.state is RoutingMultiRoute
                 ? 'Die nächste Kategorie auf deiner Route wurde erreicht'
