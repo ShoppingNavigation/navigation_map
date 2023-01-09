@@ -9,6 +9,7 @@ import 'only_graph.dart';
 import 'groundplan.dart';
 
 late final GroundPlanModel storeGroundPlan;
+const CategoryModel categoryModel = CategoryModel(id: 'asdf', name: 'Lecker brot und so', nodeId: 'v7');
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -81,7 +82,7 @@ class _ExampleState extends State<Example> {
                   canShowGraph: false,
                   adminActive: true,
                   onShelfSelected: shelfSelected,
-                  categories: const [CategoryModel(id: 'asdf', name: 'Lecker brot und so', nodeId: 'v4_17')],
+                  categories: const [categoryModel],
                 ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (value) => setState(() => _currentDestination = value),
@@ -97,5 +98,6 @@ class _ExampleState extends State<Example> {
 
   void shelfSelected(UiNode node) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Selected node $node')));
+    context.read<RoutingCubit>().routeTo(node, categoryModel);
   }
 }

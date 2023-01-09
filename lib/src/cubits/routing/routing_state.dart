@@ -26,11 +26,15 @@ class RoutingFinished extends RoutingState {}
 class RoutingSingleRoute extends RoutingState {
   final RouteToResult<UiNode> route;
   final ShelfCategoryConnector connectorPoint;
-  RoutingSingleRoute({required this.route, required this.connectorPoint}) {
+  final bool reached;
+
+  RoutingSingleRoute({required this.route, required this.connectorPoint, this.reached = false}) {
     debugCubit?.addLog(toString());
   }
 
   CategoryModel get currentCategory => connectorPoint.category!;
+
+  RoutingSingleRoute reach() => RoutingSingleRoute(route: route, connectorPoint: connectorPoint, reached: true);
 
   @override
   get props => [route, connectorPoint];
@@ -44,8 +48,10 @@ class RoutingMultiRoute extends RoutingState {
   final RouteToAllResult<UiNode> routes;
   final List<ShelfCategoryConnector> connectors;
   final int currentDestinationIndex;
+  final bool reached;
 
-  RoutingMultiRoute({required this.routes, required this.currentDestinationIndex, required this.connectors}) {
+  RoutingMultiRoute(
+      {required this.routes, required this.currentDestinationIndex, required this.connectors, this.reached = false}) {
     debugCubit?.addLog(toString());
   }
 
@@ -58,6 +64,9 @@ class RoutingMultiRoute extends RoutingState {
   CategoryModel get currentCategory => currentConnector.category!;
   int get currentSubRoute => currentDestinationIndex + 1;
   int get destinationCount => routes.route.length;
+
+  RoutingMultiRoute reach() => RoutingMultiRoute(
+      routes: routes, currentDestinationIndex: currentDestinationIndex, connectors: connectors, reached: true);
 
   @override
   get props => [routes, connectors, currentDestinationIndex];

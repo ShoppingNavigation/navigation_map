@@ -60,4 +60,12 @@ class RoutingCubit extends Cubit<RoutingState> {
 
     emit(state.singleRouting(result, destinationConnector));
   }
+
+  void reach() {
+    if (state is RoutingSingleRoute) {
+      (state as RoutingSingleRoute).reach();
+    } else if (state is RoutingMultiRoute) {
+      (state as RoutingMultiRoute).reach();
+    }
+  }
 }
