@@ -69,6 +69,7 @@ if #available(iOS 10.0, *) {
 }
 ```
 - Add `await NotificationHelper.setup()` to main method before `runApp()`
+- Add permissions for vibration
 
 ## About the structure
 

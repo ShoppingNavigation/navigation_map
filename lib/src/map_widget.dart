@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +26,8 @@ late GroundPlanCubit groundPlanCubit;
 late AdminCubit adminCubit;
 late UserCubit userCubit;
 RoutingCubit? routingCubit;
+
+bool isInForeground = true;
 
 /// Top level Widget for navigation map. This widget contains the map itself, the map controls and
 /// the navigation controls
@@ -66,8 +70,27 @@ class NavigationMap extends StatefulWidget {
   State<NavigationMap> createState() => _NavigationMapState();
 }
 
-class _NavigationMapState extends State<NavigationMap> {
+class _NavigationMapState extends State<NavigationMap> with WidgetsBindingObserver {
   final game = MapGame();
+
+@override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    isInForeground = state == AppLifecycleState.resumed;
+    log('changed app forground state to: $isInForeground');
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

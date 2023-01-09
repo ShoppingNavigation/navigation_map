@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:store_navigation_map/store_navigation_map.dart';
+import 'package:vibration/vibration.dart';
 
 class NotificationHelper {
   static final _localNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -25,6 +27,18 @@ class NotificationHelper {
 
   static int _notificationIndex = 0;
   static Future<void> notify({required String title, required String body}) async {
+    if (isInForeground && (await Vibration.hasVibrator() ?? false)) {
+      return _notifyForeground(title: title, body: body);
+    }
+
+    return _notifyBackground(title: title, body: body);
+  }
+
+  static Future<void> _notifyForeground({required String title, required String body}) async {
+    await Vibration.vibrate(pattern: [0, 100, 125, 100]);
+  }
+
+  static Future<void> _notifyBackground({required String title, required String body}) async {
     await _localNotificationsPlugin.show(
       _notificationIndex++,
       title,

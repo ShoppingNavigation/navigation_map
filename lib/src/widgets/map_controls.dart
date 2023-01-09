@@ -15,7 +15,7 @@ class MapControls extends StatelessWidget {
       children: [
         FloatingActionButton.small(
           onPressed: () async {
-            await NotificationHelper.notify(title: 'Hallo', body: 'Hello world how are u');
+            await NotificationHelper.notify(title: 'hallo', body: 'welt');
           },
           child: const Icon(Icons.gps_fixed),
         ),

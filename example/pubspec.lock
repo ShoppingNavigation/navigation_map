@@ -361,6 +361,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
+  vibration:
+    dependency: transitive
+    description:
+      name: vibration
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.7.6"
   xdg_directories:
     dependency: transitive
     description:

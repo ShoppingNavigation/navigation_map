@@ -25,6 +25,7 @@ dependencies:
     git:
       url: https://github.com/ShoppingNavigation/store_shared_models.git
       ref: main
+  vibration: ^1.7.6
   yaml: ^3.1.1
 
 dev_dependencies:
