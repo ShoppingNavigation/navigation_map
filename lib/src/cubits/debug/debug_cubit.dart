@@ -6,7 +6,8 @@ import 'package:store_navigation_map/src/cubits/debug/log_model.dart';
 part 'debug_state.dart';
 
 class DebugCubit extends Cubit<DebugState> {
-  DebugCubit({required bool canShowDebug}) : super(DebugInitial(canShowDebug: canShowDebug));
+  DebugCubit({required bool canShowDebug, required bool canShowGraph})
+      : super(DebugInitial(canShowDebug: canShowDebug, canShowGraph: canShowGraph || canShowDebug));
 
   void addDebugValue(String key, dynamic value) {
     emit(state.addDebugValue(key, value));
@@ -18,5 +19,9 @@ class DebugCubit extends Cubit<DebugState> {
 
   void changeVisibility() {
     emit(state.changeVisibility());
+  }
+
+  void changeGraphVisibility() {
+    emit(state.changeGraphVisibility());
   }
 }

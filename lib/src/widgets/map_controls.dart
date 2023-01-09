@@ -38,6 +38,15 @@ class MapControls extends StatelessWidget {
               context.read<DebugCubit>().changeVisibility();
             },
             child: const Icon(Icons.adb),
+          )
+        ],
+        if (debugCubit != null && debugCubit!.state.canShowGraph) ...[
+          SizedBox(height: debugCubit!.state.canShowDebug ? 10 : 20),
+          FloatingActionButton.small(
+              onPressed: () {
+                context.read<DebugCubit>().changeGraphVisibility();
+              },
+              child: const Icon(Icons.route)
           ),
         ]
       ],

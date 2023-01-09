@@ -76,6 +76,7 @@ class _ExampleState extends State<Example> {
               : NavigationMap(
                   groundplan: storeGroundPlan,
                   canShowDebug: true,
+                  canShowGraph: false,
                   adminActive: true,
                   onShelfSelected: shelfSelected,
                   categories: const [CategoryModel(id: 'asdf', name: 'Lecker brot und so', nodeId: 'v4_17')],

@@ -1,4 +1,5 @@
 import 'package:flame/game.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_navigation_map/src/cubits/admin/admin_cubit.dart';
@@ -30,20 +31,28 @@ class NavigationMap extends StatefulWidget {
   final GroundPlanModel groundplan;
   final bool canShowDebug;
 
+  /// when [canShowDebug] is true, this will automatically default to [true], even if explicitly set to [false]
+  final bool canShowGraph;
+
   NavigationMap(
       {super.key,
       required this.groundplan,
       bool adminActive = false,
       void Function(UiNode)? onShelfSelected,
       this.canShowDebug = false,
+      this.canShowGraph = false,
       List<CategoryModel> categories = const []}) {
+    if (canShowDebug && !kDebugMode) {
+      throw Exception('Cannot set "canShowDebug" to true, when not in debug mode');
+    }
+
     if (adminActive && onShelfSelected == null) {
       throw Exception('Cannot set adminActive to true without providing onShelfSelected function');
     }
 
 
     Bloc.observer = DebugObserver();
-    debugCubit = DebugCubit(canShowDebug: canShowDebug);
+    debugCubit = DebugCubit(canShowDebug: canShowDebug, canShowGraph: canShowGraph);
     mapControlsCubit = MapControlsCubit(
       additionalZoom: groundplan.additionalZoom,
       startupPosition: groundplan.startupPosition,

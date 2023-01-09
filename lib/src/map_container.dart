@@ -21,6 +21,8 @@ class MapContainer extends PositionComponent with Draggable {
 
   bool _isDebugViewShown = kDebugMode;
   late DebugComponent _debugGraphComponent;
+  
+  bool _isGraphShown = kDebugMode;
 
   @override
   Future<void>? onLoad() async {
@@ -34,11 +36,13 @@ class MapContainer extends PositionComponent with Draggable {
         graph: groundPlanCubit.state.groundPlan.graph, shelves: groundPlanCubit.state.groundPlan.shelves);
 
     _isDebugViewShown = debugCubit?.state.isDebugEnabled ?? false;
+    _isGraphShown = debugCubit?.state.isGraphShown ?? false;
     debugCubit?.stream.listen((event) {
       _isDebugViewShown = event.isDebugEnabled;
+      _isGraphShown = event.isGraphShown;
     });
 
-    if (_isDebugViewShown) {
+    if (_isGraphShown) {
       add(_debugGraphComponent);
     }
 
@@ -87,12 +91,12 @@ class MapContainer extends PositionComponent with Draggable {
   }
 
   void _checkDebugModeSwap() {
-    if (_isDebugViewShown && !contains(_debugGraphComponent)) {
+    if (_isGraphShown && !contains(_debugGraphComponent)) {
       add(_debugGraphComponent);
-      _isDebugViewShown = true;
-    } else if (!_isDebugViewShown && contains(_debugGraphComponent)) {
+      _isGraphShown = true;
+    } else if (!_isGraphShown && contains(_debugGraphComponent)) {
       remove(_debugGraphComponent);
-      _isDebugViewShown = false;
+      _isGraphShown = false;
     }
   }
 
