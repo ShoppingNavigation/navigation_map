@@ -27,11 +27,14 @@ class _ZoomInfoState extends State<ZoomInfo> {
     });
     _zoomChipDelayTimer = Timer(
       const Duration(seconds: 2),
-      () => setState(() {
-        if (mounted) {
-          _showZoomChip = false;
+      () {
+        if (!mounted) {
+          return;
         }
-      }),
+        setState(() {
+          _showZoomChip = false;
+        });
+      },
     );
   }
 
