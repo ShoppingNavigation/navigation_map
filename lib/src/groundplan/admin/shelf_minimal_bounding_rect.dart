@@ -11,7 +11,7 @@ class GroundplanAdminShelfMinimalBoundingRect extends PositionComponent with Tap
 
   GroundplanAdminShelfMinimalBoundingRect({required this.shelf}) {
     position = shelf.minimalBoundingRectangle.anchor;
-    size = shelf.minimalBoundingRectangle.anchor;
+    size = shelf.minimalBoundingRectangle.size;
   }
 
   @override
