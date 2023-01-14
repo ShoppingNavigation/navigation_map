@@ -1,7 +1,9 @@
 part of 'map_controls_cubit.dart';
 
 abstract class MapControlsState {
+  /// the real value which is used to zoom
   final double zoom;
+  /// the value which is displayed to the user.
   final double userZoomValue;
   final double additionalZoom;
 

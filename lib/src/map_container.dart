@@ -27,11 +27,10 @@ class MapContainer extends PositionComponent with Draggable {
   @override
   Future<void>? onLoad() async {
     size = groundPlanCubit.state.groundPlan.outline.minimalBoundingRectangle;
-    scale = Vector2(0.8, 0.8);
-    position = mapControlsCubit.state.startupPosition;
+    scale = Vector2(1, 1);
+    // position = mapControlsCubit.state.startupPosition;
 
     add(GroundPlan());
-    add(GroundPlanUser());
     _debugGraphComponent = DebugComponent(
         graph: groundPlanCubit.state.groundPlan.graph, shelves: groundPlanCubit.state.groundPlan.shelves);
 
@@ -46,18 +45,12 @@ class MapContainer extends PositionComponent with Draggable {
       add(_debugGraphComponent);
     }
 
-    scale = mapControlsCubit.state.scale;
-    mapControlsCubit.stream.listen((event) {
-      if (event.zoom != scale.x) {
-        scale = event.scale;
-      }
-    });
-
     return super.onLoad();
   }
 
   @override
   void render(Canvas canvas) {
+    canvas.drawColor(Globals.colorScheme.surfaceVariant, BlendMode.hardLight);
     if (_isDebugViewShown) {
       _renderTrace(canvas);
     }
@@ -84,6 +77,7 @@ class MapContainer extends PositionComponent with Draggable {
       Vector2 summedMovement = Vector2(0, 0);
       while (_movementTrace.isNotEmpty) {
         summedMovement += _movementTrace.removeFirst();
+        
       }
 
       position += summedMovement;
@@ -115,6 +109,7 @@ class MapContainer extends PositionComponent with Draggable {
   @override
   bool onDragEnd(DragEndInfo info) {
     _renderDragTrace.clear();
+    position = Vector2.zero();
     return true;
   }
 }
