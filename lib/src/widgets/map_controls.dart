@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_navigation_map/src/cubits/debug/debug_cubit.dart';
-import 'package:store_navigation_map/src/cubits/map_controls/map_controls_cubit.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
+//ignore: must_be_immutable
 class MapControls extends StatelessWidget {
 
-  Timer? _zoomTicker = null;
+  Timer? _zoomTicker;
 
   MapControls({super.key});
 

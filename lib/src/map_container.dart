@@ -6,7 +6,6 @@ import 'package:flame/input.dart';
 import 'package:flutter/foundation.dart';
 import 'package:store_navigation_map/src/debug/debug_component.dart';
 import 'package:store_navigation_map/src/groundplan/groundplan.dart';
-import 'package:store_navigation_map/src/groundplan/user.dart';
 import 'package:store_navigation_map/src/utils/globals.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
