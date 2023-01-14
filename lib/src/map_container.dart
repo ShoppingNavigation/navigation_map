@@ -109,7 +109,9 @@ class MapContainer extends PositionComponent with Draggable {
   @override
   bool onDragEnd(DragEndInfo info) {
     _renderDragTrace.clear();
-    position = Vector2.zero();
+    if (groundPlanCubit.state.trackUser) {
+      position = Vector2.zero();
+    }
     return true;
   }
 }

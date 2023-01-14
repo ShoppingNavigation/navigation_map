@@ -83,6 +83,7 @@ class _ExampleState extends State<Example> {
                   adminActive: true,
                   onShelfSelected: shelfSelected,
                   categories: const [categoryModel],
+                  trackUser: false,
                 ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (value) => setState(() => _currentDestination = value),

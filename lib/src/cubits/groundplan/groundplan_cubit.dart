@@ -5,8 +5,8 @@ import 'package:store_shared_models/store_shared_models.dart';
 part 'groundplan_state.dart';
 
 class GroundPlanCubit extends Cubit<GroundPlanState> {
-  GroundPlanCubit(GroundPlanModel groundPlan, {List<CategoryModel> categories = const []})
-      : super(GroundPlanState(groundPlan: groundPlan)) {
+  GroundPlanCubit(GroundPlanModel groundPlan, {List<CategoryModel> categories = const [], bool trackUser = true})
+      : super(GroundPlanState(groundPlan: groundPlan, trackUser: trackUser)) {
     if (categories.isEmpty) {
       return;
     }
@@ -17,6 +17,6 @@ class GroundPlanCubit extends Cubit<GroundPlanState> {
         shelf.connector.category = category;
       } on StateError catch (_) {}
     }
-    emit(GroundPlanState(groundPlan: groundPlan));
+    emit(GroundPlanState(groundPlan: groundPlan, trackUser: trackUser));
   }
 }

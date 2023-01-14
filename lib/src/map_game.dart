@@ -12,7 +12,9 @@ class MapGame extends FlameGame with HasDraggables, HasTappables {
     _user = GroundPlanUser();
     add(MapContainer()..add(_user));
     
-    camera.followComponent(_user);
+    if (groundPlanCubit.state.trackUser) {
+      camera.followComponent(_user);
+    }
 
     camera.zoom = mapControlsCubit.state.zoom;
     mapControlsCubit.stream.listen((event) {

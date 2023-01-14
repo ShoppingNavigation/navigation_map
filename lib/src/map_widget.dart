@@ -45,7 +45,8 @@ class NavigationMap extends StatefulWidget {
       void Function(UiNode)? onShelfSelected,
       this.canShowDebug = false,
       this.canShowGraph = false,
-      List<CategoryModel> categories = const []}) {
+      List<CategoryModel> categories = const [],
+      bool trackUser = true}) {
     if (canShowDebug && !kDebugMode) {
       throw Exception('Cannot set "canShowDebug" to true, when not in debug mode');
     }
@@ -61,7 +62,7 @@ class NavigationMap extends StatefulWidget {
       additionalZoom: groundplan.additionalZoom,
       startupPosition: groundplan.startupPosition,
     );
-    groundPlanCubit = GroundPlanCubit(groundplan, categories: categories);
+    groundPlanCubit = GroundPlanCubit(groundplan, categories: categories, trackUser: trackUser);
     adminCubit = AdminCubit(active: adminActive, onShelfSelected: onShelfSelected ?? (node) {});
     userCubit = UserCubit(groundplan.graph);
   }
