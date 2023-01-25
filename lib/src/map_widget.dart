@@ -9,7 +9,6 @@ import 'package:store_navigation_map/src/cubits/cubit_observer.dart';
 import 'package:store_navigation_map/src/cubits/debug/debug_cubit.dart';
 import 'package:store_navigation_map/src/cubits/groundplan/groundplan_cubit.dart';
 import 'package:store_navigation_map/src/cubits/map_controls/map_controls_cubit.dart';
-import 'package:store_navigation_map/src/cubits/user/user_cubit.dart';
 import 'package:store_navigation_map/src/debug/widget/debug_log.dart';
 import 'package:store_navigation_map/src/debug/widget/debug_values.dart';
 import 'package:store_navigation_map/src/map_game.dart';

@@ -10,7 +10,8 @@ abstract class UserDataProvider {
 class FakeUserDataProvider extends UserDataProvider {
   @override
   Future<Stream<Vector2>> getPosition() {
-    return Future.value(Stream<Vector2>.periodic(const Duration(milliseconds: 100), _getNextStatefulPosition));
+    return Future.value(Stream<Vector2>.periodic(
+        const Duration(milliseconds: 100), _getNextStatefulPosition));
   }
 
   final Vector2 _maxValues = Vector2(40, 60);
@@ -64,13 +65,19 @@ class GpsUserDataProvider extends UserDataProvider {
 
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
-      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
     }
 
-    final baseCoordinates = groundPlanCubit.state.groundPlan.anchorCoordinates;
     return Geolocator.getPositionStream().map((event) {
-      var x = Geolocator.distanceBetween(0, event.longitude, 0, baseCoordinates.x) * 10;
-      var y = Geolocator.distanceBetween(event.latitude, 0, baseCoordinates.y, 0) * 10;
+      final baseCoordinates =
+          userCubit?.state.anchorCoordinates ?? Vector2.zero();
+      var x =
+          Geolocator.distanceBetween(0, event.longitude, 0, baseCoordinates.x) *
+              10;
+      var y =
+          Geolocator.distanceBetween(event.latitude, 0, baseCoordinates.y, 0) *
+              10;
 
       return Vector2(x, y);
     });

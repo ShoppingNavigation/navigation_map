@@ -26,7 +26,10 @@ Future main() async {
       home: MultiBlocProvider(
         providers: [
           BlocProvider.value(value: RoutingCubit()),
-          BlocProvider.value(value: UserCubit(storeGroundPlan.graph)),
+          BlocProvider.value(
+              value: UserCubit(
+                  graph: storeGroundPlan.graph,
+                  anchorCoordinates: storeGroundPlan.anchorCoordinates)),
         ],
         child: Example(key: UniqueKey()),
       ),
@@ -89,12 +92,7 @@ class _ExampleState extends State<Example> {
                   key: UniqueKey())
               : NavigationMap(
                   groundplan: storeGroundPlan,
-                  canShowDebug: true,
-                  canShowGraph: false,
-                  adminActive: true,
-                  onShelfSelected: shelfSelected,
                   categories: const [categoryModel],
-                  trackUser: true,
                 ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (value) =>

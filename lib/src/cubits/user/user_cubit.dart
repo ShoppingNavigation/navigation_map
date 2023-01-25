@@ -11,15 +11,21 @@ class UserCubit extends Cubit<UserState> {
   final UserGraphMapper _ugm;
   final UserDataProvider _userDataProvider = GpsUserDataProvider();
 
-  UserCubit(NavigationGraph<UiNode> graph)
-      : _ugm = UserGraphMapper(graph),
-        super(UserInitial()) {
+  UserCubit({
+    required NavigationGraph<UiNode> graph,
+    required Vector2 anchorCoordinates,
+  })  : _ugm = UserGraphMapper(graph),
+        super(UserInitial(anchorCoordinates: anchorCoordinates)) {
     _init();
   }
 
   void _init() async {
     var stream = await _userDataProvider.getPosition();
     stream.listen((event) async {
+      if (routingCubit == null) {
+        return;
+      }
+
       final ugmResult = _ugm.closestPointOnEdge(event);
 
       bool routeActive = routingCubit!.state is RoutingSingleRoute ||
@@ -53,7 +59,10 @@ class UserCubit extends Cubit<UserState> {
                 : 'Die Kategorie wurde erreicht');
         debugCubit?.addLog('Sent notification for reaching category');
       }
-      emit(UserPositionSet(position: event, mappingResult: ugmResult));
+      emit(UserPositionSet(
+          position: event,
+          mappingResult: ugmResult,
+          anchorCoordinates: state.anchorCoordinates));
     });
   }
 }
