@@ -7,7 +7,7 @@ import 'package:store_navigation_map/src/utils/globals.dart';
 
 class GroundPlanUser extends PositionComponent with HasGameRef<MapGame> {
   GroundPlanUser() {
-    userCubit!.stream.listen((event) {
+    userCubit.stream.listen((event) {
       position = event.calculatedPosition;
     });
   }

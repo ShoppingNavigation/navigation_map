@@ -70,8 +70,7 @@ class GpsUserDataProvider extends UserDataProvider {
     }
 
     return Geolocator.getPositionStream().map((event) {
-      final baseCoordinates =
-          userCubit?.state.anchorCoordinates ?? Vector2.zero();
+      final baseCoordinates = userCubit.state.anchorCoordinates;
       var x =
           Geolocator.distanceBetween(0, event.longitude, 0, baseCoordinates.x) *
               10;

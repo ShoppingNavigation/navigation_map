@@ -31,19 +31,19 @@ class RoutingCubit extends Cubit<RoutingState> {
   }
 
   void routeToFromPosition(CategoryModel destination) {
-    if (!userCubit!.state.mappingResult.found) {
+    if (!userCubit.state.mappingResult.found) {
       return;
     }
 
-    routeTo(userCubit!.state.mappingResult.closestNode!, destination);
+    routeTo(userCubit.state.mappingResult.closestNode!, destination);
   }
 
   void routeToAllFromPosition(List<CategoryModel> destinations) {
-    if (!userCubit!.state.mappingResult.found) {
+    if (!userCubit.state.mappingResult.found) {
       return;
     }
 
-    routeToAll(userCubit!.state.mappingResult.closestNode!, destinations);
+    routeToAll(userCubit.state.mappingResult.closestNode!, destinations);
   }
 
   /// begins routing to a list of categories

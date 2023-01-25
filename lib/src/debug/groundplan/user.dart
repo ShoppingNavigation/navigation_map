@@ -9,7 +9,7 @@ class DebugUser extends PositionComponent {
   UserState? event;
 
   DebugUser() {
-    userCubit!.stream.listen((event) {
+    userCubit.stream.listen((event) {
       this.event = event;
     });
   }

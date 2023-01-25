@@ -19,12 +19,13 @@ import 'package:store_navigation_map/src/widgets/zoom_info.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 import 'package:store_shared_models/store_shared_models.dart';
 
+bool cubitsInitialized = false;
 DebugCubit? debugCubit;
 late MapControlsCubit mapControlsCubit;
 late GroundPlanCubit groundPlanCubit;
 late AdminCubit adminCubit;
-UserCubit? userCubit;
-RoutingCubit? routingCubit;
+late final UserCubit userCubit;
+late final RoutingCubit routingCubit;
 
 bool isInForeground = true;
 
@@ -46,6 +47,11 @@ class NavigationMap extends StatefulWidget {
       this.canShowGraph = false,
       List<CategoryModel> categories = const [],
       bool trackUser = true}) {
+    if (!cubitsInitialized) {
+      throw Exception(
+          'Please call "provideCubits" before constructing a new map');
+    }
+
     if (canShowDebug && !kDebugMode) {
       throw Exception(
           'Cannot set "canShowDebug" to true, when not in debug mode');
@@ -56,7 +62,6 @@ class NavigationMap extends StatefulWidget {
           'Cannot set adminActive to true without providing onShelfSelected function');
     }
 
-    Bloc.observer = DebugObserver();
     debugCubit =
         DebugCubit(canShowDebug: canShowDebug, canShowGraph: canShowGraph);
     mapControlsCubit = MapControlsCubit(
@@ -67,6 +72,20 @@ class NavigationMap extends StatefulWidget {
         categories: categories, trackUser: trackUser);
     adminCubit = AdminCubit(
         active: adminActive, onShelfSelected: onShelfSelected ?? (node) {});
+  }
+
+  static void provideCubits(UserCubit userC, RoutingCubit routingC,
+      {required GroundPlanModel groundplan}) {
+    Bloc.observer = DebugObserver();
+    userCubit = userC;
+    routingCubit = routingC;
+
+    cubitsInitialized = true;
+    NavigationMap(groundplan: groundplan);
+  }
+
+  static void updateCategories(List<CategoryModel> categories) {
+    groundPlanCubit.updateCategories(categories);
   }
 
   @override
@@ -100,8 +119,6 @@ class _NavigationMapState extends State<NavigationMap>
   Widget build(BuildContext context) {
     Globals.colorScheme = Theme.of(context).colorScheme;
     Globals.textTheme = Theme.of(context).textTheme;
-    routingCubit ??= context.read<RoutingCubit>();
-    userCubit ??= context.read<UserCubit>();
 
     return MultiBlocProvider(
       providers: [

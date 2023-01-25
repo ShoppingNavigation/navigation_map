@@ -40,7 +40,7 @@ NavigationMap(
 );
 ```
 
-Added to that, you need to provide the `RoutingCubit` and `UserCubit` to a top level bloc-provider. Using that cubit you can either route to a sinlge category:
+Added to that, you need to provide the `RoutingCubit` and `UserCubit` to a top level bloc-provider and the `provideCubits` Method. Using that cubit you can either route to a sinlge category:
 
 ```dart
 context.read<RoutingCubit>().routeTo(start, category);
