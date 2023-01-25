@@ -7,7 +7,6 @@ import 'package:store_navigation_map/store_navigation_map.dart';
 
 //ignore: must_be_immutable
 class MapControls extends StatelessWidget {
-
   Timer? _zoomTicker;
 
   MapControls({super.key});
@@ -17,11 +16,6 @@ class MapControls extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        FloatingActionButton.small(
-          onPressed: () {},
-          child: const Icon(Icons.gps_fixed),
-        ),
-        const SizedBox(height: 20),
         GestureDetector(
           onLongPress: () => _startZoomLongpress(1),
           onLongPressEnd: (details) => _stopZoomLongpress(),
@@ -58,8 +52,7 @@ class MapControls extends StatelessWidget {
               onPressed: () {
                 context.read<DebugCubit>().changeGraphVisibility();
               },
-              child: const Icon(Icons.route)
-          ),
+              child: const Icon(Icons.route)),
         ]
       ],
     );
@@ -67,7 +60,8 @@ class MapControls extends StatelessWidget {
 
   /// zoom must either be [-1] or [1]
   void _startZoomLongpress(int zoom) {
-    _zoomTicker = Timer.periodic(const Duration(milliseconds: 250), (timer) => _zoom(zoom));
+    _zoomTicker = Timer.periodic(
+        const Duration(milliseconds: 250), (timer) => _zoom(zoom));
   }
 
   void _stopZoomLongpress() {
