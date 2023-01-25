@@ -1,14 +1,13 @@
 import 'dart:ui';
 
 import 'package:flame/experimental.dart';
-import 'package:store_navigation_map/src/map_container.dart';
 import 'package:store_navigation_map/src/utils/globals.dart';
 
 /// Contains the groundplan flame-world
 class MapWorld extends World {
   @override
   Future<void> onLoad() async {
-    add(MapContainer());
+    // add(MapContainer());
 
     super.onLoad();
   }

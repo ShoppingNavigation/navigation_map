@@ -12,6 +12,7 @@ export 'src/models/connectors/shelf_category_connector.dart';
 
 // api controls
 export 'src/cubits/routing/routing_cubit.dart';
+export 'src/cubits/user/user_cubit.dart';
 
 // dependend packages
 export 'package:store_navigation_graph/store_navigation_graph.dart';

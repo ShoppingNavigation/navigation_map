@@ -9,7 +9,7 @@ class DebugUser extends PositionComponent {
   UserState? event;
 
   DebugUser() {
-    userCubit.stream.listen((event) {
+    userCubit!.stream.listen((event) {
       this.event = event;
     });
   }
@@ -24,13 +24,21 @@ class DebugUser extends PositionComponent {
       return;
     }
 
-    canvas.drawCircle(event!.position.toOffset(), groundPlanCubit.state.groundPlan.lineWidth, DebugGlobals.userPaint);
-    canvas.drawCircle(event!.position.toOffset(), groundPlanCubit.state.groundPlan.lineWidth, DebugGlobals.userPaint);
-    canvas.drawLine(event!.position.toOffset(), event!.mappingResult.closestPoint!.toOffset(),
+    canvas.drawCircle(event!.position.toOffset(),
+        groundPlanCubit.state.groundPlan.lineWidth, DebugGlobals.userPaint);
+    canvas.drawCircle(event!.position.toOffset(),
+        groundPlanCubit.state.groundPlan.lineWidth, DebugGlobals.userPaint);
+    canvas.drawLine(
+        event!.position.toOffset(),
+        event!.mappingResult.closestPoint!.toOffset(),
         DebugGlobals.userClosestPointOnEdgePaint);
-    canvas.drawLine(event!.position.toOffset(), event!.mappingResult.closestConnection!.toOffset(),
+    canvas.drawLine(
+        event!.position.toOffset(),
+        event!.mappingResult.closestConnection!.toOffset(),
         DebugGlobals.userClosestPointPaint);
-    canvas.drawLine(event!.position.toOffset(), event!.mappingResult.secondConnection!.toOffset(),
+    canvas.drawLine(
+        event!.position.toOffset(),
+        event!.mappingResult.secondConnection!.toOffset(),
         DebugGlobals.userClosestPointPaint);
   }
 }

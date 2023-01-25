@@ -23,8 +23,11 @@ Future main() async {
           useMaterial3: true,
           colorScheme:
               ColorScheme.fromSeed(seedColor: const Color(0xFFBFF5A3))),
-      home: BlocProvider(
-        create: (context) => RoutingCubit(),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider.value(value: RoutingCubit()),
+          BlocProvider.value(value: UserCubit(storeGroundPlan.graph)),
+        ],
         child: Example(key: UniqueKey()),
       ),
     ),
