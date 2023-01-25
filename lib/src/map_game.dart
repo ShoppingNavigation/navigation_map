@@ -9,8 +9,7 @@ class MapGame extends FlameGame with HasDraggables, HasTappables {
   @override
   Future<void> onLoad() async {
     _user = GroundPlanUser();
-    add(MapContainer());
-    add(_user);
+    add(MapContainer(user: _user));
 
     if (groundPlanCubit.state.trackUser) {
       camera.followComponent(_user);

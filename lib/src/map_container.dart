@@ -6,6 +6,7 @@ import 'package:flame/input.dart';
 import 'package:flutter/foundation.dart';
 import 'package:store_navigation_map/src/debug/debug_component.dart';
 import 'package:store_navigation_map/src/groundplan/groundplan.dart';
+import 'package:store_navigation_map/src/groundplan/user.dart';
 import 'package:store_navigation_map/src/utils/globals.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
@@ -20,8 +21,12 @@ class MapContainer extends PositionComponent with Draggable {
 
   bool _isDebugViewShown = kDebugMode;
   late DebugComponent _debugGraphComponent;
-  
+
   bool _isGraphShown = kDebugMode;
+
+  final GroundPlanUser user;
+
+  MapContainer({required this.user});
 
   @override
   Future<void>? onLoad() async {
@@ -31,7 +36,8 @@ class MapContainer extends PositionComponent with Draggable {
 
     add(GroundPlan());
     _debugGraphComponent = DebugComponent(
-        graph: groundPlanCubit.state.groundPlan.graph, shelves: groundPlanCubit.state.groundPlan.shelves);
+        graph: groundPlanCubit.state.groundPlan.graph,
+        shelves: groundPlanCubit.state.groundPlan.shelves);
 
     _isDebugViewShown = debugCubit?.state.isDebugEnabled ?? false;
     _isGraphShown = debugCubit?.state.isGraphShown ?? false;
@@ -43,6 +49,8 @@ class MapContainer extends PositionComponent with Draggable {
     if (_isGraphShown) {
       add(_debugGraphComponent);
     }
+
+    add(user);
 
     return super.onLoad();
   }
@@ -64,7 +72,9 @@ class MapContainer extends PositionComponent with Draggable {
   void _renderTrace(Canvas canvas) {
     if (_renderDragTrace.length >= 2) {
       for (var i = 1; i < _renderDragTrace.length; i++) {
-        canvas.drawLine(_renderDragTrace[i - 1].toOffset(), _renderDragTrace[i].toOffset(),
+        canvas.drawLine(
+            _renderDragTrace[i - 1].toOffset(),
+            _renderDragTrace[i].toOffset(),
             Paint()..color = Globals.colorScheme.error);
       }
     }
@@ -76,7 +86,6 @@ class MapContainer extends PositionComponent with Draggable {
       Vector2 summedMovement = Vector2(0, 0);
       while (_movementTrace.isNotEmpty) {
         summedMovement += _movementTrace.removeFirst();
-        
       }
 
       position += summedMovement;
