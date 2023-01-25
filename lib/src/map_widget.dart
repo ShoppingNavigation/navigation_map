@@ -24,7 +24,7 @@ DebugCubit? debugCubit;
 late MapControlsCubit mapControlsCubit;
 late GroundPlanCubit groundPlanCubit;
 late AdminCubit adminCubit;
-late UserCubit userCubit;
+UserCubit? userCubit;
 RoutingCubit? routingCubit;
 
 bool isInForeground = true;
@@ -48,33 +48,37 @@ class NavigationMap extends StatefulWidget {
       List<CategoryModel> categories = const [],
       bool trackUser = true}) {
     if (canShowDebug && !kDebugMode) {
-      throw Exception('Cannot set "canShowDebug" to true, when not in debug mode');
+      throw Exception(
+          'Cannot set "canShowDebug" to true, when not in debug mode');
     }
 
     if (adminActive && onShelfSelected == null) {
-      throw Exception('Cannot set adminActive to true without providing onShelfSelected function');
+      throw Exception(
+          'Cannot set adminActive to true without providing onShelfSelected function');
     }
 
-
     Bloc.observer = DebugObserver();
-    debugCubit = DebugCubit(canShowDebug: canShowDebug, canShowGraph: canShowGraph);
+    debugCubit =
+        DebugCubit(canShowDebug: canShowDebug, canShowGraph: canShowGraph);
     mapControlsCubit = MapControlsCubit(
       additionalZoom: groundplan.additionalZoom,
       startupPosition: groundplan.startupPosition,
     );
-    groundPlanCubit = GroundPlanCubit(groundplan, categories: categories, trackUser: trackUser);
-    adminCubit = AdminCubit(active: adminActive, onShelfSelected: onShelfSelected ?? (node) {});
-    userCubit = UserCubit(groundplan.graph);
+    groundPlanCubit = GroundPlanCubit(groundplan,
+        categories: categories, trackUser: trackUser);
+    adminCubit = AdminCubit(
+        active: adminActive, onShelfSelected: onShelfSelected ?? (node) {});
   }
 
   @override
   State<NavigationMap> createState() => _NavigationMapState();
 }
 
-class _NavigationMapState extends State<NavigationMap> with WidgetsBindingObserver {
+class _NavigationMapState extends State<NavigationMap>
+    with WidgetsBindingObserver {
   final game = MapGame();
 
-@override
+  @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
@@ -98,6 +102,7 @@ class _NavigationMapState extends State<NavigationMap> with WidgetsBindingObserv
     Globals.colorScheme = Theme.of(context).colorScheme;
     Globals.textTheme = Theme.of(context).textTheme;
     routingCubit ??= context.read<RoutingCubit>();
+    userCubit ??= context.read<UserCubit>();
 
     return MultiBlocProvider(
       providers: [

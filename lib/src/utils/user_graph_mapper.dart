@@ -6,6 +6,7 @@ class UgmResult {
   final Vector2? closestPoint;
   final Vector2? closestConnection;
   final Vector2? secondConnection;
+  final UiNode? closestNode;
 
   UgmResult({
     required this.found,
@@ -13,6 +14,7 @@ class UgmResult {
     this.closestConnection,
     this.secondConnection,
     this.error,
+    this.closestNode,
   });
 
   static get empty => UgmResult(found: false);
@@ -45,7 +47,8 @@ class UserGraphMapper {
       return UgmResult(found: false);
     }
 
-    final closestConnection = distances.first.key.position;
+    final closestNode = distances.first.key;
+    final closestConnection = closestNode.position;
     final distancesToOnlyAdjacent = distances
         .where((element) => adjacentNodesToClosestNode.containsKey(element.key))
         .toList();
@@ -90,6 +93,7 @@ class UserGraphMapper {
       closestPoint: closestPoint,
       closestConnection: closestConnection,
       secondConnection: secondConnection,
+      closestNode: closestNode,
     );
   }
 
