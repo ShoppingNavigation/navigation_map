@@ -9,18 +9,20 @@ import 'only_graph.dart';
 import 'groundplan.dart';
 
 late final GroundPlanModel storeGroundPlan;
-const CategoryModel categoryModel = CategoryModel(id: 'asdf', name: 'Lecker brot und so', nodeId: 'v7');
+const CategoryModel categoryModel =
+    CategoryModel(id: 'asdf', name: 'Lecker brot und so', nodeId: 'v7');
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationHelper.setup();
-  
-
   storeGroundPlan = await loadStoreGroundPlan();
 
   runApp(
     MaterialApp(
-      theme: ThemeData(useMaterial3: true, colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFBFF5A3))),
+      theme: ThemeData(
+          useMaterial3: true,
+          colorScheme:
+              ColorScheme.fromSeed(seedColor: const Color(0xFFBFF5A3))),
       home: BlocProvider(
         create: (context) => RoutingCubit(),
         child: Example(key: UniqueKey()),
@@ -54,13 +56,16 @@ class _ExampleState extends State<Example> {
           actions: _currentDestination == 1
               ? [
                   IconButton(
-                    onPressed: () => context.read<RoutingCubit>().routeTo(startNode, getranke),
+                    onPressed: () => context
+                        .read<RoutingCubit>()
+                        .routeTo(startNode, getranke),
                     icon: const Icon(Icons.route),
                   ),
                   IconButton(
                     onPressed: () => showDialog(
                       context: context,
-                      builder: (context) => DestinationSelector(routingCubit: routingCubit),
+                      builder: (context) =>
+                          DestinationSelector(routingCubit: routingCubit),
                     ),
                     icon: const Icon(Icons.alt_route),
                   )
@@ -68,13 +73,16 @@ class _ExampleState extends State<Example> {
               : []),
       // somehow does not work with list lookup
       body: _currentDestination == 0
-          ? NavigationMap(groundplan: groundPlanOnlyGraph, canShowDebug: true, key: UniqueKey())
+          ? NavigationMap(
+              groundplan: groundPlanOnlyGraph,
+              canShowDebug: true,
+              key: UniqueKey())
           : _currentDestination == 1
               ? NavigationMap(
-              groundplan: groundPlan,
-              canShowDebug: true,
-              adminActive: true,
-              onShelfSelected: shelfSelected,
+                  groundplan: groundPlan,
+                  canShowDebug: true,
+                  adminActive: true,
+                  onShelfSelected: shelfSelected,
                   key: UniqueKey())
               : NavigationMap(
                   groundplan: storeGroundPlan,
@@ -83,22 +91,25 @@ class _ExampleState extends State<Example> {
                   adminActive: true,
                   onShelfSelected: shelfSelected,
                   categories: const [categoryModel],
-                  trackUser: false,
+                  trackUser: true,
                 ),
       bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (value) => setState(() => _currentDestination = value),
+        onDestinationSelected: (value) =>
+            setState(() => _currentDestination = value),
         selectedIndex: _currentDestination,
         destinations: const [
           NavigationDestination(icon: Icon(Icons.scatter_plot), label: 'Graph'),
           NavigationDestination(icon: Icon(Icons.map), label: 'Map'),
-          NavigationDestination(icon: Icon(Icons.developer_mode), label: 'Demo'),
+          NavigationDestination(
+              icon: Icon(Icons.developer_mode), label: 'Demo'),
         ],
       ),
     );
   }
 
   void shelfSelected(UiNode node) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Selected node $node')));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text('Selected node $node')));
     context.read<RoutingCubit>().routeTo(node, categoryModel);
   }
 }

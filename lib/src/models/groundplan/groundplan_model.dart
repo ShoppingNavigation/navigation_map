@@ -21,6 +21,9 @@ class GroundPlanModel {
   /// at which distance to the connector node the user should be informed (in decimeters)
   final double notificationDistance;
 
+  /// sets the maximum user graph mapping error, at which the users position will simply be displayed
+  final double maxUGMError;
+
   /// non-final, because the mapping between shelves and categories is done during runtime
   List<GroundPlanShelfModel> shelves;
   final List<GroundPlanObstacleModel> obstacles;
@@ -35,6 +38,7 @@ class GroundPlanModel {
     this.lineWidth = 1,
     this.notificationDistance = 200,
     this.startupPosition,
+    this.maxUGMError = 200,
   });
 
   static GroundPlanModel get empty => GroundPlanModel(
@@ -52,20 +56,27 @@ class GroundPlanModel {
 
     assert(yamlContent.containsKey('graph'));
     assert(yamlContent.containsKey('outline'));
-    assert(yamlContent.containsKey('shelves') && yamlContent['shelves'] is YamlList);
-    assert(yamlContent.containsKey('obstacles') && yamlContent['obstacles'] is YamlList);
+    assert(yamlContent.containsKey('shelves') &&
+        yamlContent['shelves'] is YamlList);
+    assert(yamlContent.containsKey('obstacles') &&
+        yamlContent['obstacles'] is YamlList);
 
     return GroundPlanModel(
       anchorCoordinates: vectorFromYaml(yamlContent['anchorGeoCoordinates']),
       additionalZoom: (yamlContent['additionalZoom'] as num?)?.toDouble() ?? 0,
       lineWidth: (yamlContent['lineWidth'] as num?)?.toDouble() ?? 1,
-      notificationDistance: (yamlContent['notificationDistance'] as num?)?.toDouble() ?? 1,
+      maxUGMError: (yamlContent['maxUGMError'] as num?)?.toDouble() ?? 1,
+      notificationDistance:
+          (yamlContent['notificationDistance'] as num?)?.toDouble() ?? 1,
       startupPosition: vectorFromYaml(yamlContent['startupPosition']),
       outline: GroundPlanOutlineModel.fromYaml(yamlContent['outline']),
       graph: graphFromTaml(yamlContent['graph']),
-      shelves: (yamlContent['shelves'] as YamlList).map((element) => GroundPlanShelfModel.fromYaml(element)).toList(),
-      obstacles:
-          (yamlContent['obstacles'] as YamlList).map((element) => GroundPlanObstacleModel.fromYaml(element)).toList(),
+      shelves: (yamlContent['shelves'] as YamlList)
+          .map((element) => GroundPlanShelfModel.fromYaml(element))
+          .toList(),
+      obstacles: (yamlContent['obstacles'] as YamlList)
+          .map((element) => GroundPlanObstacleModel.fromYaml(element))
+          .toList(),
     );
   }
 }

@@ -4,14 +4,14 @@ import 'package:store_navigation_map/src/map_container.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
 class MapGame extends FlameGame with HasDraggables, HasTappables {
-
   late final GroundPlanUser _user;
 
   @override
   Future<void> onLoad() async {
     _user = GroundPlanUser();
-    add(MapContainer()..add(_user));
-    
+    add(MapContainer());
+    add(_user);
+
     if (groundPlanCubit.state.trackUser) {
       camera.followComponent(_user);
     }
@@ -23,5 +23,4 @@ class MapGame extends FlameGame with HasDraggables, HasTappables {
 
     return super.onLoad();
   }
-
 }

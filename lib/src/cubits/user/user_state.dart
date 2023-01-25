@@ -9,16 +9,23 @@ abstract class UserState extends Equatable {
   /// the calculated position on the closest edge of the navigation graph
   final UgmResult mappingResult;
 
+  Vector2 get calculatedPosition => mappingResult.found &&
+          mappingResult.error! > groundPlanCubit.state.groundPlan.maxUGMError
+      ? mappingResult.closestPoint!
+      : position;
+
   @override
   List<Object> get props => [position, mappingResult];
 }
 
 class UserInitial extends UserState {
-  UserInitial() : super(position: Vector2.zero(), mappingResult: UgmResult.empty);
+  UserInitial()
+      : super(position: Vector2.zero(), mappingResult: UgmResult.empty);
 }
 
 class UserPositionSet extends UserState {
-  const UserPositionSet({required super.position, required super.mappingResult});
+  const UserPositionSet(
+      {required super.position, required super.mappingResult});
 
   @override
   String toString() => 'Update user position';

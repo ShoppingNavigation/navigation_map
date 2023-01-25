@@ -20,7 +20,7 @@ dependencies:
   store_navigation_graph:
     git:
       url: https://github.com/ShoppingNavigation/navigation_graph.git
-      ref: main
+      ref: "29fefd62c88fe5fa551acfacdb6a9a8e40ec2d0c"
   store_shared_models:
     git:
       url: https://github.com/ShoppingNavigation/store_shared_models.git

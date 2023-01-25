@@ -2,11 +2,18 @@ import 'package:store_navigation_map/store_navigation_map.dart';
 
 class UgmResult {
   final bool found;
+  final double? error;
   final Vector2? closestPoint;
   final Vector2? closestConnection;
   final Vector2? secondConnection;
 
-  UgmResult({required this.found, this.closestPoint, this.closestConnection, this.secondConnection});
+  UgmResult({
+    required this.found,
+    this.closestPoint,
+    this.closestConnection,
+    this.secondConnection,
+    this.error,
+  });
 
   static get empty => UgmResult(found: false);
 }
@@ -23,13 +30,15 @@ class UserGraphMapper {
   /// calculates the closest point on any edge of [graph] for the provided positon
   UgmResult closestPointOnEdge(Vector2 from) {
     final stopwatch = Stopwatch()..start();
-    final distances = _calculateDistances(from).entries.toList()..sort((a, b) => a.value.compareTo(b.value));
+    final distances = _calculateDistances(from).entries.toList()
+      ..sort((a, b) => a.value.compareTo(b.value));
     if (distances.isEmpty) {
       _reportDebugValues(double.infinity, stopwatch);
       _reportFound(false, reason: 'No distances');
       return UgmResult(found: false);
     }
-    final adjacentNodesToClosestNode = graph.getAdjacentTNodes(distances.first.key);
+    final adjacentNodesToClosestNode =
+        graph.getAdjacentTNodes(distances.first.key);
     if (adjacentNodesToClosestNode.isEmpty) {
       _reportDebugValues(double.infinity, stopwatch);
       _reportFound(false, reason: 'No adjacent nodes');
@@ -37,8 +46,9 @@ class UserGraphMapper {
     }
 
     final closestConnection = distances.first.key.position;
-    final distancesToOnlyAdjacent =
-        distances.where((element) => adjacentNodesToClosestNode.containsKey(element.key)).toList();
+    final distancesToOnlyAdjacent = distances
+        .where((element) => adjacentNodesToClosestNode.containsKey(element.key))
+        .toList();
 
     Vector2? closestPoint;
     Vector2? secondConnection;
@@ -49,36 +59,42 @@ class UserGraphMapper {
         possibleSecondConnection.key.position,
         from,
       );
-      
+
       secondConnectionIndex++;
       if (closestPoint != null) {
         secondConnection = possibleSecondConnection.key.position;
         break;
       }
     }
-    
+
     if (closestPoint == null) {
       _reportFound(false, reason: 'No closest point');
       return UgmResult(found: false);
     }
-    
-    _reportDebugValues(from.distanceTo(closestPoint), stopwatch);
-    assert(!closestPoint.isNaN && !closestPoint.isInfinite, 'Must be finite: $closestPoint');
-    assert(!closestConnection.isNaN && !closestConnection.isInfinite, 'Must be finite: $closestConnection');
-    assert(!secondConnection!.isNaN && !secondConnection.isInfinite, 'Must be finite: $secondConnection');
+
+    final error = from.distanceTo(closestPoint);
+    _reportDebugValues(error, stopwatch);
+    assert(!closestPoint.isNaN && !closestPoint.isInfinite,
+        'Must be finite: $closestPoint');
+    assert(!closestConnection.isNaN && !closestConnection.isInfinite,
+        'Must be finite: $closestConnection');
+    assert(!secondConnection!.isNaN && !secondConnection.isInfinite,
+        'Must be finite: $secondConnection');
     debugCubit?.addDebugValue('UGM_Closest', closestConnection);
     debugCubit?.addDebugValue('UGM_Second', secondConnection);
     debugCubit?.addDebugValue('UGM_SecondIndex', secondConnectionIndex);
     _reportFound(true);
     return UgmResult(
       found: true,
+      error: error,
       closestPoint: closestPoint,
       closestConnection: closestConnection,
       secondConnection: secondConnection,
     );
   }
 
-  Vector2? _closestPointOnVectorRay(Vector2 positionFirst, Vector2 positionSecond, Vector2 from) {
+  Vector2? _closestPointOnVectorRay(
+      Vector2 positionFirst, Vector2 positionSecond, Vector2 from) {
     final directionVector = positionFirst - positionSecond;
     // orthogonal vectors are vector where v1 * v2 = 0
     final orthogonalVector = Vector2(directionVector.y, -directionVector.x);
@@ -131,10 +147,13 @@ class _VectorRay {
         location.y * other.direction.x +
         other.direction.x * other.location.y -
         other.direction.y * other.location.x);
-    final divisorT = direction.x * other.direction.y - direction.y * other.direction.x;
+    final divisorT =
+        direction.x * other.direction.y - direction.y * other.direction.x;
 
-    final dividendR = direction.x * (location.y - other.location.y) - direction.y * (location.x - other.location.x);
-    final divisorR = direction.x * other.direction.y - direction.y * other.direction.x;
+    final dividendR = direction.x * (location.y - other.location.y) -
+        direction.y * (location.x - other.location.x);
+    final divisorR =
+        direction.x * other.direction.y - direction.y * other.direction.x;
 
     return [dividendT / divisorT, dividendR / divisorR];
   }
@@ -148,7 +167,7 @@ class _VectorRay {
     if (!_isCorrectNumber(multiples[0]) || !_isCorrectNumber(multiples[1])) {
       return null;
     }
-    
+
     if (multiples[1] >= 0 && multiples[1] <= 1) {
       return other.location + (other.direction * multiples[1]);
     }

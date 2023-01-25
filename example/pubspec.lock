@@ -298,7 +298,7 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: main
+      ref: "29fefd62c88fe5fa551acfacdb6a9a8e40ec2d0c"
       resolved-ref: "29fefd62c88fe5fa551acfacdb6a9a8e40ec2d0c"
       url: "https://github.com/ShoppingNavigation/navigation_graph.git"
     source: git

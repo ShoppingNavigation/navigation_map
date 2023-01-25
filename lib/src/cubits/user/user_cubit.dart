@@ -22,7 +22,8 @@ class UserCubit extends Cubit<UserState> {
     stream.listen((event) async {
       final ugmResult = _ugm.closestPointOnEdge(event);
 
-      bool routeActive = routingCubit!.state is RoutingSingleRoute || routingCubit!.state is RoutingMultiRoute;
+      bool routeActive = routingCubit!.state is RoutingSingleRoute ||
+          routingCubit!.state is RoutingMultiRoute;
 
       Vector2 destinationPosition = Vector2.zero();
       bool reached = false;
