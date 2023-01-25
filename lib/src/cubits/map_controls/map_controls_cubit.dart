@@ -6,7 +6,7 @@ part 'map_controls_state.dart';
 class MapControlsCubit extends Cubit<MapControlsState> {
   MapControlsCubit({required double additionalZoom, Vector2? startupPosition})
       : super(InitMapControlsState(
-          zoom: 1 + additionalZoom,
+          zoom: 1 * additionalZoom,
           additionalZoom: additionalZoom,
           userZoomValue: 1,
           startupPosition: startupPosition ?? Vector2.all(0),

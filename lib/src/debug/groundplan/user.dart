@@ -24,8 +24,8 @@ class DebugUser extends PositionComponent {
       return;
     }
 
-    canvas.drawCircle(event!.position.toOffset(), 1, DebugGlobals.userPaint);
-    canvas.drawCircle(event!.position.toOffset(), 1, DebugGlobals.userPaint);
+    canvas.drawCircle(event!.position.toOffset(), groundPlanCubit.state.groundPlan.lineWidth, DebugGlobals.userPaint);
+    canvas.drawCircle(event!.position.toOffset(), groundPlanCubit.state.groundPlan.lineWidth, DebugGlobals.userPaint);
     canvas.drawLine(event!.position.toOffset(), event!.mappingResult.closestPoint!.toOffset(),
         DebugGlobals.userClosestPointOnEdgePaint);
     canvas.drawLine(event!.position.toOffset(), event!.mappingResult.closestConnection!.toOffset(),

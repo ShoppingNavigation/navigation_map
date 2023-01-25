@@ -26,11 +26,13 @@ class UserGraphMapper {
     final distances = _calculateDistances(from).entries.toList()..sort((a, b) => a.value.compareTo(b.value));
     if (distances.isEmpty) {
       _reportDebugValues(double.infinity, stopwatch);
+      _reportFound(false, reason: 'No distances');
       return UgmResult(found: false);
     }
     final adjacentNodesToClosestNode = graph.getAdjacentTNodes(distances.first.key);
     if (adjacentNodesToClosestNode.isEmpty) {
       _reportDebugValues(double.infinity, stopwatch);
+      _reportFound(false, reason: 'No adjacent nodes');
       return UgmResult(found: false);
     }
 
@@ -38,23 +40,36 @@ class UserGraphMapper {
     final distancesToOnlyAdjacent =
         distances.where((element) => adjacentNodesToClosestNode.containsKey(element.key)).toList();
 
-    final secondConnection = distancesToOnlyAdjacent.first.key.position;
-
-    Vector2? closestPoint = _closestPointOnVectorRay(
-          closestConnection,
-          secondConnection,
-          from,
-    );
+    Vector2? closestPoint;
+    Vector2? secondConnection;
+    int secondConnectionIndex = 0;
+    for (var possibleSecondConnection in distancesToOnlyAdjacent) {
+      closestPoint = _closestPointOnVectorRay(
+        closestConnection,
+        possibleSecondConnection.key.position,
+        from,
+      );
+      
+      secondConnectionIndex++;
+      if (closestPoint != null) {
+        secondConnection = possibleSecondConnection.key.position;
+        break;
+      }
+    }
+    
     if (closestPoint == null) {
+      _reportFound(false, reason: 'No closest point');
       return UgmResult(found: false);
     }
     
     _reportDebugValues(from.distanceTo(closestPoint), stopwatch);
     assert(!closestPoint.isNaN && !closestPoint.isInfinite, 'Must be finite: $closestPoint');
     assert(!closestConnection.isNaN && !closestConnection.isInfinite, 'Must be finite: $closestConnection');
-    assert(!secondConnection.isNaN && !secondConnection.isInfinite, 'Must be finite: $secondConnection');
+    assert(!secondConnection!.isNaN && !secondConnection.isInfinite, 'Must be finite: $secondConnection');
     debugCubit?.addDebugValue('UGM_Closest', closestConnection);
     debugCubit?.addDebugValue('UGM_Second', secondConnection);
+    debugCubit?.addDebugValue('UGM_SecondIndex', secondConnectionIndex);
+    _reportFound(true);
     return UgmResult(
       found: true,
       closestPoint: closestPoint,
@@ -91,6 +106,13 @@ class UserGraphMapper {
     debugCubit?.addDebugValue('UGM_Time', sw.elapsed.inMicroseconds / 1000.0);
     debugCubit?.addDebugValue('UGM_Step', currentStep++);
   }
+
+  void _reportFound(bool found, {String reason = ''}) {
+    debugCubit?.addDebugValue('UGM_Found', found);
+    if (!found && reason.isNotEmpty) {
+      debugCubit?.addDebugValue('UGM_Reason', reason);
+    }
+  }
 }
 
 /// stolen from https://github.com/starteNCS/inside, which is javascript. so there are a few adjustments
@@ -126,14 +148,11 @@ class _VectorRay {
     if (!_isCorrectNumber(multiples[0]) || !_isCorrectNumber(multiples[1])) {
       return null;
     }
-
-    if (multiples[0] >= -1 && multiples[0] <= 1) {
-      return location + (direction * multiples[0]);
-    } else if (multiples[1] >= -1 && multiples[1] <= 1) {
+    
+    if (multiples[1] >= 0 && multiples[1] <= 1) {
       return other.location + (other.direction * multiples[1]);
-    } else {
-      return null;
     }
+    return null;
   }
 
   /// Calculates in which direction the vector ray is facing

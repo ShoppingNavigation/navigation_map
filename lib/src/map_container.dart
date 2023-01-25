@@ -6,7 +6,6 @@ import 'package:flame/input.dart';
 import 'package:flutter/foundation.dart';
 import 'package:store_navigation_map/src/debug/debug_component.dart';
 import 'package:store_navigation_map/src/groundplan/groundplan.dart';
-import 'package:store_navigation_map/src/groundplan/user.dart';
 import 'package:store_navigation_map/src/utils/globals.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
@@ -21,39 +20,36 @@ class MapContainer extends PositionComponent with Draggable {
 
   bool _isDebugViewShown = kDebugMode;
   late DebugComponent _debugGraphComponent;
+  
+  bool _isGraphShown = kDebugMode;
 
   @override
   Future<void>? onLoad() async {
     size = groundPlanCubit.state.groundPlan.outline.minimalBoundingRectangle;
-    scale = Vector2(0.8, 0.8);
-    position = mapControlsCubit.state.startupPosition;
+    scale = Vector2(1, 1);
+    // position = mapControlsCubit.state.startupPosition;
 
     add(GroundPlan());
-    add(GroundPlanUser());
     _debugGraphComponent = DebugComponent(
         graph: groundPlanCubit.state.groundPlan.graph, shelves: groundPlanCubit.state.groundPlan.shelves);
 
     _isDebugViewShown = debugCubit?.state.isDebugEnabled ?? false;
+    _isGraphShown = debugCubit?.state.isGraphShown ?? false;
     debugCubit?.stream.listen((event) {
       _isDebugViewShown = event.isDebugEnabled;
+      _isGraphShown = event.isGraphShown;
     });
 
-    if (_isDebugViewShown) {
+    if (_isGraphShown) {
       add(_debugGraphComponent);
     }
-
-    scale = mapControlsCubit.state.scale;
-    mapControlsCubit.stream.listen((event) {
-      if (event.zoom != scale.x) {
-        scale = event.scale;
-      }
-    });
 
     return super.onLoad();
   }
 
   @override
   void render(Canvas canvas) {
+    canvas.drawColor(Globals.colorScheme.surfaceVariant, BlendMode.hardLight);
     if (_isDebugViewShown) {
       _renderTrace(canvas);
     }
@@ -80,6 +76,7 @@ class MapContainer extends PositionComponent with Draggable {
       Vector2 summedMovement = Vector2(0, 0);
       while (_movementTrace.isNotEmpty) {
         summedMovement += _movementTrace.removeFirst();
+        
       }
 
       position += summedMovement;
@@ -87,12 +84,12 @@ class MapContainer extends PositionComponent with Draggable {
   }
 
   void _checkDebugModeSwap() {
-    if (_isDebugViewShown && !contains(_debugGraphComponent)) {
+    if (_isGraphShown && !contains(_debugGraphComponent)) {
       add(_debugGraphComponent);
-      _isDebugViewShown = true;
-    } else if (!_isDebugViewShown && contains(_debugGraphComponent)) {
+      _isGraphShown = true;
+    } else if (!_isGraphShown && contains(_debugGraphComponent)) {
       remove(_debugGraphComponent);
-      _isDebugViewShown = false;
+      _isGraphShown = false;
     }
   }
 
@@ -111,6 +108,9 @@ class MapContainer extends PositionComponent with Draggable {
   @override
   bool onDragEnd(DragEndInfo info) {
     _renderDragTrace.clear();
+    if (groundPlanCubit.state.trackUser) {
+      position = Vector2.zero();
+    }
     return true;
   }
 }

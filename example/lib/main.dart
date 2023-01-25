@@ -3,14 +3,18 @@ import 'package:example/store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
+import 'package:store_shared_models/store_shared_models.dart';
 
 import 'only_graph.dart';
 import 'groundplan.dart';
 
 late final GroundPlanModel storeGroundPlan;
+const CategoryModel categoryModel = CategoryModel(id: 'asdf', name: 'Lecker brot und so', nodeId: 'v7');
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await NotificationHelper.setup();
+  
 
   storeGroundPlan = await loadStoreGroundPlan();
 
@@ -75,6 +79,11 @@ class _ExampleState extends State<Example> {
               : NavigationMap(
                   groundplan: storeGroundPlan,
                   canShowDebug: true,
+                  canShowGraph: false,
+                  adminActive: true,
+                  onShelfSelected: shelfSelected,
+                  categories: const [categoryModel],
+                  trackUser: false,
                 ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (value) => setState(() => _currentDestination = value),
@@ -90,5 +99,6 @@ class _ExampleState extends State<Example> {
 
   void shelfSelected(UiNode node) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Selected node $node')));
+    context.read<RoutingCubit>().routeTo(node, categoryModel);
   }
 }

@@ -1,11 +1,10 @@
 import 'package:flame/components.dart';
-import 'package:flame/input.dart';
 import 'package:flutter/widgets.dart';
 import 'package:store_navigation_map/src/cubits/admin/admin_cubit.dart';
 import 'package:store_navigation_map/src/utils/globals.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
-class GroundPlanShelf extends PositionComponent with Tappable {
+class GroundPlanShelf extends PositionComponent {
   Paint _shelfPaint = Globals.defaultShelfPaint;
 
   final GroundPlanShelfModel shelf;
@@ -15,8 +14,6 @@ class GroundPlanShelf extends PositionComponent with Tappable {
     _shelfPath = _buildPath(shelf.position, shelf.vertices);
 
     position = shelf.position;
-
-    size = shelf.minimalBoundingRectangle;
 
     adminCubit.stream.listen((event) {
       if (event is AdminShelfSelected) {
@@ -34,12 +31,6 @@ class GroundPlanShelf extends PositionComponent with Tappable {
     canvas.drawPath(
         _shelfPath,
         _shelfPaint);
-  }
-
-  @override
-  bool onTapUp(TapUpInfo info) {
-    adminCubit.selectShelf(shelf);
-    return true;
   }
 
   Path _buildPath(Vector2 start, List<Vector2> vertices) {

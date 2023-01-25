@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flame/game.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_navigation_map/src/cubits/admin/admin_cubit.dart';
@@ -15,6 +18,7 @@ import 'package:store_navigation_map/src/widgets/map_controls.dart';
 import 'package:store_navigation_map/src/widgets/next_category.dart';
 import 'package:store_navigation_map/src/widgets/zoom_info.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
+import 'package:store_shared_models/store_shared_models.dart';
 
 DebugCubit? debugCubit;
 late MapControlsCubit mapControlsCubit;
@@ -23,30 +27,42 @@ late AdminCubit adminCubit;
 late UserCubit userCubit;
 RoutingCubit? routingCubit;
 
+bool isInForeground = true;
+
 /// Top level Widget for navigation map. This widget contains the map itself, the map controls and
 /// the navigation controls
 class NavigationMap extends StatefulWidget {
   final GroundPlanModel groundplan;
   final bool canShowDebug;
 
+  /// when [canShowDebug] is true, this will automatically default to [true], even if explicitly set to [false]
+  final bool canShowGraph;
+
   NavigationMap(
       {super.key,
       required this.groundplan,
       bool adminActive = false,
       void Function(UiNode)? onShelfSelected,
-      this.canShowDebug = false}) {
+      this.canShowDebug = false,
+      this.canShowGraph = false,
+      List<CategoryModel> categories = const [],
+      bool trackUser = true}) {
+    if (canShowDebug && !kDebugMode) {
+      throw Exception('Cannot set "canShowDebug" to true, when not in debug mode');
+    }
+
     if (adminActive && onShelfSelected == null) {
       throw Exception('Cannot set adminActive to true without providing onShelfSelected function');
     }
 
 
     Bloc.observer = DebugObserver();
-    debugCubit = DebugCubit(canShowDebug: canShowDebug);
+    debugCubit = DebugCubit(canShowDebug: canShowDebug, canShowGraph: canShowGraph);
     mapControlsCubit = MapControlsCubit(
       additionalZoom: groundplan.additionalZoom,
       startupPosition: groundplan.startupPosition,
     );
-    groundPlanCubit = GroundPlanCubit(groundplan);
+    groundPlanCubit = GroundPlanCubit(groundplan, categories: categories, trackUser: trackUser);
     adminCubit = AdminCubit(active: adminActive, onShelfSelected: onShelfSelected ?? (node) {});
     userCubit = UserCubit(groundplan.graph);
   }
@@ -55,8 +71,27 @@ class NavigationMap extends StatefulWidget {
   State<NavigationMap> createState() => _NavigationMapState();
 }
 
-class _NavigationMapState extends State<NavigationMap> {
+class _NavigationMapState extends State<NavigationMap> with WidgetsBindingObserver {
   final game = MapGame();
+
+@override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    isInForeground = state == AppLifecycleState.resumed;
+    log('changed app forground state to: $isInForeground');
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +122,7 @@ class _NavigationMapState extends State<NavigationMap> {
             );
           },
         ),
-        const Positioned(
+        Positioned(
           top: 10,
           left: 10,
           child: MapControls(),

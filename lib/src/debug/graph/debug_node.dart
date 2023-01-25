@@ -5,7 +5,7 @@ import 'package:store_navigation_map/src/utils/globals.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
 class DebugNode extends Component {
-  static const double _textSize = 2;
+  static final double _textSize = 2 * groundPlanCubit.state.groundPlan.lineWidth;
   final TextPaint _textPaint = TextPaint(
     style: TextStyle(
       fontSize: _textSize,
@@ -18,7 +18,8 @@ class DebugNode extends Component {
 
   @override
   void render(Canvas canvas) {
-    canvas.drawCircle(node.position.toOffset(), 2.0, DebugGlobals.nodePaint);
+    canvas.drawCircle(
+        node.position.toOffset(), 2.0 * groundPlanCubit.state.groundPlan.lineWidth, DebugGlobals.nodePaint);
     _textPaint.render(
         canvas, node.name,
       Vector2(

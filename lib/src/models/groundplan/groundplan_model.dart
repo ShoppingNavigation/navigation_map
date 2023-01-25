@@ -7,25 +7,39 @@ class GroundPlanModel {
   /// to make the map larger by default
   final double additionalZoom;
 
+  /// make the lineWidth thicker for large maps
+  final double lineWidth;
+
+  final Vector2 anchorCoordinates;
+
   /// set the start camera position
   final Vector2? startupPosition;
 
   final NavigationGraph<UiNode> graph;
   final GroundPlanOutlineModel outline;
-  final List<GroundPlanShelfModel> shelves;
+
+  /// at which distance to the connector node the user should be informed (in decimeters)
+  final double notificationDistance;
+
+  /// non-final, because the mapping between shelves and categories is done during runtime
+  List<GroundPlanShelfModel> shelves;
   final List<GroundPlanObstacleModel> obstacles;
 
-  const GroundPlanModel({
+  GroundPlanModel({
     required this.outline,
     required this.graph,
     required this.shelves,
     required this.obstacles,
+    required this.anchorCoordinates,
     this.additionalZoom = 0,
+    this.lineWidth = 1,
+    this.notificationDistance = 200,
     this.startupPosition,
   });
 
   static GroundPlanModel get empty => GroundPlanModel(
-      additionalZoom: 1,
+        additionalZoom: 1,
+        anchorCoordinates: Vector2.zero(),
         outline: GroundPlanOutlineModel(vertices: []),
         graph: NavigationGraph(nodes: []),
         shelves: [],
@@ -42,7 +56,11 @@ class GroundPlanModel {
     assert(yamlContent.containsKey('obstacles') && yamlContent['obstacles'] is YamlList);
 
     return GroundPlanModel(
-      additionalZoom: yamlContent['additionalZoom'] as double? ?? 1,
+      anchorCoordinates: vectorFromYaml(yamlContent['anchorGeoCoordinates']),
+      additionalZoom: (yamlContent['additionalZoom'] as num?)?.toDouble() ?? 0,
+      lineWidth: (yamlContent['lineWidth'] as num?)?.toDouble() ?? 1,
+      notificationDistance: (yamlContent['notificationDistance'] as num?)?.toDouble() ?? 1,
+      startupPosition: vectorFromYaml(yamlContent['startupPosition']),
       outline: GroundPlanOutlineModel.fromYaml(yamlContent['outline']),
       graph: graphFromTaml(yamlContent['graph']),
       shelves: (yamlContent['shelves'] as YamlList).map((element) => GroundPlanShelfModel.fromYaml(element)).toList(),
