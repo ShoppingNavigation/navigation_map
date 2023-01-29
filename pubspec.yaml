@@ -20,11 +20,11 @@ dependencies:
   store_navigation_graph:
     git:
       url: https://github.com/ShoppingNavigation/navigation_graph.git
-      ref: "740c15d0bf3ad9de0327ea0e464dc3e16eef26f7"
+      ref: "29fefd62c88fe5fa551acfacdb6a9a8e40ec2d0c"
   store_shared_models:
     git:
       url: https://github.com/ShoppingNavigation/store_shared_models.git
-      ref: main
+      ref: "740c15d0bf3ad9de0327ea0e464dc3e16eef26f7"
   vibration: ^1.7.6
   yaml: ^3.1.1
 
