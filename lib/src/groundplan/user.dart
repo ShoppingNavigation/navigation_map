@@ -13,6 +13,7 @@ class GroundPlanUser extends PositionComponent with HasGameRef<MapGame> {
   GroundPlanUser() {
     anchor = Anchor.center;
 
+    position = userCubit.state.calculatedPosition;
     userCubit.stream.listen((event) {
       position = event.calculatedPosition;
     });
