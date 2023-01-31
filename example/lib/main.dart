@@ -16,6 +16,13 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationHelper.setup();
   storeGroundPlan = await loadStoreGroundPlan();
+  final userCubit = UserCubit(
+      graph: storeGroundPlan.graph,
+      anchorCoordinates: storeGroundPlan.anchorCoordinates);
+  final routingCubit = RoutingCubit();
+
+  NavigationMap.provideCubits(userCubit, routingCubit,
+      groundplan: storeGroundPlan);
 
   runApp(
     MaterialApp(
@@ -25,11 +32,8 @@ Future main() async {
               ColorScheme.fromSeed(seedColor: const Color(0xFFBFF5A3))),
       home: MultiBlocProvider(
         providers: [
-          BlocProvider.value(value: RoutingCubit()),
-          BlocProvider.value(
-              value: UserCubit(
-                  graph: storeGroundPlan.graph,
-                  anchorCoordinates: storeGroundPlan.anchorCoordinates)),
+          BlocProvider.value(value: routingCubit),
+          BlocProvider.value(value: userCubit),
         ],
         child: Example(key: UniqueKey()),
       ),
@@ -93,6 +97,7 @@ class _ExampleState extends State<Example> {
               : NavigationMap(
                   groundplan: storeGroundPlan,
                   categories: const [categoryModel],
+                  canShowDebug: true,
                 ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (value) =>

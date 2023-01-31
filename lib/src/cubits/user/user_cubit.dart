@@ -20,8 +20,8 @@ class UserCubit extends Cubit<UserState> {
   }
 
   void _init() async {
-    var stream = await _userDataProvider.getPosition();
-    stream.listen((event) async {
+    var positionStream = await _userDataProvider.getPosition();
+    positionStream.listen((event) async {
       final ugmResult = _ugm.closestPointOnEdge(event);
 
       bool routeActive = routingCubit.state is RoutingSingleRoute ||
@@ -58,7 +58,18 @@ class UserCubit extends Cubit<UserState> {
       emit(UserPositionSet(
           position: event,
           mappingResult: ugmResult,
-          anchorCoordinates: state.anchorCoordinates));
+          anchorCoordinates: state.anchorCoordinates,
+          rotation: state.rotation));
+    });
+
+    final rotationStream = _userDataProvider.getRotation();
+    rotationStream.listen((event) {
+      emit(UserPositionSet(
+        position: state.position,
+        mappingResult: state.mappingResult,
+        anchorCoordinates: state.anchorCoordinates,
+        rotation: event,
+      ));
     });
   }
 }

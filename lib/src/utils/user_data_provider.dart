@@ -1,13 +1,23 @@
-import 'dart:math';
+import 'dart:math' as math;
 
+import 'package:flutter_compass/flutter_compass.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:store_navigation_map/store_navigation_map.dart';
 
 abstract class UserDataProvider {
   Future<Stream<Vector2>> getPosition();
+  Stream<double> getRotation();
 }
 
 class FakeUserDataProvider extends UserDataProvider {
+  @override
+  Stream<double> getRotation() {
+    return Stream.periodic(
+      const Duration(microseconds: 1000),
+      (computationCount) => computationCount.toDouble(),
+    );
+  }
+
   @override
   Future<Stream<Vector2>> getPosition() {
     return Future.value(Stream<Vector2>.periodic(
@@ -32,10 +42,20 @@ class FakeUserDataProvider extends UserDataProvider {
     return _previousPosition;
   }
 
-  double _yValue(double x, double offset) => offset + 9 * sin(x * (1 / 10));
+  double _yValue(double x, double offset) =>
+      offset + 9 * math.sin(x * (1 / 10));
 }
 
 class GpsUserDataProvider extends UserDataProvider {
+  @override
+  Stream<double> getRotation() {
+    if (FlutterCompass.events == null) {
+      throw Exception("No Compass build in");
+    }
+
+    return FlutterCompass.events!.map((event) => event.heading ?? 0);
+  }
+
   @override
   Future<Stream<Vector2>> getPosition() async {
     bool serviceEnabled;
