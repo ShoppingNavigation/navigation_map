@@ -42,6 +42,10 @@ class GroundPlan extends PositionComponent {
           route: initialState.route.route,
           connector: initialState.connectorPoint);
       add(_currentDisplayingRoute!);
+    } else if (initialState is RoutingMultiRoute) {
+      _showRoute(
+          initialState.routes.route[initialState.currentDestinationIndex],
+          initialState.currentConnector);
     }
 
     routingCubit.stream.listen((event) {
