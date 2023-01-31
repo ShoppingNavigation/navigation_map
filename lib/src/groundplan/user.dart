@@ -20,7 +20,6 @@ class GroundPlanUser extends PositionComponent with HasGameRef<MapGame> {
     GpsUserDataProvider().getRotation().listen((event) {
       assert(event <= 180 && event >= -180);
       angle = event * (math.pi / 180.0);
-      print("echter winkel: $event, gerechnet: $angle");
     });
   }
 
