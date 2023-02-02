@@ -21,7 +21,7 @@ abstract class UserState extends Equatable {
   final double rotation;
 
   Vector2 get calculatedPosition => mappingResult.found &&
-          mappingResult.error! > groundPlanCubit.state.groundPlan.maxUGMError
+          mappingResult.error! < groundPlanCubit.state.groundPlan.maxUGMError
       ? mappingResult.closestPoint!
       : position;
 
